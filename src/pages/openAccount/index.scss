@@ -1,0 +1,10 @@
+.boxs {
+  background: #FFFFFF;
+  padding: 85rpx 32rpx 0rpx 32rpx;
+
+  & > view:nth-child(1) {
+    font-size: 32rpx;
+    color: #808080;
+    margin-bottom: 115rpx;
+  }
+}

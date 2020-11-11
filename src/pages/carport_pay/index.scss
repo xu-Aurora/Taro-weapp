@@ -1,0 +1,83 @@
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #F5F6FA;
+
+
+  .carport_pay {
+    box-sizing: border-box;
+    padding-top: 32rpx;
+    font-size: 32rpx;
+    position: relative;
+  
+    &>view:nth-child(1) {
+      padding-left: 32rpx;
+      margin-bottom: 12rpx;
+      color: #808080;
+    }
+    &>view:nth-child(2) {
+      background-color: #ffffff;
+      display: flex;
+      padding: 26rpx 0rpx 23rpx 32rpx;
+      box-sizing: border-box;
+      &>view:nth-child(1) {
+        flex: 1;
+      }
+      &>view:nth-child(2) {
+        flex: 3.5;
+        font-size: 34rpx;
+        color: #808080;
+        text-align: right;
+        padding-right: 10rpx;
+        &>view:nth-child(2) {
+          font-size: 28rpx;
+          margin-top: 10rpx;
+        }
+      }
+      &>view:nth-child(3) {
+        flex: 0.5;
+      }
+    }
+    &>view:nth-child(3) {
+      background-color: #ffffff;
+      margin-bottom: 58rpx;
+      .at-input {
+        border-top: 1rpx solid #EAEAEA;
+      }
+    }
+    &>view:nth-child(4) {
+      padding-left: 32rpx;
+      color: #808080;
+      margin-bottom: 17rpx;
+      &>text:nth-child(1) {
+        margin-right: 64rpx;
+      }
+    }
+    &>view:nth-child(5) {
+      background-color: #ffffff;
+      margin-bottom: 58rpx;
+    }
+    .footer {
+      background-color: #F5F6FA;
+      padding: 0rpx 40rpx;
+      margin-bottom: 204rpx;
+    }
+    .tips {
+      padding: 0rpx 40rpx;
+      font-size: 28rpx;
+      color: #606060;
+      display: flex;
+  
+      &>view {
+        margin-right: 13rpx;
+        image {
+          width: 47rpx;
+          height: 46rpx;
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,78 @@
+.bank_card_set {
+  padding: 56rpx 28rpx 0rpx 28rpx;
+  box-sizing: border-box;
+
+  .title {
+    padding: 0rpx 32rpx 34rpx 46rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &>view:nth-child(1)>text:nth-child(1) {
+      font-size: 36px;
+      color: #3E3E3E;
+      font-weight: 600;
+      margin-right: 15rpx;
+    }
+    &>view:nth-child(1)>text:nth-child(2) {
+      font-size: 28rpx;
+      color: #3E3E3E;
+    }
+    &>view:nth-child(2) {
+      font-size: 34px;
+      color: #3E3E3E;
+    }
+  }
+
+  .card_list {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+
+    &>view {
+      padding: 53rpx 50rpx 63rpx 50rpx;
+      box-sizing: border-box;
+      height: 350rpx;
+      background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/bank_card.png');
+      background-size: 100% 100%;
+
+      &>view:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 54rpx;
+        &>view:nth-child(1) {
+          display: flex;
+          align-items: center;
+          font-size: 36rpx;
+          font-weight: 600;
+          .box_img {
+            background: #ffffff;
+            width: 82rpx;
+            height: 82rpx;
+            border-radius: 50%;
+            margin-right: 20rpx;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            image {
+              width: 82rpx;
+              height: 82rpx;
+            }
+          }
+
+        }
+        &>view:nth-child(2) {
+          image {
+            width: 48rpx;
+            height: 48rpx;
+          }
+        }
+      }
+      &>view:nth-child(2) {
+        font-size: 39rpx;
+      }
+    }
+  }
+}

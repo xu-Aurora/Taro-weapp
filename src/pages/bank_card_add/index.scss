@@ -1,0 +1,50 @@
+.bank_card_add {
+  background-color: #F5F6FA;
+  box-sizing: border-box;
+  height: 100vh;
+  padding-top: 32rpx;
+
+  .at-input__input {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 620rpx !important;
+  }
+  .at-action-sheet__overlay {
+    position: relative;
+    // z-index: 1119;
+  }
+
+  &>view:nth-child(1) {
+    font-size: 32rpx;
+    color: #808080;
+    margin: 5rpx 0rpx 18rpx 32rpx;
+  }
+
+  &>view:nth-child(2) {
+    margin: 0rpx 0rpx 106rpx 0rpx;
+    background-color: #ffffff;
+  }
+  &>view:nth-child(3) {
+    padding: 0rpx 40rpx;
+  }
+
+  .nodata {
+    padding: 100rpx 0rpx;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    &>view {
+      image {
+        width: 82rpx;
+        height: 82rpx;
+        margin-bottom: 20rpx;
+      }
+      view {
+        text-align: center;
+        color: #808080;
+      }
+    }
+
+  }
+}

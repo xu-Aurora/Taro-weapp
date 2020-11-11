@@ -1,0 +1,89 @@
+
+.container {
+  background-color: #ffffff;
+  box-sizing: border-box;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+
+
+  .camera1 {
+    height: 61%;
+    width: 100%;
+    top: -115rpx;
+
+    .boxs {
+      height: 100vh;
+      width: 100vw;
+
+      .imgBox {
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        left: 0rpx;
+        top: 0rpx;
+        z-index: 1200;
+
+        .bgImg {
+          height: 100vh;
+          width: 100vw;
+          position: absolute;
+          left: 0rpx;
+          top: 0rpx;
+          z-index: 1200;
+        }
+      }
+    }
+  }
+  .bottom {
+    width: 100vw;
+    display: flex;
+    position: absolute;
+    z-index: 1201;
+    bottom: 108rpx;
+    left: 0rpx;
+
+    .item {
+      flex: 1;
+      font-size: 28rpx;
+      color: #606060;
+      text-align: center;
+      .t {
+        display: flex;
+        justify-content: center;
+
+        .img {
+          width: 120rpx;
+          height: 120rpx;
+          margin-bottom: 25rpx;
+        }
+      }
+
+    }
+  }
+
+  .top {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 65%;
+    z-index: 1201;
+    transform: translate(-50%, -50%);
+
+    .tips {
+      font-size: 36rpx;
+      color: #606060;
+      margin-bottom: 20rpx;
+      text-align: center;
+      .a {
+        margin-bottom: 15rpx;
+      }
+    }
+    .s {
+      font-size: 46px;
+      color: #5584FF;
+    }
+  }
+
+
+}

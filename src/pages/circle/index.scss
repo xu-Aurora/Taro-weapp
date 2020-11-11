@@ -1,0 +1,211 @@
+.circle {
+  overflow: hidden;
+  background-color: #F5F6FA;
+  min-height: 100vh;
+  // overflow-y: scroll;
+
+
+  .top {
+    padding: 20rpx 28rpx 54rpx 28rpx;
+    background-color: #ffffff;
+
+    .card {
+      box-shadow: 0 4rpx 20rpx 0 rgba(0,0,0,0.30);
+      border-radius: 10rpx;
+      width: 100%;
+      height: 292rpx;
+      background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/circle_card.png');
+      background-size: 100% 100%;
+      box-sizing: border-box;
+      padding: 43rpx 78rpx 57rpx 32rpx;
+      color: #ffffff;
+      font-size: 28rpx;
+      margin-bottom: 64rpx;
+      &>view:nth-child(1) {
+        display: flex;
+        font-size: 42rpx;
+        justify-content: space-between;
+        align-items: center;
+        image {
+          width: 48rpx;
+          height: 48rpx;
+        }
+      }
+      &>view:nth-child(2) {
+        margin: 45rpx 0rpx 10rpx 0rpx;
+      }
+    }
+    .balance {
+      padding: 0rpx 10rpx 38rpx 10rpx;
+      box-sizing: border-box;
+      display: flex;
+      // justify-content: space-between;
+      border-bottom: 1rpx solid #E5E5E5;
+      color: #808080;
+      .left {
+        flex: 1.1;
+        &>view:nth-child(1) {
+          font-size: 42rpx;
+          color: #FF9D1A;
+          margin-bottom: 5rpx;
+        }
+        &>view:nth-child(2) {
+          font-size: 26rpx;
+        }
+      }
+      .right {
+        flex: 0.9;
+        display: flex;
+        align-items: center;
+        .cz {
+          margin-right: 20rpx;
+        }
+      }
+    }
+    .earnings {
+      padding: 43rpx 10rpx 38rpx 0rpx;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      color: #808080;
+      font-size: 26rpx;
+      .left {
+        flex: 1.1;
+        &>view:nth-of-type(1) {
+          &>view:nth-child(1) {
+            color: #F6724A;
+          }
+        }
+      }
+      .right {
+        flex: 0.9;
+      }
+      .common {
+        display: flex;
+        image {
+          width: 90rpx;
+          height: 90rpx;
+          margin-right: 32rpx;
+        }
+        &>view:nth-of-type(1) {
+          &>view:nth-child(1) {
+            margin-bottom: 10rpx;
+            font-size: 36rpx;
+          }
+        }
+      }
+    }
+  }
+  .total {
+    padding: 58rpx 0rpx 20rpx 32rpx;
+    font-weight: 600;
+    font-size: 32rpx;
+    color: #808080;
+  }
+
+  //车位列表
+  .car_list {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    padding: 29rpx 24rpx 0rpx 32rpx;
+    border-bottom: 1rpx solid  #E5E5E5;
+    margin-bottom: 20rpx;
+    .item {
+      .conTopMargin{
+        margin-top: 30px;
+        margin-bottom: 27rpx;
+      }
+      .itemTitle_wrap{
+        height: 72rpx;
+      }
+      .itemImg{
+        width: 42rpx;
+        height: 30rpx;
+        display: block;
+        float: left;
+        margin: 7rpx 10rpx 0 0;
+  
+      }
+      .itemTitle{
+        float: left;
+        font-size: 30rpx;
+        color: #3E3E3E;
+      }
+      .itemTag{
+        float: right;
+      }
+      .itemContLeft{
+        font-size: 24rpx;
+        color: #808080;
+        float: left;
+      }
+      .itemContRight{
+        font-size: 24rpx;
+        color: #808080;
+        float: right;
+      }
+      .textButton12{
+        margin-bottom: 12rpx;
+      }
+    }
+  }
+
+  .mar-bot {
+    padding-bottom: 37rpx;
+  }
+
+  .footer1 {
+    padding: 44rpx 0rpx 45rpx 0rpx;
+    display: flex;
+    justify-content: center;
+    font-size: 28rpx;
+    color: #ACAEB5;
+    &>view {
+      display: flex;
+      .line {
+        height: 2rpx;
+        margin-top: 20rpx;
+        width: 160rpx;
+        background: #C9C9CB;
+      }
+      .text {
+        margin: 0rpx 20rpx;
+      }
+    }
+
+  }
+
+  //修改弹出层的样式
+  .c_modal {
+    .at-modal__container {
+      font-size: 32rpx;
+      color: #3E3E3E;
+  
+      .modal_header {
+        padding: 70rpx 20rpx 0rpx 20rpx;
+        .at-modal__header {
+          white-space: pre-wrap;
+          text-align: left;
+          padding-bottom: 40rpx;
+        }
+      }
+    }
+    .modal1 {
+      margin: 20rpx 0rpx 80rpx 0rpx;
+  
+      &>view:nth-child(2) {
+        color: #F6724A;
+      }
+      &>view:nth-child(3) {
+        margin-bottom: 30rpx;
+      }
+      .col {
+        color: #808080;
+        margin-top: 20rpx;
+      }
+      .mar_bot {
+        margin-bottom: 10rpx;
+      }
+    }
+  }
+}

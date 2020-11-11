@@ -1,0 +1,22 @@
+
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+
+  .pwd_update {
+    padding-top: 20rpx;
+    box-sizing: border-box;
+    
+    &>view:nth-child(1) {
+      background-color: #ffffff;
+      margin-bottom: 104rpx;
+    }
+  
+    .footer {
+      background-color: #F5F6FA;
+      padding: 0rpx 40rpx;
+    }
+  }
+}

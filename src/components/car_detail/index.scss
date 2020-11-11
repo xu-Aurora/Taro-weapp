@@ -1,0 +1,215 @@
+.boxs {
+  color: #808080;
+
+
+  .topBG {
+    padding-top: 30rpx;
+    background: #F5F6FA;
+
+    & > view {
+      width: 100vw;
+      height: 260rpx;
+      image {
+        width: 100vw;
+        height: 260rpx;
+      }
+    }
+
+    .bg_pz {
+      position: relative;
+      color: #ffffff;
+      font-size: 48rpx;
+      .left {
+        position: absolute;
+        left: 108rpx;
+        top: 50rpx;
+      }
+      .right {
+        position: absolute;
+        right: 128rpx;
+        top: 50rpx;
+      }
+
+    }
+
+    .bg_qz {
+      position: relative;
+      color: #ffffff;
+      & > view:nth-of-type(1) {
+        position: absolute;
+        left: 92rpx;
+        top: 25%;
+      }
+    }
+  }
+
+   //车位信息
+  .car_info {
+    padding: 0rpx 28rpx 33rpx 28rpx;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    margin-bottom: 20rpx;
+    border-bottom: 1rpx solid #D9D9D9;
+
+    //回购模式
+    .buy_back {
+      padding-top: 35rpx;
+      margin-bottom: 20rpx;
+      font-size: 30rpx;
+      .tag_blue {
+        font-size: 26rpx;
+        color: #3C92FF;
+        background: #ECF4FF;
+        border-radius: 25rpx;
+        padding: 8rpx 22rpx;
+        height: 36rpx;
+        margin-right: 10rpx;
+      }
+      .tag_bisque {
+        color: #ED801E;
+        background: #FFEFDC;
+        font-size: 26rpx;
+        border-radius: 25rpx;
+        padding: 8rpx 17rpx;
+        height: 36rpx;
+        margin-right: 10rpx;
+      }
+
+      &>view:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        & > view:nth-child(1) {
+          font-size: 36rpx;
+          color: #3E3E3E;
+          margin-bottom: 28rpx;
+          height: 30rpx;
+          line-height: 30rpx;
+          & > image {
+            width: 42rpx;
+            height: 30rpx;
+            border-radius: 5px;
+            margin-right: 10rpx;
+          }
+          & > text {
+            display: inline-block;
+            height: 30rpx;
+            line-height: 30rpx;
+          }
+        }
+        & > view:nth-child(2) {
+          margin-bottom: 28rpx;
+        }
+
+      }
+      &>view:nth-child(2) {
+        margin-bottom: 30rpx;
+        &>view {
+          margin-bottom: 20rpx;
+        }
+      }
+      &>view:nth-child(3) {
+        display: flex;
+        .left, .right {
+          flex: 0.9;
+          &>view {
+            margin-bottom: 30rpx
+          }
+        }
+        .right {
+          flex: 1.1;
+        }
+      }
+    }
+
+  }
+
+  .bottom {
+    padding: 47rpx 32rpx 44rpx 32rpx;
+    font-size: 30rpx;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-bottom: 1rpx solid #E5E5E5;
+    border-top: 1rpx solid #E5E5E5;
+
+    & > view {
+      display: flex;
+      justify-content: space-between;
+      margin: 30rpx 0rpx;
+      align-items: center;
+    }
+
+    &>view:nth-child(2) {
+      display: flex;
+      margin-top: 34rpx;
+      padding-right: 65rpx;
+      justify-content: space-between;
+      margin-bottom: 30rpx;
+    }
+    // &>view:nth-child(4), &>view:nth-child(3) {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   margin: 30rpx 0rpx;
+    //   align-items: center;
+    // }
+    // &>view:nth-child(5) {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   margin-bottom: 32rpx;
+    //   align-items: center;
+    // }
+    .more {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      view {
+        background-color: #F5F7FB;
+        border-radius: 10rpx;
+        font-size: 34rpx;
+        color: #3E3E3E;
+        width: 670rpx;
+        height: 82rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+
+  // 购买协议
+  .buy_protocol {
+    background-color: #ffffff;
+    border-bottom: 1rpx solid #E5E5E5;
+    border-top: 1rpx solid #E5E5E5;
+    padding: 26rpx 50rpx 26rpx 32rpx;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    &>text {
+      font-size: 32rpx;
+      color: #3E3E3E;
+    }
+    &>view {
+      font-size: 34rpx;
+      color: #808080;
+      &>text {
+        margin-right: 28rpx;
+      }
+    }
+  }
+
+  // 地址
+  .address {
+    display: flex;
+    align-items: center;
+    view {
+      height: 40rpx;
+    }
+    image {
+      width: 40rpx;
+      height: 40rpx;
+    }
+  }
+  
+}
+

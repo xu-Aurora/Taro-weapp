@@ -1,0 +1,26 @@
+.map {
+  position: relative;
+  .at-search-bar__placeholder-wrap {
+    padding-right: 180rpx;
+    justify-content: flex-end;
+  }
+  .at-search-bar__input {
+    padding-left: 275rpx;
+    padding-right: 0rpx;
+  }
+  .at-icon-search {
+    // position: absolute;
+    // left: 225rpx;
+    display: none;
+  }
+
+  .top_search {
+    position: absolute;
+    left: 0rpx;
+    top: 0rpx;
+    z-index: 1000;
+    width: 100%;
+    padding-bottom: 0rpx;
+    height: 119rpx;
+  }
+}

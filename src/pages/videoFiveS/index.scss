@@ -1,0 +1,52 @@
+.videotape {
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow: hidden;
+  max-height: 100vh;
+
+  .cam {
+    .camera1 {
+      height: 600rpx;
+    }
+  }
+
+  .video_bom{
+    padding-top: 58rpx;
+    .videoInfo{
+      width: 630rpx;
+      text-align: center;
+      font-size: 36px;
+      color: #606060;
+      margin: 0 auto;
+    }
+    .videoNum{
+      font-size: 72px;
+      color: #5584FF;
+      text-align: center;
+      margin-top: 46rpx;
+      letter-spacing: 20rpx;
+    }
+    .btn {
+      margin-top: 72rpx;
+      width: 670rpx;
+    }
+  }
+  
+  .bgMark {
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000000, $alpha: 0.5);
+    position: absolute;
+    left: 0rpx;
+    top: 0rpx;
+
+    & > view {
+      color: #ffffff;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, 50%);
+    }
+  }
+}
+  

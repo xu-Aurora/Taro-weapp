@@ -1,0 +1,35 @@
+.boxs {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > view {
+
+    & > view:nth-child(1) {
+      display: flex;
+      justify-content: center;
+      height: 380rpx;
+  
+      image {
+        width: 380rpx;
+        height: 380rpx;
+      }
+    }
+
+    & > view:nth-child(2) {
+      margin: 77rpx 0rpx 100rpx 0rpx;
+      text-align: center;
+      font-size: 36rpx;
+      color: #606060;
+    }
+
+    & > view:nth-child(3) {
+      display: flex;
+      justify-content: center;
+    }
+
+
+  }
+}

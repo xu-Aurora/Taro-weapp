@@ -1,0 +1,140 @@
+
+
+.boxs {
+  .pay {
+    background-color: #F5F6FA;
+    overflow: hidden;
+    height: 100vh;
+  
+    .box {
+      background: #ffffff;
+      padding: 30rpx 46rpx 1rpx 46rpx;
+      margin-top: 20rpx;
+      color: #808080;
+      .price {
+        font-size: 32rpx;
+        color: #FA5741;
+      }
+      &>view {
+        margin-bottom: 30rpx;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    &>view:nth-child(1) {
+      &>view:nth-child(2) {
+        &>text:nth-child(1) {
+          color: #3E3E3E;
+        }
+      }
+    }
+    &>view:nth-child(2) {
+      margin-bottom: 58rpx;
+      &>view:nth-child(4) {
+        justify-content: flex-end;
+        align-items: center;
+        font-size: 28rpx;
+        image {
+          width: 32rpx;
+          height: 32rpx;
+        }
+        &>view:nth-of-type(1) {
+          margin: 0rpx 18rpx 0rpx 16rpx;
+          color: #F67149;
+        }
+        &>view:nth-of-type(2) {
+          color: #5584FF;
+        }
+      }
+    }
+  
+    .p {
+      padding-left: 32rpx;
+      color: #808080;
+      margin-bottom: 17rpx;
+      &>text:nth-child(1) {
+        margin-right: 64rpx;
+      }
+    }
+  
+    .c {
+      background-color: #ffffff;
+      margin-bottom: 58rpx;
+    }
+  
+    .footer {
+      background-color: #F5F6FA;
+      padding: 0rpx 40rpx;
+      margin-bottom: 204rpx;
+    }
+  
+    //修改弹出层的样式
+    .c_modal {
+      .at-modal__container {
+        font-size: 32rpx;
+        color: #3E3E3E;
+    
+        .modal_header {
+          padding: 70rpx 20rpx 0rpx 20rpx;
+          .at-modal__header {
+            white-space: pre-wrap;
+            text-align: left;
+            padding-bottom: 40rpx;
+          }
+        }
+      }
+      .modal1 {
+        margin: 20rpx 0rpx 80rpx 0rpx;
+    
+        &>view:nth-child(2) {
+          color: #F6724A;
+        }
+        &>view:nth-child(3) {
+          margin-bottom: 30rpx;
+        }
+        .col {
+          color: #808080;
+          margin-top: 20rpx;
+        }
+        .mar_bot {
+          margin-bottom: 10rpx;
+        }
+      }
+    }
+    .t_modal {
+      .modal2 {
+        padding: 32rpx 20rpx 10rpx 20rpx;
+        &>view:nth-child(1) {
+          margin-bottom: 32rpx;
+        }
+      }
+    }
+  
+  }
+  .protocol {
+    display: flex;
+    align-items: center;
+    font-size: 24rpx;
+    margin-bottom: 30rpx;
+    padding-left: 32rpx;
+
+    .at-checkbox {
+      background: none;
+    }
+
+    .at-checkbox__title {
+      font-size: 24rpx;
+      line-height: 46rpx;
+    }
+    .at-checkbox__option {
+      padding-left: 0rpx;
+    }
+    .at-checkbox__option-wrap {
+      padding: 0rpx;
+    }
+    .at-checkbox::before, .at-checkbox::after {
+      border-top: 0rpx;
+      border-bottom: 0rpx;
+    }
+  }
+}

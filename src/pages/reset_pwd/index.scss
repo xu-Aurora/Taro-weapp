@@ -1,0 +1,20 @@
+.reset_pwd {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #F5F6FA;
+
+  .phone_update {
+    margin-top: 20rpx;
+    &>view {
+      background-color: #ffffff;
+      margin-top: 20rpx;
+    }
+  
+    .footer {
+      background-color: #F5F6FA;
+      padding: 84rpx 40rpx 0rpx 40rpx;
+    }
+  }
+}
+

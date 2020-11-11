@@ -1,0 +1,34 @@
+
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+
+  .bank_bind_update {
+    box-sizing: border-box;
+    overflow: hidden;
+  
+    &>view:nth-child(1) {
+      padding: 32rpx 0rpx 10rpx 32rpx;
+      font-size: 32rpx;
+      color: #808080;
+    }
+  
+    &>view:nth-child(3) {
+      padding: 0rpx 40rpx;
+      margin-top: 117rpx;
+    }
+  
+    .at-list__item-extra {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      max-width: none;
+    }
+    .at-list__item-content {
+      margin-right: 90rpx;
+      flex: none;
+    }
+  }
+}

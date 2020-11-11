@@ -1,0 +1,265 @@
+
+.container {
+  background: #F5F6FA;
+  padding: 20rpx 0rpx 58rpx 0rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+
+  // 我的资产
+  .myProperty {
+    .t {
+      background: #ffffff;
+      padding: 40rpx 20rpx 41rpx 32rpx;
+      box-sizing: border-box;
+
+      .myProperty {
+        font-size: 32rpx;
+        color: #3E3E3E;
+        margin-bottom: 45rpx;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        & > view:nth-child(1) {
+          display: flex;
+          align-items: center;
+          & > view:nth-child(1) {
+            margin-right: 12rpx;
+          }
+          image {
+            width: 37rpx;
+            height: 25rpx;
+          }
+        }
+        & > view:nth-child(2) {
+          display: flex;
+          align-items: center;
+          image {
+            width: 36rpx;
+            height: 40rpx;
+            margin-right: 30rpx;
+          }
+
+        }
+
+      }
+
+
+      .totalProperty {
+        display: flex;
+        justify-content: space-between;
+  
+        .left {
+          & > view:nth-child(1) {
+            font-size: 20rpx;
+            color: #808080;
+            margin-bottom: 10rpx;
+          }
+          & > view:nth-child(2) {
+            font-size: 38rpx;
+            color: #3E3E3E;
+          }
+        }
+        .right {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          padding-top: 10rpx;
+          & > view {
+            width: 414rpx;
+            height: 30rpx;
+            display: flex;
+          }
+          .top {
+            font-size: 22rpx;
+            color: #808080;
+            margin-bottom: 8rpx;
+  
+            & > view {
+              display: flex;
+              justify-content: center;
+            }
+          }
+          .bottom {
+            border-radius: 6rpx;
+            background: #ffffff;
+            & > view:nth-child(1) {
+              background: #FFAF48;
+              margin-right: 2rpx;
+              border-radius: 6rpx 0rpx 0rpx 6rpx;
+            }
+            & > view:nth-child(2) {
+              background: #FC7946;
+              margin-right: 2rpx;
+            }
+            & > view:nth-child(3) {
+              background: #5584FF;
+              border-radius: 0rpx 6rpx 6rpx 0rpx;
+            }
+          }
+        }
+      }
+    } 
+
+
+    .b {
+      color: #3E3E3E;
+      font-size: 28rpx;
+      // 账户余额
+      .balance {
+        padding: 24rpx 65rpx 20rpx 32rpx;
+        display: flex;
+        justify-content: space-between;
+  
+        & > view:nth-child(1) {
+          display: flex;
+          align-items: center;
+  
+          & > view:nth-child(1) {
+            width: 16rpx;
+            height: 16rpx;
+            margin-right: 12rpx;
+            background: #FFAF48;
+          }
+        }
+      }
+      // 权证及凭证统计
+      .statistics {
+        & > view {
+          padding: 18rpx 41rpx 18rpx 32rpx;
+          box-sizing: border-box;
+
+          & > view {
+            display: flex;
+            justify-content: space-between;
+          }
+          .top {
+            margin-bottom: 12rpx;
+            .l {
+              font-size: 28rpx;
+              display: flex;
+              align-items: center;
+              & > view:nth-child(1) {
+                width: 16rpx;
+                height: 16rpx;
+                margin-right: 12rpx;
+                background: #FFAF48;
+              }
+            }
+            .r {
+              font-size: 30rpx;
+              display: flex;
+              align-items: center;
+              image {
+                width: 12rpx;
+                height: 25rpx;
+                margin-left: 15rpx;
+              }
+            }
+          }
+          .bottom {
+            font-size: 24rpx;
+            color: #808080;
+            
+            & > view:nth-child(1) {
+              margin-left: 25rpx;
+            }
+            & > view:nth-child(2) {
+              margin-right: 27rpx;
+            }
+          }
+
+        }
+        & > view:nth-child(1) {
+          background: #ffffff;
+        }
+      }
+
+      & > view:last-child {
+        height: 38rpx;
+        background: #ffffff;
+      }
+    }
+
+  }
+  // 我的贷款
+  .myLoan {
+    background: #ffffff;
+    margin: 20rpx 0rpx;
+    box-sizing: border-box;
+
+    & > view {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    & > view:nth-child(1) {
+      padding: 40rpx 41rpx 15rpx 32rpx;
+      font-size: 32rpx;
+      color: #3E3E3E;
+    }
+    & > view:nth-child(2) {
+      padding: 24rpx 41rpx 18rpx 32rpx;
+      background: #F9F9F9;
+      font-size: 28rpx;
+      color: #3E3E3E;
+
+      & > view:nth-child(2) {
+        display: flex;
+        align-items: center;
+
+        image {
+          width: 12rpx;
+          height: 25rpx;
+          margin-left: 15rpx;
+        }
+      }
+    }
+    & > view:nth-child(3) {
+      font-size: 24rpx;
+      color: #808080;
+      padding: 24rpx 41rpx 50rpx 32rpx;
+    }
+  }
+  // 我的收益
+  .income {
+    background: #ffffff;
+    padding-bottom: 28rpx;
+
+    & > view:nth-child(1) {
+      font-size: 32rpx;
+      color: #3E3E3E;
+      padding: 40rpx 0rpx 18rpx 32rpx;
+    }
+    & > view:nth-child(2), & > view:nth-child(3),& > view:nth-child(4) {
+      background: #F9F9F9;
+      padding: 26rpx 41rpx 16rpx 32rpx;
+      
+      & > view:nth-child(1) {
+        margin-bottom: 12rpx;
+        display: flex;
+        justify-content: space-between;
+
+        & > view:nth-child(1) {
+          font-size: 26rpx;
+          color: #3E3E3E;
+        }
+        & > view:nth-child(2) {
+          font-size: 30px;
+          color: #F6724A;
+          display: flex;
+          align-items: center;
+          image {
+            width: 12rpx;
+            height: 25rpx;
+            margin-left: 15rpx;
+          }
+        }
+      }
+      & > view:nth-child(2) {
+        font-size: 24rpx;
+        color: #808080;
+      }
+    }
+  }
+}

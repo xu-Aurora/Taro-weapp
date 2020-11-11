@@ -1,0 +1,121 @@
+.perCenter {
+  background-color: #F5F6FA;
+  padding: 20rpx 0rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .at-list__item {
+    padding-left: 0rpx;
+    margin-left: 24rpx;
+  }
+  // 顶部用户信息
+  .avatar {
+    padding: 30rpx 10rpx 26rpx 32rpx;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20rpx;
+    &>view:nth-child(1) {
+      display: flex;
+      align-items: center;
+      .at-avatar {
+        margin-right: 20rpx;
+      }
+      text {
+        font-size: 36rpx;
+        color: #3E3E3E;
+      }
+    }
+
+  }
+
+  //账户余额
+  .account {
+    padding: 0rpx 28rpx 30rpx 28rpx;
+    box-sizing: border-box;
+    border-bottom: 1rpx solid #E5E5E5;
+    margin-bottom: 30rpx;
+    background-color: #ffffff;
+
+    .top {
+      background: linear-gradient(to right, #FEAF65 , #FD6161);
+      margin-bottom: 45rpx;
+      padding: 40rpx 35rpx 51rpx 39rpx;
+      display: flex;
+      color: #ffffff;
+      box-shadow: 0 2rpx 10rpx 0 rgba(0,0,0,0.24);
+      border-radius: 10rpx;
+      .left {
+        flex: 1.3;
+        &>view:nth-child(1) {
+          margin-bottom: 28rpx;
+          font-size: 24rpx;
+          &>text {
+            margin-right: 15rpx;
+          }
+          .at-icon {
+            font-size: 36rpx !important;
+          }
+        }
+        &>view:nth-child(2) {
+          font-size: 40rpx;
+        }
+      }
+      .right {
+        flex: 1;
+      }
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      color: #606060;
+      &>view:nth-child(1) {
+        color: #808080;
+        font-size: 28rpx;
+        display: flex;
+        align-items: center;
+      }
+      &>view:nth-child(2) {
+        font-size: 34rpx;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  &>view:nth-child(2) {
+    .deal {
+      .at-list__item .item-extra__info {
+        width: 50rpx;
+        height: 50rpx;
+        border-radius: 50%;
+        line-height: 50rpx;
+        text-align: center;
+        color: #ffffff;
+        background-color: #F12C20;
+        font-size: 26rpx;
+        padding: 0rpx;
+        margin-right: 58rpx;
+      }
+    }
+    .order {
+      .at-list__item .item-extra__info {
+        padding-right: 20rpx;
+      }
+    }
+
+  }
+
+  .at-list {
+    margin-bottom: 20rpx;
+  }
+
+  .marbot {
+    margin-bottom: 0rpx;
+    position: relative;
+    z-index: 10;
+  }
+}

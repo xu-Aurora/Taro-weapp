@@ -1,0 +1,29 @@
+.userIdUpdate{
+  .at-image-picker__item {
+    image {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+    .userCard{
+        padding-top:108rpx;
+        .at-image-picker{
+            width: 420rpx;
+            height: 260rpx;
+            margin: 0 auto;
+            .at-image-picker__flex-box{
+                height:260rpx;
+            }
+        }
+        .codeText{
+            font-size: 30px;
+            color: #808080;
+            text-align: center;
+            padding: 24rpx 0 60rpx 0;
+        }
+    }
+    .footer{
+        width:670rpx;
+        margin:58rpx auto;
+    }
+}

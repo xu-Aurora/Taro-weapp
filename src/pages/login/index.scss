@@ -1,0 +1,40 @@
+.login {
+  //头部
+  .head {
+    padding: 22rpx 42rpx 30rpx 48rpx;
+    background-color: #ffffff;
+    border-bottom: 1rpx solid #E5E5E5;
+    &>view {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 77rpx;
+      &>text:nth-child(1) {
+        font-size: 52rpx;
+        color: #5584FF;
+      }
+      view {
+        &>text:nth-child(1) {
+          font-size: 34px;
+          color: #909090;
+        }
+        &>text:nth-child(2) {
+          color: #5584FF;
+          font-size: 34px;
+        }
+      }
+
+    }
+  }
+
+  &>view:nth-child(3) {
+    padding: 0rpx 40rpx;
+    margin: 100rpx 0rpx 40rpx 0rpx;
+  }
+  &>view:nth-child(4) {
+    font-size: 32rpx;
+    color: #909090;
+    display: flex;
+    justify-content: center;
+  }
+}

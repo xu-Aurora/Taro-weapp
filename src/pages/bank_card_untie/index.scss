@@ -1,0 +1,12 @@
+.bank_card_untie {
+  padding: 105rpx 75rpx 0rpx 75rpx;
+  box-sizing: border-box;
+  text-align: center;
+
+  &>view:nth-child(1) {
+    font-size: 46px;
+    color: #3E3E3E;
+    margin-bottom: 44rpx;
+  }
+
+}

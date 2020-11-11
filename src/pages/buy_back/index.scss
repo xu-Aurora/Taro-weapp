@@ -1,0 +1,63 @@
+.buy_back {
+  background-color: #F5F6FA;
+  box-sizing: border-box;
+  height: 100vh;
+  padding-top: 32rpx;
+  font-size: 32rpx;
+  position: relative;
+
+  .at-list__item-extra {
+    width: 400rpx;
+    flex: 0 0 400rpx;
+  }
+
+  &>view:nth-child(1) {
+    padding-left: 32rpx;
+    margin-bottom: 12rpx;
+    color: #808080;
+  }
+  &>view:nth-child(2) {
+    background-color: #ffffff;
+    margin-bottom: 15rpx;
+    .item1 {
+      padding-left: 0rpx;
+      margin-left: 24rpx;
+    }
+  }
+  .number {
+    padding-left: 32rpx;
+    color: #808080;
+    margin-bottom: 17rpx;
+    margin-top: 121rpx;
+    &>text:nth-child(1) {
+      margin-right: 64rpx;
+    }
+  }
+
+  .inp {
+    background-color: #ffffff;
+    margin-bottom: 58rpx;
+  }
+
+  .footer {
+    background-color: #F5F6FA;
+    padding: 0rpx 40rpx;
+    margin-bottom: 40rpx;
+  }
+  .tips {
+    padding: 0rpx 40rpx;
+    font-size: 28rpx;
+    color: #606060;
+    margin-bottom: 15rpx;
+    &>view:nth-child(1) {
+      display: flex;
+      align-items: center;
+      margin-right: 13rpx;
+      image {
+        width: 47rpx;
+        height: 46rpx;
+      }
+    }
+    
+  }
+}

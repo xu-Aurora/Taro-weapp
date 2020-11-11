@@ -1,0 +1,68 @@
+.myCarport {
+
+  // 清楚浮动
+  .clear {
+    zoom: 1;
+  }
+  .clear:before {
+    content: "";
+    display: table;
+  }
+  .clear:after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+
+  //车位列表
+  .car_list {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    padding: 29rpx 24rpx 0rpx 32rpx;
+    margin-bottom: 20rpx;
+    .item {
+      .conTopMargin{
+        margin-top:30px;
+        margin-bottom: 27rpx;
+      }
+      .itemTitle_wrap{
+        height:72rpx;
+      }
+      .itemImg{
+        width: 42rpx;
+        height: 30rpx;
+        display:block;
+        float:left;
+        margin:7rpx 10rpx 0 0;
+
+      }
+      .itemTitle{
+        float: left;
+        font-size: 30rpx;
+        color: #3E3E3E;
+      }
+      .itemTag{
+        float: right;
+      }
+      .itemContLeft{
+        font-size: 24rpx;
+        color: #808080;
+        float: left;
+      }
+      .itemContRight{
+        font-size: 24rpx;
+        color: #808080;
+        float: right;
+      }
+      .textButton12{
+        margin-bottom: 12rpx;
+      }
+
+    }
+  }
+
+  .mar-bot {
+    padding-bottom: 37rpx;
+  }
+
+}

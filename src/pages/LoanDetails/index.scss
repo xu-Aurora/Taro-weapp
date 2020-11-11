@@ -1,0 +1,90 @@
+.loanDetails{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    .loanWrap{
+        background:  #F5F6FA;
+        overflow-y: auto;
+        flex: 1;
+        color: #909090;
+        font-size: 29px;
+        .loan{
+            padding: 42rpx 20rpx 48rpx 32rpx;
+            background: #fff;
+            margin-top: 20rpx;
+            .loanTitle{
+                font-size: 36px;
+                color: #3E3E3E;
+                margin-bottom: 40rpx;
+            }
+            .marginbtm30{
+                margin-bottom: 30rpx;
+                
+            }
+            .loanRedPrice{
+                color: #F6724A;
+            }
+            .fontcolor80{
+                color: #808080;
+            }
+            .loanrate{
+                width: 353rpx;
+            }
+            .left{
+                float: left;
+            }
+            .right{
+              float: right;
+            }
+        }
+        .loanInput{
+            margin-top: 20rpx;
+            position: relative;
+            .at-input{
+                margin-left: 0;
+            }
+            .at-input__title{
+                margin-left: 32rpx;
+                margin-right: 36rpx;
+                font-size: 32px;
+                color: #3E3E3E;
+            }
+            .allBtn {
+                width: 110rpx;
+                height: 100rpx;
+                text-align: center;
+                line-height: 100rpx;
+                font-size: 26px;
+                color: #5584FF;
+                position: absolute;
+                right: 20rpx;
+                top: 0rpx;
+                z-index: 1000;
+            }
+            .inputLabelRight{
+                position: absolute;
+                left: 153rpx;
+                top: 28rpx;
+                font-size: 30rpx;
+                color: #3E3E3E;
+            }
+        }
+        .nowLoanFooter{
+            height: 136rpx;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            .loanBtn{
+                width: 675rpx;
+                height: 80rpx;
+                line-height: 80rpx;
+                margin-top: 32rpx;
+            }
+        }
+    }
+    
+}

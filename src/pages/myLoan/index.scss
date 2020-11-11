@@ -1,0 +1,66 @@
+.myLoan {
+  // 清楚浮动
+  .clear {
+    zoom: 1;
+  }
+  .clear:before {
+    content: "";
+    display: table;
+  }
+  .clear:after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+
+  .at-tabs__item {
+    flex: 0.25;
+  }
+  .at-tabs__item--active .at-tabs__item-underline {
+    left: -50rpx;
+  }
+
+  //车位列表
+  .car_list {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    padding: 29rpx 24rpx 30rpx 32rpx;
+    border-bottom: 1rpx solid  #E5E5E5;
+    margin-bottom: 20rpx;
+
+    .item {
+      & > view {
+        margin-bottom: 12rpx;
+        font-size: 24rpx;
+        color: #808080;
+      }
+      & > view:nth-child(1) {
+        font-size: 32rpx;
+        color: #3E3E3E;
+        margin-bottom: 15rpx;
+      }
+      & > view:nth-child(5) {
+        display: flex;
+        justify-content: space-between;
+
+        & > view:nth-child(2) {
+          margin-right: 30rpx;
+        }
+      }
+
+    }
+    .btn1 {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 48rpx;
+      .at-button {
+        margin-left: 18rpx;
+      }
+    }
+  }
+
+  .mar-bot {
+    padding-bottom: 37rpx;
+  }
+
+}

@@ -1,0 +1,36 @@
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+
+  .dealPwd_update1 {
+    padding-top: 52rpx;
+    box-sizing: border-box;
+  
+    &>view:nth-child(1) {
+      padding: 0rpx 0rpx 17rpx 28rpx;
+      font-size: 32px;
+      color: #808080;
+      &>text:nth-child(1) {
+        margin-right: 64rpx;
+      }
+    }
+  
+    &>view:nth-child(2), &>view:nth-child(3){
+      background-color: #ffffff;
+    }
+
+    .footer {
+      background-color: #F5F6FA;
+      padding: 0rpx 40rpx;
+      margin-top: 104rpx;
+    }
+
+    .at-input {
+      margin-bottom: 0rpx;
+    }
+  
+  }
+}
+

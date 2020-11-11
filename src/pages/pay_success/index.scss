@@ -1,0 +1,48 @@
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .pay_success {
+    padding: 58rpx 40rpx 0rpx 40rpx;
+    box-sizing: border-box;
+    text-align: center;
+  
+    &>view:nth-child(1) {
+      margin-bottom: 55rpx;
+      display: flex;
+      justify-content: center;
+      image {
+        width: 186rpx;
+        height: 186rpx;
+      }
+    }
+  
+    &>view:nth-child(2) {
+      font-size: 36px;
+      color: #3E3E3E;
+  
+      &>view:nth-child(2) {
+        margin: 37rpx 0rpx 132rpx 0rpx;
+        text-align: left;
+        font-size: 30rpx;
+        color: #808080;
+      }
+    }
+
+    .lc {
+      width: 100%;
+      margin-top: 50rpx;
+      height: 252rpx;
+      display: flex;
+      justify-content: center;
+
+      image {
+        width: 280rpx;
+        height: 252rpx;
+      }
+    }
+  
+  }
+}
+

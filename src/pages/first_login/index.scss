@@ -1,0 +1,48 @@
+.first_login {
+  // padding-top: 122rpx;
+  box-sizing: border-box;
+
+  &>view:nth-child(1) {
+    font-size: 46rpx;
+    color: #3E3E3E;
+    padding-left: 44rpx;
+  }
+  &>view:nth-child(2) {
+    font-size: 32rpx;
+    color: #808080;
+    padding-left: 44rpx;
+    margin: 24rpx 0rpx 85rpx 0rpx;
+  }
+
+  .set_dealPwd {
+    // &>view:nth-child(1) {
+    //   background-color: #ffffff;
+    // }
+  
+    .footer {
+      background-color: #F5F6FA;
+      padding: 0rpx 40rpx;
+      margin: 70rpx 0rpx 104rpx 0rpx;
+    }
+    .tips {
+      padding: 0rpx 40rpx;
+      font-size: 28rpx;
+      color: #606060;
+      display: flex;
+  
+      &>view {
+        margin-right: 13rpx;
+        image {
+          width: 47rpx;
+          height: 46rpx;
+        }
+      }
+      &>view:nth-child(2) {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+
+}

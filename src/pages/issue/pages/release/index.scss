@@ -1,0 +1,59 @@
+.release {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+  
+  .at-search-bar__placeholder-wrap {
+    padding-right: 140rpx;
+    justify-content: flex-end;
+  }
+  .at-search-bar__input {
+    padding-left: 275rpx;
+    padding-right: 0rpx;
+  }
+  .at-icon-search {
+    // position: absolute;
+    // left: 225rpx;
+    display: none;
+  }
+  
+  .sort {
+    display: flex;
+    font-size: 28rpx;
+    color: #3E3E3E;
+    align-items: center;
+    text {
+      margin-right: 11rpx;
+      display: inline-block;
+      height: 42rpx;
+      vertical-align: bottom;
+    }
+    image {
+      width: 28rpx;
+      height: 28rpx;
+    }
+  }
+
+  .nodata {
+    width: 100%;
+    background: #F5F6FA;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: #808080;
+    &>view {
+      image {
+        width: 210rpx;
+        height: 160rpx;
+        margin-bottom: 30rpx;
+      }
+      view {
+        text-align: center;
+      }
+    }
+  }
+}
+

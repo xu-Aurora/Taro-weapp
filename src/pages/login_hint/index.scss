@@ -1,0 +1,35 @@
+
+.boxs {
+  background-color: #ffffff;
+  overflow: hidden;
+  min-height: 100vh;
+  
+  .login_hint {
+    padding: 227rpx 40rpx 351rpx 40rpx;
+    box-sizing: border-box;
+    text-align: center;
+  
+    &>view:nth-child(1) {
+      display: flex;
+      justify-content: center;
+      .logo {
+        width: 148rpx;
+        height: 148rpx;
+        background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/logo.png') no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  
+  
+    .tips {
+      margin: 90rpx 0rpx 115rpx 0rpx;
+      font-size: 34rpx;
+      color: #909090;
+    }
+  
+    .btn {
+      margin-bottom: 39rpx;
+    }
+  
+  }
+}

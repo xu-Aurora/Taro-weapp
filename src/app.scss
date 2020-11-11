@@ -1,0 +1,393 @@
+//修改taro-ui的默认样式
+$color-brand: #5584FF;
+$color-grey-3: #B2B2B2;
+@import '../node_modules/taro-ui/dist/style/index.scss';
+
+//水平居中
+.hor_center {
+  display: flex;
+  justify-content: center;
+}
+.clear {
+  zoom: 1;
+}
+.clear:before {
+  content: "";
+  display: table;
+}
+.clear:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+/* 全局设置字体大小颜色 */
+.base_font {
+  font-size: 28rpx;
+  color: #3E3E3E;
+  font-family: PingFangSC-Regular;
+  letter-spacing: 0.4rpx;
+}
+
+.color {
+  color:#5584FF;
+  margin: 0 5rpx;
+  font-weight: 600;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 60rpx;
+}
+
+.btn_red {
+  border: 1rpx solid #E64340;
+  color: #E64340;
+  background: #FFF8F8;
+}
+
+//底部到底样式
+.footer1 {
+  padding: 44rpx 0rpx 45rpx 0rpx;
+  display: flex;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #ACAEB5;
+  &>view {
+    display: flex;
+    .line {
+      height: 2rpx;
+      margin-top: 20rpx;
+      width: 160rpx;
+      background: #C9C9CB;
+    }
+    .text {
+      margin: 0rpx 20rpx;
+    }
+  }
+
+}
+
+.at-tabs {
+  background-color: #F5F6FA;
+}
+.at-tabs__header {
+  padding-right: 0;
+  text-align: left;
+  margin-bottom: 20rpx;
+}
+.at-tabs__item--active {
+  font-size: 36rpx;
+  color: #3E3E3E;
+  font-weight: 400;
+}
+.at-tabs__item--active .at-tabs__item-underline {
+  transform: scaleX(.3);
+  left: -100rpx;
+  top: 0;
+  background: #FA5741;
+  // margin-left: -115rpx;
+}
+.at-tabs__item-underline {
+  top: 0;
+  height: 8rpx;
+}
+.at-tabs__underline {
+  height: 0rpx !important;
+}
+
+
+
+
+//使用权限
+.permission {
+  position: absolute;
+  left: 0rpx;
+  top: 0rpx;
+  width: 140rpx;
+  height: 40rxp;
+  image {
+    width: 140rpx;
+    height: 40rxp;
+  }
+}
+
+//顶部搜索
+.top_search {
+  background-color: #ffffff;
+  border-bottom: 1rpx solid #D9D9D9;
+  box-sizing: border-box;
+  padding: 10rpx 0rpx 32rpx 0rpx;
+  position: relative;
+
+
+  .at-search-bar::after {
+    border-bottom-width: 0rpx;
+  }
+  // .at-search-bar {
+  //   padding: 0rpx 18rpx 0px 1px;
+  // }
+  .at-search-bar__input-cnt,.at-search-bar__input,.at-search-bar__placeholder-wrap,.at-search-bar__clear {
+    height: 82rpx !important;
+  }
+  .at-search-bar__clear {
+    z-index: 10000;
+  }
+
+  .at-search-bar__input-cnt {
+    max-width: 100%;
+  }
+
+  .at-search-bar__action {
+    height: 75rpx;
+    line-height: 75rpx;
+    margin-left: 0rpx;
+  }
+  .area_select {
+    position: absolute;
+    left: 55rpx;
+    top: 40rpx;
+    z-index: 100;
+
+    .city {
+      display: flex;
+      align-items: center;
+      &>text {
+        margin-right: 15rpx;
+      }
+      .at-icon {
+        margin-right: 15rpx;
+      }
+      .line {
+        width: 2rpx;
+        height: 30rpx;
+        background-color: #B2B2B2;
+      }
+    }
+
+  }
+
+  //nav选择
+  .nav_select {
+    margin-top: 24rpx;
+    display: flex;
+
+    .picker {
+      font-size: 28rpx;
+      color: #3E3E3E;
+    }
+
+    & > view {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+
+    }
+    .sort {
+      display: flex;
+      font-size: 28rpx;
+      color: #3E3E3E;
+      align-items: center;
+      text {
+        margin-right: 11rpx;
+        display: inline-block;
+        height: 42rpx;
+        vertical-align: bottom;
+      }
+      image {
+        width: 28rpx;
+        height: 28rpx;
+      }
+    }
+  }
+}
+
+.tag_blue {
+  font-size: 26rpx;
+  color: #3C92FF;
+  background: #ECF4FF;
+  border-radius: 25rpx;
+  padding: 8rpx 22rpx;
+  height: 36rpx;
+  margin-right: 10rpx;
+}
+.tag_bisque {
+  color: #ED801E;
+  background: #FFEFDC;
+  font-size: 26rpx;
+  border-radius: 25rpx;
+  padding: 8rpx 17rpx;
+  height: 36rpx;
+  margin-right: 10rpx;
+}
+
+//验证码按钮
+.codeBtn {
+  font-size: 32rpx !important;
+  color: #5584FF !important;
+  background: #F0F4FF;
+  border: 1rpx solid #5584FF;
+  border-radius: 10rpx;
+  padding: 15rpx 30rpx !important;
+  margin-right: 24rpx;
+}
+.at-input__container .at-input__children {
+  position: static;
+}
+.at-input, .at-list {
+  position: static;
+}
+.at-list__item::after {
+  border-bottom: 0rpx;
+}
+
+
+
+//input框底部border
+.bot_line {
+  border-bottom: 1rpx solid #E5E5E5;
+}
+//轮播图
+.swipers {
+  margin-top: 36rpx;
+  position: relative;
+  .test-h {
+    height: 380rpx;
+    image {
+      width: 100%;
+      height: 380rpx;
+      border-radius: 8rpx;
+      box-shadow: 0 4rpx 20rpx 0 rgba(0, 0, 0, 0.3);
+    }
+
+  }
+  //自定义圆点
+  .dots {
+    height: 20rpx;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -36rpx;
+    .dot {
+      width: 14rpx;
+      height: 14rpx;
+      border-radius: 50%;
+      margin-right: 26rpx;
+      background-color: #CCDAFF;
+    }
+    .active {
+      width: 32rpx;
+      height: 14rpx;
+      border-radius: 8rpx;
+      margin-right: 26rpx;
+      background-color: #5584FF;
+    }
+  }
+}
+
+//红色按钮
+.red_btn {
+  color: #E64340;
+  border: 1rpx solid #E64340;
+  background: #FFF8F8;
+}
+
+// 地址
+.address {
+  display: flex;
+  align-items: center;
+  view {
+    height: 35rpx;
+  }
+  image {
+    width: 35rpx;
+    height: 35rpx;
+  }
+}
+// 单行，太长显示省略号
+.overflow1 {
+  width: 420rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* tabs标签加载更多 */
+.dragUpdatePage {
+  position: relative;
+  overflow: hidden;
+}
+
+.downDragBox {
+  width: 100%;
+  top: 0px;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  position: absolute;
+}
+.tab-container {
+  height: 100vh;
+  // overflow: scroll;
+  position: absolute;
+}
+.upDragBox {
+  height: 30vh;
+}
+
+// 列表按钮
+.btn1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40rpx;
+  padding-top: 20rpx;
+  padding-bottom: 32rpx;
+  border-top: 1rpx solid #E5E5E5;
+  .at-button {
+    margin-left: 18rpx;
+  }
+  .at-button--secondary {
+    border: 1rpx solid #D2D2D2;
+    color: #606060;
+  }
+
+  &>view:nth-child(1) {
+    font-size: 24rpx;
+    color: #808080;
+  }
+  &>view:nth-child(2) {
+    display: flex;
+  }
+}
+
+.nodata {
+  width: 100%;
+  background: #F5F6FA;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: #808080;
+  &>view {
+    text-align: center;
+    image {
+      width: 210rpx;
+      height: 160rpx;
+      margin-bottom: 30rpx;
+    }
+    view {
+      text-align: center;
+    }
+  }
+}
+
+
+

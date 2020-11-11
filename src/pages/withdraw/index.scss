@@ -1,0 +1,56 @@
+
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+
+
+  .withdraw {
+    overflow: hidden;
+    box-sizing: border-box;
+  
+    .at-input__title {
+      width: 192rpx;
+    }
+  
+    &>view:nth-child(1) {
+      font-size: 32rpx;
+      color: #808080;
+      padding: 32rpx;
+    }
+    &>view:nth-child(2) {
+      background: #FFFFFF;
+      border-top: 1rpx solid #E5E5E5;
+  
+      .tx {
+        display: flex;
+        justify-content: space-between; 
+        font-size: 26rpx;
+        padding: 17rpx 46rpx 17rpx 32rpx;
+        color: #B2B2B2;
+  
+        &>view:nth-child(2) {
+          color: #5584FF;
+        }
+      }
+    }
+    &>view:nth-child(3) {
+      padding: 60rpx 0rpx 16rpx 28rpx;
+      font-size: 32rpx;
+      color: #808080;
+  
+      &>text:nth-child(1) {
+        margin-right: 64rpx;
+      }
+    }
+    &>view:nth-child(4) {
+      background: #FFFFFF;
+    }
+  
+    .footer {
+      padding: 58rpx 40rpx 0rpx 40rpx;
+    }
+  }
+}
+

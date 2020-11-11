@@ -1,0 +1,26 @@
+.boxs {
+  background: #FFFFFF;
+  .protocol {
+    padding: 10rpx 12rpx 46rpx 15rpx;
+    box-sizing: border-box;
+    font-size: 28rpx;
+    color: #606060;
+    line-height: 40rpx;
+  }
+  .col {
+    color: #000000;
+  }
+  .hh {
+    font-size: 30rpx;
+    color: #000000;
+    line-height: 70rpx;
+  }
+
+  .indent {
+    text-indent: 50rpx;
+  }
+  .mt {
+    margin-bottom: 30rpx;
+  }
+
+}

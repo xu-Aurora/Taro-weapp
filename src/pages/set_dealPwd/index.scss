@@ -1,0 +1,30 @@
+.set_dealPwd {
+  background-color: #F5F6FA;
+  height: 100vh;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+
+  &>view:nth-child(1) {
+    background-color: #ffffff;
+  }
+
+  .footer {
+    background-color: #F5F6FA;
+    padding: 0rpx 40rpx;
+    margin: 70rpx 0rpx 104rpx 0rpx;
+  }
+  .tips {
+    padding: 0rpx 40rpx;
+    font-size: 28rpx;
+    color: #606060;
+    display: flex;
+
+    &>view {
+      margin-right: 13rpx;
+      image {
+        width: 47rpx;
+        height: 46rpx;
+      }
+    }
+  }
+}

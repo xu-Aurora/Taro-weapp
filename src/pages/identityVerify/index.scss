@@ -1,0 +1,28 @@
+.identityVerify {
+  background: #ffffff;
+  box-sizing: border-box;
+  height: 100vh;
+  padding-top: 126rpx;
+
+
+  .img {
+    display: flex;
+    justify-content: center;
+    image {
+      width: 450rpx;
+      height: 450rpx;
+    }
+  }
+
+  .text {
+    font-size: 36rpx;
+    color: #606060;
+    text-align: center;
+    line-height: 55rpx;
+    margin: 40rpx 0rpx 70rpx 0rpx;
+  }
+
+  .fot_btn {
+    padding: 0rpx 40rpx;
+  }
+}

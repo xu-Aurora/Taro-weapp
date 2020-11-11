@@ -1,0 +1,62 @@
+.boxs {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+
+  .ellipsis {
+    max-width: 500rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .al_bus_detail {
+    box-sizing: border-box;
+    font-size: 32rpx;
+    padding-bottom: 80rpx;
+    padding-top: 20rpx;
+    overflow: hidden;
+    // 列表
+    .lists {
+      border-bottom: 1rpx solid #E5E5E5;
+      border-top: 1rpx solid #E5E5E5;
+      padding: 0rpx 32rpx;
+      background-color: #ffffff;
+      margin-bottom: 20rpx;
+  
+      &>view {
+        display: flex;
+        justify-content: space-between;
+        padding: 26rpx 0rpx;
+        border-bottom: 1rpx solid #E5E5E5;
+        color: #909090;
+      }
+      &>view:last-child {
+        border-bottom: none;
+      }
+    }
+    // 底部按钮
+    .fotter_btn {
+      padding: 38rpx 40rpx 0rpx 40rpx;
+  
+      .exit_btn {
+        margin-top: 36rpx;
+      }
+    }
+  
+    .at-list__item-extra {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+    }
+    .at-list__item-content {
+      margin-right: 90rpx;
+      flex: none;
+    }
+  
+  }
+}
+

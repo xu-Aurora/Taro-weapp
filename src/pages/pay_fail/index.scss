@@ -1,0 +1,30 @@
+.pay_fail {
+  padding: 186rpx 40rpx 0rpx 40rpx;
+  box-sizing: border-box;
+  text-align: center;
+
+  &>view:nth-child(1) {
+    margin-bottom: 55rpx;
+    display: flex;
+    justify-content: center;
+    image {
+      width: 186rpx;
+      height: 186rpx;
+    }
+  }
+  &>view:nth-child(2) {
+    font-size: 36px;
+    color: #3E3E3E;
+  }
+  &>view:nth-child(3),&>view:nth-child(4) {
+    color: #808080;
+  }
+  &>view:nth-child(3) {
+    margin: 40rpx 0rpx 100rpx 0rpx;
+  }
+  &>view:nth-child(4) {
+    margin-bottom: 46rpx;
+    text-align: left;
+  }
+
+}

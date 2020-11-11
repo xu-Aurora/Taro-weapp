@@ -1,0 +1,150 @@
+.register {
+  background-color: #F5F6FA;
+  height: 100vh;
+  //头部
+  .head {
+    padding: 22rpx 42rpx 30rpx 48rpx;
+    background-color: #ffffff;
+    border-bottom: 1rpx solid #E5E5E5;
+    margin-bottom: 20rpx;
+    &>view:nth-child(1) {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 77rpx;
+      &>text:nth-child(1) {
+        font-size: 52rpx;
+        color: #5584FF;
+      }
+      view {
+        &>text:nth-child(1) {
+          font-size: 34px;
+          color: #909090;
+        }
+        &>text:nth-child(2) {
+          color: #5584FF;
+          font-size: 34px;
+        }
+      }
+    }
+    &>view:nth-child(2) {
+      font-size: 36rpx;
+      color: #3E3E3E;
+    }
+  }
+
+  //第一页
+  .one_page {
+  position: relative;
+
+    .reg_info {
+      &>view {
+        background-color: #ffffff;
+        border-bottom: 1rpx solid #E5E5E5;
+        border-top: 1rpx solid #E5E5E5;
+        margin-bottom: 20rpx;
+      }
+  
+    }
+  
+    .footer {
+      background-color: #F5F6FA;
+      padding: 27rpx 40rpx 98rpx 40rpx;
+    }
+  }
+
+  .date_sel {
+    position: relative;
+    
+
+    .picker1 {
+      position: absolute;
+      top: 26rpx;
+      left: 225rpx;
+      z-index: 100;
+      picker {
+        width: 510rpx;
+        height: 45rpx;
+      }
+
+      .icon {
+        position: absolute;
+        top: 0rpx;
+        right: 0rpx;
+      }
+    }
+  }
+  .del_line {
+    margin-bottom: 0rpx;
+
+  }
+  .del_line::after {
+    border-bottom-width: 0rpx;
+  }
+
+  //第二页
+  .next_page {
+    position: relative;
+    &>view:nth-child(1),  &>view:nth-child(3) {
+      background-color: #ffffff;
+      border-bottom: 1rpx solid #E5E5E5;
+      border-top: 1rpx solid #E5E5E5;
+    }
+    &>view:nth-child(2) {
+      font-size: 32rpx;
+      color: #808080;
+      margin: 58rpx 0rpx 28rpx 0rpx;
+
+      &>text:nth-child(1) {
+        margin-right: 49rpx;
+        margin-left: 32rpx;
+      }
+    }
+
+    &>view:nth-child(4) {
+      padding-bottom: 86rpx;
+      font-size: 28rpx;
+      color: #3E3E3E;
+      position: relative;
+      &>text:nth-of-type(1) {
+        color: #5584FF;
+        position: absolute;
+        top: 30rpx;
+        left: 314rpx;
+        text {
+          color: #3E3E3E;
+        }
+      }
+      &>text:nth-of-type(2) {
+        color: #5584FF;
+        position: absolute;
+        top: 30rpx;
+        left: 510rpx;
+      }
+
+      .at-checkbox {
+        background-color: #F5F6FA;
+      }
+      .at-checkbox::after {
+        border-bottom: 0rpx;
+      }
+      .at-checkbox::before {
+        border-top: 0rpx;
+      }
+    }
+
+    .footer1 {
+      padding: 0rpx 40rpx 240rpx 40rpx;
+      background-color: #F5F6FA;
+      display: flex;
+
+      .back {
+        margin-right: 32rpx;
+      }
+      at-button {
+        flex: 1;
+      }
+    }
+  }
+
+}

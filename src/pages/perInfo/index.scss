@@ -1,0 +1,45 @@
+.perInfo {
+  background-color: #F5F6FA;
+  height: 100vh;
+  overflow: hidden;
+
+  .at-list__item {
+    padding-left: 0rpx;
+    margin-left: 24rpx;
+  }
+
+  &>view:nth-child(1) {
+    margin: 20rpx 0rpx;
+
+    .at-list__item-container {
+      position: relative;
+
+       .item-thumb {
+        position: absolute;
+        right: 30rpx;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    .at-list__item-extra {
+      max-width: 450rpx !important;
+    }
+    .item-extra__info {
+      padding-right: 45rpx;
+    }
+  }
+
+  .btn {
+    width: 670rpx;
+    height: 94rpx;
+    background: #FFF8F8;
+    border: 2px solid #E64340;
+    border-radius: 10px;
+    margin: 40rpx auto;
+    View{
+      padding: 24rpx;
+      font-size: 36px;
+      color: #E64340;
+    }
+  }
+}

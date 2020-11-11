@@ -1,0 +1,50 @@
+.boxs {
+  overflow: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background: #F5F6FA;
+  
+  .history_bill {
+    .title {
+      background: #ffffff;
+      display: flex;
+      padding: 28rpx 0rpx 28rpx 32rpx;
+      font-size: 28rpx;
+      color: #3E3E3E;
+      margin-bottom: 20rpx;
+      &>view:nth-child(1) {
+        flex: 1;
+      }
+      &>view:nth-child(2) {
+        flex: 3;
+        display: flex;
+      }
+    }
+  }
+
+  .list {
+    padding-left: 32rpx;
+    box-sizing: border-box;
+    background: #ffffff;
+    .item {
+      box-sizing: border-box;
+      padding: 36rpx 32rpx 30rpx 0rpx;
+      border-bottom: 1rpx solid #E5E5E5;
+      &>view:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        font-size: 32rpx;
+        color: #3E3E3E;
+        margin-bottom: 15rpx;
+      }
+      &>view:nth-child(2) {
+        font-size: 28rpx;
+        color: #808080;
+      }
+    }
+    &>view:last-child {
+      border-bottom: 0rpx;
+    }
+  }
+
+}

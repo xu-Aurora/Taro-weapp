@@ -1,0 +1,99 @@
+.community {
+  background-color: #F5F6FA;
+  min-height: 100vh;
+
+  .at-search-bar__placeholder-wrap {
+    padding-right: 140rpx;
+    justify-content: flex-end;
+  }
+  .at-search-bar__input {
+    padding-left: 275rpx;
+    padding-right: 0rpx;
+  }
+  .at-icon-search {
+    // position: absolute;
+    // left: 225rpx;
+    display: none;
+  }
+  &>view:nth-child(1) {
+    margin-bottom: 20rpx;
+  }
+
+  //list数据
+  .list {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    padding: 0rpx 32rpx 0rpx 32rpx;
+    border-bottom: 1rpx solid #E5E5E5;
+    // margin-top: 20rpx;
+
+    .item {
+      padding-bottom: 38rpx;
+      margin-top: 36rpx;
+      // border-bottom: 1rpx solid #D9D9D9;
+      display: flex;
+
+      .left {
+        width: 210rpx;
+        height: 160rpx;
+        margin-right: 24rpx;
+        border-radius: 4rpx;
+        &>image {
+          width: 210rpx;
+          height: 160rpx;
+          border-radius: 4rpx;
+        }
+      }
+
+      .right {
+        flex: 1;
+        &>view:nth-child(1) {
+          font-size: 32rpx;
+          color: #3E3E3E;
+          margin-bottom: 10rpx;
+        }
+        &>view:nth-child(2) {
+          font-size: 24rpx;
+          color: #808080;
+        }
+        &>view:nth-child(3) {
+          font-size: 24rpx;
+          color: #808080;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          view {
+            font-size: 36rpx;
+            color: #FA5741;
+            font-weight: 600;
+            text {
+              font-size: 28rpx;
+            }
+          }
+        }
+        &>view:nth-child(4) {
+          font-size: 24px;
+          color: #808080;
+          display: flex;
+          justify-content: space-between;
+          &>view:nth-child(1) {
+            max-width: 280rpx;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    &>view:nth-child(1) {
+      // border-top: 1rpx solid #D9D9D9;
+      padding-top: 38rpx;
+      margin-top: 0rpx;
+    }
+
+    &>view:last-child {
+      border-bottom: none;
+      border-bottom: 0rpx;
+    }
+  }
+}
