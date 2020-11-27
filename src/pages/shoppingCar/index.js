@@ -54,7 +54,7 @@ export default class Index extends PureComponent {
   }
 
   tips = () => {
-    toast('车位已摘牌', 'none', 2000)
+    toast('资产已摘牌', 'none', 2000)
   }
 
   // 点击地址跳转到地图页面
@@ -150,7 +150,7 @@ export default class Index extends PureComponent {
                   {
                     ele.BuyBack.Usufruct == 0 ? 
                     <Text>{ `凭证编号${ele.ParkingId.toUpperCase()}` }</Text> : 
-                    <Text>车位号{ ele.ParkingCode }</Text>
+                    <Text>资产号{ ele.ParkingCode }</Text>
                   }
                   </View>
                   <View>所属商圈：{ ele.CircleName }</View>
@@ -193,7 +193,7 @@ export default class Index extends PureComponent {
           onCancel={() => this.setState({isOpened: false})}
           onClose={() => this.setState({isOpened: false})}
           onConfirm={this.handleConfirm}
-          content='车位已摘牌，是否移出购物车？'
+          content='资产已摘牌，是否移出购物车？'
         />
 
 

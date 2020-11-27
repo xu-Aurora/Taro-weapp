@@ -2,7 +2,7 @@ import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtActionSheet, AtActionSheetItem, AtSearchBar } from "taro-ui"
 import Header from '../../components/header/header'
-import { imgUrl, debounce, isEmpty, splitThousand } from '../../utils/util'
+import { imgUrl, debounce, isEmpty, splitThousand, changeNum } from '../../utils/util'
 import api from '../../api/api'
 import { get, set } from '../../global_data'
 import './index.scss'
@@ -69,7 +69,7 @@ export default class Index extends PureComponent {
   //页面跳转
   goPage (type,val) {
     if (type === 'car_detail') {
-      if (type === 'car_detail') {  //用来标识下,车位详情是从仓储跳转过去的
+      if (type === 'car_detail') {  //用来标识下,资产详情是从仓储跳转过去的
         set('page', 'community')
       }
       this.$preload({
@@ -219,7 +219,7 @@ export default class Index extends PureComponent {
 
   }
 
-  //获取车位数据
+  //获取资产数据
   getData (params) {
     api.buildingDetail({
       LoginMark: Taro.getStorageSync('uuid'),
@@ -385,7 +385,7 @@ export default class Index extends PureComponent {
                                   </View> 
                                 </View>
                                 <View className='right'>
-                                  <View className='overflow1'>凭证编号{ ele.ParkingId.toUpperCase() }</View>
+                                  <View className='overflow1'>品名：{ ele.ParkingCode }</View>
                                   <View>所属商圈：{ ele.CircleName }</View>
                                   <View>凭证到期日：{ ele.LimitDate }</View>
                                   <View>类别：{ this.type(ele.ParkingTraitType) }</View>
@@ -405,7 +405,7 @@ export default class Index extends PureComponent {
                         >
                           <View>
                             <Image src={`${imgUrl}order_nodata.png`} />
-                            <View>暂无车位</View>
+                            <View>暂无资产</View>
                           </View>
                         </View>
                       }
@@ -441,16 +441,16 @@ export default class Index extends PureComponent {
                                 <View className='left'>
                                   <View style={{color: '#5584FF'}}>
                                     <View>
-                                      <Text>{ ele.SalePrice && splitThousand(ele.SalePrice) }</Text>
-                                      <Text>元</Text>
+                                      <Text>{ ele.SalePrice && changeNum(ele.SalePrice) }</Text>
+                                      {/* <Text>{ele.SalePrice>=100000 ? '(万元)' : '(元)'}</Text> */}
                                     </View>
-                                    <View>挂牌价<Text style={{fontSize: '18rpx'}}> (元)</Text></View>
+                                    <View>挂牌价<Text style={{fontSize: '18rpx'}}> {ele.SalePrice>=100000 ? '(万元)' : '(元)'}</Text></View>
                                   </View>
                                 </View>
                                 <View className='right'>
-                                  <View>车位号{ this.parkCode(ele)}</View>
+                                  <View>品名：{ ele.ParkingCode }</View>
                                   <View>所属商圈：{ ele.CircleName }</View>
-                                  <View>车位类型：{ ele.ParkingType }</View>
+                                  <View>类别：{ this.type(ele.ParkingTraitType) }</View>
                                 </View>
                               </View>
                             )
@@ -464,7 +464,7 @@ export default class Index extends PureComponent {
                         >
                           <View>
                             <Image src={`${imgUrl}order_nodata.png`} />
-                            <View>暂无车位</View>
+                            <View>暂无资产</View>
                           </View>
                         </View>
                       }

@@ -42,13 +42,13 @@ class App extends Taro.PureComponent {
 
     }
 
-    api.wineClassfy().then(res => {
-      if (res.data.code === 200) {
-        set('ParkingTraitType', res.data.data[0].id)
-        // set('ParkingTypeId', res.data.data[0].ChildNodes[0].id)
+    // api.wineClassfy().then(res => {
+    //   if (res.data.code === 200) {
+    //     set('ParkingTraitType', res.data.data[0].id)
+    //     // set('ParkingTypeId', res.data.data[0].ChildNodes[0].id)
 
-      }
-    })
+    //   }
+    // })
     
 
     // 获取设备信息
@@ -89,7 +89,7 @@ class App extends Taro.PureComponent {
       // "pages/repay_info/index",         // 还款信息
       "pages/openSet/index",            // 设置页面
       "pages/user_authorize/index",    // 用户授权
-      "pages/parkingIndex/index",       // 车位页面
+      "pages/parkingIndex/index",       // 资产页面
       "pages/protocol/index",           // 注册协议
       "pages/first_pay/index",          // 首付
       "pages/bindBankCard/index",       // 商圈，绑定浙商银行卡
@@ -101,10 +101,10 @@ class App extends Taro.PureComponent {
       "pages/bank_card_add/index",      // 银行卡添加
       // "pages/total_account/index",      // 总账户
       "pages/buy_back/index",           // 回购
-      "pages/carport_pay/index",        // 车位支付、转让
+      "pages/carport_pay/index",        // 资产支付、转让
       "pages/bank_bind_update/index",   // 银行卡绑定修改
       "pages/withdraw/index",           // 提现
-      "pages/invite_join/index",        // 邀请会员加入、车位搜索付款对象
+      "pages/invite_join/index",        // 邀请会员加入、资产搜索付款对象
       "pages/busArea/index",            // 我的商圈
       "pages/circle/index",             // 商圈
       "pages/community/index",          // 仓储
@@ -117,8 +117,8 @@ class App extends Taro.PureComponent {
       "pages/login/index",              // 登录
       "pages/first_login/index",        // 第一次登录
       // "pages/Listing/index",         // 挂牌
-      "pages/car_detail/index",         // 车位详情->未购买
-      "pages/myCarport_detail/index",   // 我的车位详情->已购买
+      "pages/car_detail/index",         // 资产详情->未购买
+      "pages/myCarport_detail/index",   // 我的资产详情->已购买
       "pages/pwd_update/index",         // 修改登录密码
       "pages/reset_pwd/index",          // 重置登录密码
       "pages/phone_update/index",       // 修改手机号

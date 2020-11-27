@@ -205,7 +205,7 @@ export default class Index extends PureComponent {
   /**
    * @param {*} OrderCode     订单号
    * @param {*} DownPayMent   首付金额
-   * @param {*} Price         车位价格
+   * @param {*} Price         资产价格
    */
   getLoanScheme (OrderCode, DownPayMent, Price, fourParams) {
     Taro.showLoading({ title: '方案获取中...' })
@@ -502,7 +502,7 @@ export default class Index extends PureComponent {
       isAgree1, isAgree2, agreeCol1, agreeCol2, accountDatas, isOpened, title, navType,  
       disabled1, firstAmount, display2, loanData, selector, scale, scale1, deadline, disabled } = this.state
     const titleHeight = get('titleHeight')
-    const content = `修改金额失败，首付金额不能低于车位总价的${scale1}%。`
+    const content = `修改金额失败，首付金额不能低于资产总价的${scale1}%。`
     const rate = accAdd(accMul(loanData.callDatumRate, 100), loanData.spread/100)
     const interest = numDiv(accMul((loanData.loanAmount)*numDiv(rate, 12), loanData.loanTerm), 100).toFixed(2)
     

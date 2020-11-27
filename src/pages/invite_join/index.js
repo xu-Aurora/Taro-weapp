@@ -138,8 +138,8 @@ export default class Index extends PureComponent {
                 <Image src={`${imgUrl}remind.png`} />
               </View>
               {
-                page === 'carport_detail' ? <View>{ title }对象必须为车位所属商圈成员，如不是，请邀请其加入该商圈</View> : 
-                <View>邀请会员加入商圈，并经商圈主办方审批通过后，被邀请会员即可加入该商圈。在同一商圈内进行车位的购买、转让、支付等交易。</View>
+                page === 'carport_detail' ? <View>{ title }对象必须为资产所属商圈成员，如不是，请邀请其加入该商圈</View> : 
+                <View>邀请会员加入商圈，并经商圈主办方审批通过后，被邀请会员即可加入该商圈。在同一商圈内进行资产的购买、转让、支付等交易。</View>
               }
             </View> : 
             <View className='result'>

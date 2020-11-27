@@ -136,11 +136,11 @@ export default class Index extends PureComponent {
                 <View>{ datas.UserCount }个</View>
               </View>
               <View>
-                <View>车位资产总数 :</View>
+                <View>资产资产总数 :</View>
                 <View>{ datas.TotalCount }个</View>
               </View>
               <View>
-                <View>在售车位数 :</View>
+                <View>在售资产数 :</View>
                 <View>{ datas.ForSaleCount }个</View>
               </View>
             </View>

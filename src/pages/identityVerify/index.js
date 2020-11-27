@@ -65,7 +65,7 @@ export default class Index extends PureComponent {
         FaceType_c: 2,
         payType: 'tx'
       })
-    } else {                                                    // 从车位购买跳转过来
+    } else {                                                    // 从资产购买跳转过来
       this.$preload({
         datas: this.$router.preload.datas,
         payType: this.$router.preload.payType,

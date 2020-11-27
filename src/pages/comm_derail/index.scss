@@ -158,15 +158,16 @@
             margin-bottom: 5rpx;
             & > text:nth-child(1) {
               font-weight: 600;
-              font-size: 46rpx;
+              font-size: 40rpx;
             }
             & > text:nth-child(2) {
-              font-size: 32rpx;
+              font-size: 28rpx;
             }
           }
 
           & > view:nth-child(2) {
             font-size: 24rpx;
+            text-align: center;
           }
         }
       }

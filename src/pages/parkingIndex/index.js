@@ -4,7 +4,7 @@ import { AtIcon, AtActivityIndicator, AtLoadMore, AtActionSheet, AtActionSheetIt
 import Header from '@/components/header/header'
 import Search from '@/components/Search';
 import { get, toast } from '@/global_data'
-import { imgUrl, splitThousand } from '@/utils/util'
+import { imgUrl, splitThousand, changeNum } from '@/utils/util'
 import api from '@/api/api'
 import QQMapWX from '@/assets/js/qqmap-wx-jssdk.min'
 import './index.scss'
@@ -51,14 +51,17 @@ export default class Index extends PureComponent {
       cityVal: '',    //选择数据展示的值
       selCity: [],
       multiIndex:[0,0],
-      parkingData: [],  //车位列表
+      parkingData: [],  //资产列表
       ParkingLot: '',
       display: 'none',
       prePage: 'aw',
+      ParkingTraitTypes: [],
+      ParkingTypeId: '',
+      ParkingTraitType: '',
 
       searchText: '',
       flag: false,   // 用来判断展示列表还是搜索记录     
-      hotList: ['栏目1', '栏目2', '栏目3', '栏目4', '栏目5'],
+      hotList: [],
 
       circleLength: '',
       scrollY: true,
@@ -93,7 +96,7 @@ export default class Index extends PureComponent {
         ParkingTraitType,
         ParkingLot: this.state.ParkingLot,
         CircleId: this.state.susCode1,
-        Price: this.state.priceCode1,   //车位面额值
+        Price: this.state.priceCode1,   //资产面额值
         KeyWord: value,
         sord: this.state.sord
       })
@@ -102,7 +105,7 @@ export default class Index extends PureComponent {
   }
 
   initGetDatas(ParkingTraitType, ParkingTypeId) {
-    const { searchText } = this.state
+
 
     this.setState({
       selBusVal: '商圈',
@@ -111,12 +114,14 @@ export default class Index extends PureComponent {
       iconBus: 'chevron-up',
       iconPrice: 'chevron-up',
       iconType: 'chevron-up',
-      ParkingLot: '',
       ParkingTypeId,
-      ParkingTraitType
+      ParkingTraitType,
+      flag: false
     }, () => {
-      this.getParkingNum({ 
-        KeyWord: searchText
+      this.getParkingNum({
+        CircleId: '',
+        Price: '',
+        sord: '',
       })
     })
 
@@ -165,7 +170,15 @@ export default class Index extends PureComponent {
         }
       });
     }
-  };
+  }
+
+  delhistory = () => {		//  清空历史记录
+    hList = []
+    Taro.setStorage({
+      key: 'search_cache',
+      data: []
+    })
+  }
 
   keywordsClick = (item) => {
     // 关键词搜索与历史搜索
@@ -249,7 +262,7 @@ export default class Index extends PureComponent {
       })
       this.getParkingNum({
         CircleId: susCode[e.detail.value] == 0 ? '' : susCode[e.detail.value], //商圈id 
-        Price: priceCode1,   //车位面额值
+        Price: priceCode1,   //资产面额值
         KeyWord: searchText,
         sord: sord
       })
@@ -260,7 +273,7 @@ export default class Index extends PureComponent {
         priceCode1: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value]
       })
       this.getParkingNum({
-        Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //车位面额值
+        Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //资产面额值
         CircleId: susCode1,   //商圈id 
         KeyWord: searchText,
         sord: sord
@@ -435,6 +448,26 @@ export default class Index extends PureComponent {
     })
   }
 
+  getType () {
+    api.getClassfy({data: 'wineTpye'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ParkingTraitTypes: res.data.data,
+        })
+      }
+    })
+  }
+
+  getHotSearch() {
+    api.getHotSearch().then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          hotList: res.data.data
+        })
+      }
+    })
+  }
+
   componentWillMount () {
     let citys = Taro.getStorageSync('city') && JSON.parse(Taro.getStorageSync('city'))
     let uuid = Taro.getStorageSync('uuid')
@@ -443,16 +476,17 @@ export default class Index extends PureComponent {
     let params = {
       LoginMark: Taro.getStorageSync('uuid'),
       Token: Taro.getStorageSync('userInfo') ? JSON.parse(Taro.getStorageSync('userInfo')).token : '',
-      ParkingTypeId: get('ParkingTypeId'),
-      ParkingTraitType: get('ParkingTraitType'),
+      // ParkingTypeId: get('ParkingTypeId'),
+      // ParkingTraitType: get('ParkingTraitType'),
       CircleId: this.state.CircleId,
       Price: this.state.Price,
       KeyWord: this.state.searchText,
       sord: this.state.sord,
       existLoading: true
     }
-
+    this.getHotSearch()
     const asyncHttp = async () => {
+      await this.getType()
       await this.getAreaZone()
       await this.getCircle()
       await this.getParkingNum(params)
@@ -465,13 +499,24 @@ export default class Index extends PureComponent {
       userInfo,
       ParkingLot: ParkingLot,
       title: ParkingLot ? (ParkingLot === 0 ? '在售资产通凭证' : '在售资产通权证') : '资产通',
-      ParkingTypeId: '',
-      ParkingTraitType: get('ParkingTraitType'),
+      // ParkingTypeId: '',
+      // ParkingTraitType: get('ParkingTraitType'),
       flag: page === 'al' ? true : false,
       prePage: page
     })
 
     asyncHttp()
+  }
+
+  type(val) {
+    const { ParkingTraitTypes } = this.state
+    let t
+    ParkingTraitTypes.forEach(ele => {
+      if (ele.F_ItemValue == val) {
+        t = ele.F_ItemName
+      }
+    })
+    return t
   }
 
   // 鼠标点击移动开始触发事件
@@ -512,7 +557,7 @@ export default class Index extends PureComponent {
               sord: this.state.sord,
               KeyWord: searchText,
               CircleId: susCode1,   //商圈id 
-              Price: priceCode1,   //车位面额值
+              Price: priceCode1,   //资产面额值
             }
             that.getParkingNum(params, 'loading', 'toast1')
           },500)
@@ -589,7 +634,7 @@ export default class Index extends PureComponent {
       let params = {
         sord: sord,
         CircleId: susCode1,   //商圈id 
-        Price: priceCode1   //车位面额值
+        Price: priceCode1   //资产面额值
       }
       that.getParkingNum1(params, 'noMore')
     }, 500)
@@ -663,21 +708,26 @@ export default class Index extends PureComponent {
                     </View>
                   </View>
                 ) : null}
-                <View className={"wanted-circle"}>
-                  <View className="header">猜你想搜的</View>
-                  <View className="list">
-                    {hotList.map((item, index) => {
-                      return (
-                        <View
-                          key={index}
-                          onClick={this.keywordsClick.bind(this, item)}
-                        >
-                          {item}
-                        </View>
-                      );
-                    })}
-                  </View>
-                </View>
+                {
+                  hotList.length > 0 ? (
+                    <View className={"wanted-circle"}>
+                      <View className="header">猜你想搜的</View>
+                      <View className="list">
+                        {hotList.map((item, index) => {
+                          return (
+                            <View
+                              key={index}
+                              onClick={this.keywordsClick.bind(this, item)}
+                            >
+                              {item}
+                            </View>
+                          );
+                        })}
+                      </View>
+                    </View>
+                  ) : null
+                }
+
               </View>
             ) : (
               <View>
@@ -765,10 +815,10 @@ export default class Index extends PureComponent {
                                   </View> : 
                                   <View style={{color: '#5584FF'}}>
                                     <View>
-                                      <Text>{ ele&&splitThousand(ele.SalePrice) }</Text>
-                                      <Text>万</Text>
+                                      <Text>{ ele&&changeNum(ele.SalePrice) }</Text>
+                                      {/* <Text>万</Text> */}
                                     </View>
-                                    <View>挂牌价 (元)</View>
+                                    <View>挂牌价<Text style={{fontSize: '18rpx'}}> {ele.SalePrice>=100000 ? '(万元)' : '(元)'}</Text></View>
                                   </View>
                                 }
                               </View>
@@ -776,10 +826,10 @@ export default class Index extends PureComponent {
                               ele && ele.BuyBack.Usufruct == 0 ? 
                               <View class='right'>
                                 <View className='overflow1'>
-                                  <Text>{ `凭证编号${ele.ParkingId.toUpperCase()}` }</Text>
+                                  <Text>品名：{ ele.ParkingCode }</Text>
                                 </View>
                                 <View>所属商圈：{ ele.CircleName }</View>
-                                <View>所属仓储：{ ele.BuildingName }</View>
+                                {/* <View>所属仓储：{ ele.BuildingName }</View> */}
                                 <View className='address'>
                                   <View className='overflow1'>地址：{ ele.Address }</View>
                                   <View>
@@ -794,17 +844,17 @@ export default class Index extends PureComponent {
                               </View> : 
                               <View class='right'>
                                 <View>
-                                  <Text>车位号{ ele.ParkingCode }</Text>
+                                  <Text>品名：{ ele.ParkingCode }</Text>
                                 </View>
                                 <View>所属商圈：{ ele.CircleName }</View>
-                                <View>所属仓储：{ ele.BuildingName }</View>
+                                {/* <View>所属仓储：{ ele.BuildingName }</View> */}
                                 <View className='address'>
                                   <View className='overflow1'>地址：{ ele.Address }</View>
                                   <View>
                                     <Image onClick={this.goNavigation.bind(this,ele.Address)} src={`${imgUrl}icon_map_l.png`} />
                                   </View>
                                 </View>
-                                <View>车位类型：{ ele.ParkingTypeName }</View>
+                                <View>类别：{ this.type(ele.ParkingTraitType) }</View>
                               </View>
                             }
 

@@ -96,6 +96,11 @@ export default class Index extends PureComponent {
   render () {
     const { cardList, isOpened } = this.state
     const default_card = `${imgUrl}card_logo.png`
+    const bgImg = {
+      background: `url(${imgUrl}bank_card.png)`,
+      backgroundSize: '100% 100%'
+    }
+
     return (
       <View className='bank_card_set'>
         <View className='title'>
@@ -110,7 +115,7 @@ export default class Index extends PureComponent {
             {
               cardList.length > 0 ? cardList.map(ele => {
                 return (
-                  <View key={ele.CardNo}>
+                  <View key={ele.CardNo} style={bgImg}>
                     <View>
                       <View>
                         <View className='box_img'><Image mode='widthFix' src={ele.BankLogo ? ele.BankLogo : default_card} /></View>

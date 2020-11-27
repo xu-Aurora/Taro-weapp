@@ -60,7 +60,7 @@ export default class Index extends PureComponent {
     navigationStyle: 'custom'
   }
 
-  // 跳转到车位详情
+  // 跳转到资产详情
   goPage (id,status) {
     this.$preload({
       id,
@@ -104,7 +104,7 @@ export default class Index extends PureComponent {
     })
   }
 
-  //车位操作
+  //资产操作
   handle (type,id,CircleId,way,e) {
     e.stopPropagation()
     //用来判断是点击的支付还是转让,把状态存到全局变量中
@@ -487,7 +487,7 @@ export default class Index extends PureComponent {
                       <View className='nodata'>
                         <View>
                           <Image src={`${imgUrl}park_default.png`} />
-                          <View>暂无车位</View>
+                          <View>暂无资产</View>
                         </View>
                       </View>
                     )
@@ -542,7 +542,7 @@ export default class Index extends PureComponent {
                               <View className='clear conTopMargin'>
                                 <View className='itemContLeft'>
                                   <View className='textButton12'>
-                                    <Text>车位号：</Text>
+                                    <Text>资产号：</Text>
                                     <Text>{ele.ParkingCode}</Text>
                                   </View>
                                   <View className='textButton12'>
@@ -587,7 +587,7 @@ export default class Index extends PureComponent {
                       <View className='nodata'>
                         <View>
                           <Image src={`${imgUrl}park_default.png`} />
-                          <View>暂无车位</View>
+                          <View>暂无资产</View>
                         </View>
                       </View>
                     )

@@ -169,7 +169,7 @@ export default class Index extends PureComponent {
                 )
               }
               <View>
-                <View>车位类型 :</View>
+                <View>资产类型 :</View>
                 <View>{ datas.ParkingType }</View>
               </View>
               {

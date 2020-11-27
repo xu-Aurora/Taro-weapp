@@ -35,13 +35,13 @@ export default class Index extends PureComponent {
       areaCode: [],   //区的code数据
       areaCode1: '',   //用来储存选中的区code
       selAreaVal: '区域',
-      selPrice: ['车位价格','1万以下','1-5万', '5-20万', '20-50万', '50万以上'],
+      selPrice: ['资产价格','1万以下','1-5万', '5-20万', '20-50万', '50万以上'],
       priceCode: ['0','-10000','10000-50000','50000-200000','200000-500000','500000-'],
       priceCode1: '',
-      selPriceVal: '车位价格',
-      selType: [],    //车位类型
-      typeCode1: '',    //用来储存选中的车位类型的code
-      selTypeVal: '车位类型',
+      selPriceVal: '资产价格',
+      selType: [],    //资产类型
+      typeCode1: '',    //用来储存选中的资产类型的code
+      selTypeVal: '资产类型',
       city: [],       //市
       cityCode: '',
       province: [],   //省
@@ -91,8 +91,8 @@ export default class Index extends PureComponent {
         this.setState({
           datas: res.data.data.rows,
           selAreaVal: '区域',
-          selPriceVal: '车位价格',
-          selTypeVal: '车位类型'
+          selPriceVal: '资产价格',
+          selTypeVal: '资产类型'
         })
       }
     })
@@ -216,7 +216,7 @@ export default class Index extends PureComponent {
         CityCode: cityCode,  //市code
         CountyName: areaCode[e.detail.value] == 0 ? '' : areaCode[e.detail.value],  //区code
         ParkingType: typeCode1,  //商圈类型code
-        Price: priceCode1,   //车位价格值
+        Price: priceCode1,   //资产价格值
         Sord: Sord,
         KeyWord: seatchVal
       })
@@ -228,7 +228,7 @@ export default class Index extends PureComponent {
       })
       this.getLists({
         CityCode: cityCode,    //市code
-        Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //车位价格值
+        Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //资产价格值
         CountyName: areaCode1,   //区code
         ParkingType: typeCode1,  //商圈类型code
         Sord: this.state.Sord,
@@ -242,9 +242,9 @@ export default class Index extends PureComponent {
       })
       this.getLists({
         CityCode: cityCode,  //市code
-        ParkingType: selType[e.detail.value] == '车位类型' ? '' : selType[e.detail.value], //楼盘类型code
+        ParkingType: selType[e.detail.value] == '资产类型' ? '' : selType[e.detail.value], //楼盘类型code
         CountyName: areaCode1,   //区code
-        Price: priceCode1,   //车位价格值
+        Price: priceCode1,   //资产价格值
         Sord: Sord,
         KeyWord: seatchVal
       })
@@ -292,14 +292,14 @@ export default class Index extends PureComponent {
       }
     })
   }
-  //获取车位类型
+  //获取资产类型
   getParkType () {
     api.buildTraitType({
       data: 'ParkingType',
       existLoading: true
     }).then(res => {
       if (res.data.code === 200) {
-        let datas = ['车位类型']
+        let datas = ['资产类型']
         let code = []
         res.data.data.forEach(ele => {
           datas.push(ele.F_ItemName.slice(0,4))
@@ -343,7 +343,7 @@ export default class Index extends PureComponent {
       CityName: params.CityName,
       KeyWord: params.KeyWord,
       ParkingType: params.ParkingType,  //商圈类型code
-      Price: params.Price,   //车位价格值
+      Price: params.Price,   //资产价格值
       Sord: params.Sord,
       CountyName: params.CountyName
     }).then(res => {
@@ -373,7 +373,7 @@ export default class Index extends PureComponent {
       CityName: params.CityName,
       KeyWord: params.KeyWord,
       ParkingType: params.ParkingType,  //商圈类型code
-      Price: params.Price,   //车位价格值
+      Price: params.Price,   //资产价格值
       Sord: params.Sord,
       CountyName: params.CountyName
     }).then(res => {

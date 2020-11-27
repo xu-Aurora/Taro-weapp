@@ -97,7 +97,7 @@ export default class Index extends PureComponent {
                   Taro.navigateTo({
                     url: '../pay/index'
                   })
-                } else {                      // 车位购买
+                } else {                      // 资产购买
                   t.parkingBuy(t)
                 }
               })
@@ -153,7 +153,7 @@ export default class Index extends PureComponent {
       }
     })
   }
-  // 车位购买
+  // 资产购买
   parkingBuy(t) {
     t.$preload({
       inPage: t.$router.preload.pages1,

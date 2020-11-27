@@ -21,6 +21,14 @@ export function splitThousand(num, fixed) {
   return fixed ? num.join(".") : num[0]
 }
 
+export const changeNum = (val) => {
+  if (Number(val) >= 100000) {
+    return `${splitThousand(val/10000)}`
+  } else {
+    return splitThousand(val)
+  }
+}
+
 
 //服务器图片路径
 export const imgUrl = 'http://cwt.yiyatong.net.cn:8087/system/weapp-image-zct/'

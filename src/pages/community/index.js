@@ -52,7 +52,7 @@ export default class Index extends PureComponent {
 
       searchText: '',
       flag: false,   // 用来判断展示列表还是搜索记录     
-      hotList: ['栏目1', '栏目2', '栏目3', '栏目4', '栏目5'],
+      hotList: [],
 
       scrollY: true,
       // 拖动上下滚动
@@ -95,20 +95,42 @@ export default class Index extends PureComponent {
         BuildTraitTypes: typeCode1, // 楼盘类型code
         DistrictCode: tareaCode1,   // 区code
         CircleIds: susCode1,        // 商圈id 
-        Price: priceCode1,          // 车位价格值
+        Price: priceCode1,          // 资产价格值
         KeyWord: value 
       })
     }
 
   }
 
-  initGetDatas(params) {
-    this.getDatas(params)
+  initGetDatas(cityCode) {
+    
     this.setState({
       selBusVal: '商圈',
       selAreaVal: '区域' ,
       selPriceVal: '价格' ,
-      selTypeVal: '楼盘类型'
+      selTypeVal: '楼盘类型',
+      cityCode,
+      flag: false
+    })
+
+    this.getBuildings({
+      CityCode: cityCode,
+      CircleIds: '',
+      DistrictCode: '',             // 区code
+      BuildTraitTypes: '',          // 商圈类型code
+      Price: '',                   // 资产价格值
+    })
+
+    this.getArea({
+      CityCode: cityCode
+    })
+  }
+
+  delhistory = () => {		//  清空历史记录
+    hList = []
+    Taro.setStorage({
+      key: 'search_cache',
+      data: []
     })
   }
 
@@ -234,7 +256,7 @@ export default class Index extends PureComponent {
         DistrictCode: areaCode[e.detail.value] == 0 ? '' : areaCode[e.detail.value],  //区code
         CircleIds: susCode1,   //商圈id 
         BuildTraitTypes: typeCode1,  //商圈类型code
-        Price: priceCode1,   //车位价格值
+        Price: priceCode1,   //资产价格值
         KeyWord: searchText 
       })
     }else if (type === 'bus') {
@@ -248,7 +270,7 @@ export default class Index extends PureComponent {
         CircleIds: susCode[e.detail.value] == 0 ? '' : susCode[e.detail.value], //商圈id 
         DistrictCode: areaCode1,   //区code
         BuildTraitTypes: typeCode1,  //商圈类型code
-        Price: priceCode1,   //车位价格值
+        Price: priceCode1,   //资产价格值
         KeyWord: searchText 
       })
     }else if (type === 'price') {
@@ -259,7 +281,7 @@ export default class Index extends PureComponent {
       })
       this.getBuildings({
         CityCode: cityCode,    //市code
-        Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //车位价格值
+        Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //资产价格值
         DistrictCode: areaCode1,   //区code
         BuildTraitTypes: typeCode1,  //商圈类型code
         CircleIds: susCode1,   //商圈id 
@@ -277,7 +299,7 @@ export default class Index extends PureComponent {
         BuildTraitTypes: typeCode[e.detail.value] == 0 ? '' : typeCode[e.detail.value], //楼盘类型code
         DistrictCode: tareaCode1,   //区code
         CircleIds: susCode1,   //商圈id 
-        Price: priceCode1,  //车位价格值
+        Price: priceCode1,  //资产价格值
         KeyWord: searchText 
       })
 
@@ -394,7 +416,7 @@ export default class Index extends PureComponent {
       DistrictCode: params.DistrictCode,        // 区code
       CircleIds: params.CircleIds,              // 商圈id 
       BuildTraitTypes: params.BuildTraitTypes,  // 商圈类型code
-      Price: params.Price,                      // 车位价格值
+      Price: params.Price,                      // 资产价格值
       KeyWord: params.KeyWord,                   // 输入框
       existLoading: params.existLoading
     }).then(res => {
@@ -430,7 +452,7 @@ export default class Index extends PureComponent {
       DistrictCode: params.DistrictCode,        // 区code
       CircleIds: params.CircleIds,              // 商圈id 
       BuildTraitTypes: params.BuildTraitTypes,  // 商圈类型code
-      Price: params.Price,                      // 车位价格值
+      Price: params.Price,                      // 资产价格值
       KeyWord: params.KeyWord                   // 输入框
     }).then(res => {
       if (res.data.code === 200) {
@@ -441,6 +463,16 @@ export default class Index extends PureComponent {
           rows: this.state.rows + 10
         }, () => {
           Taro.hideLoading()
+        })
+      }
+    })
+  }
+
+  getHotSearch() {
+    api.getHotSearch().then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          hotList: res.data.data
         })
       }
     })
@@ -466,11 +498,11 @@ export default class Index extends PureComponent {
       CircleIds: this.$router.preload.CircleId ? this.$router.preload.CircleId : '',
       DistrictCode: this.state.areaCode1,             // 区code
       BuildTraitTypes: this.state.typeCode1,          // 商圈类型code
-      Price: this.state.priceCode1,                   // 车位价格值
+      Price: this.state.priceCode1,                   // 资产价格值
       KeyWord: this.state.searchText,                   // 输入框
       existLoading: true
     }
-
+    this.getHotSearch()
     const asyncHttp = async () => {
       await this.getAreaZone()
       await this.getArea(params)
@@ -520,7 +552,7 @@ export default class Index extends PureComponent {
               CircleIds: this.state.susCode1,
               DistrictCode: this.state.areaCode1,             // 区code
               BuildTraitTypes: this.state.typeCode1,          // 商圈类型code
-              Price: this.state.priceCode1,                   // 车位价格值
+              Price: this.state.priceCode1,                   // 资产价格值
               KeyWord: this.state.searchText                   // 输入框
             }
             that.getBuildings(params, 'loading', 'toast1')
@@ -599,7 +631,7 @@ export default class Index extends PureComponent {
         CircleIds: this.state.susCode1,
         DistrictCode: this.state.areaCode1,             // 区code
         BuildTraitTypes: this.state.typeCode1,          // 商圈类型code
-        Price: this.state.priceCode1,                   // 车位价格值
+        Price: this.state.priceCode1,                   // 资产价格值
         KeyWord: this.state.searchText                   // 输入框
       }
       this.getBuildings1(params, 'noMore')
@@ -687,19 +719,6 @@ export default class Index extends PureComponent {
             <View>
               <View className='top_search' style={{paddingTop: '6px'}}>
                 <View className='nav_select'>
-                  <View onClick={this.changeIcon.bind(this,'bus')}>
-                    <Picker 
-                      mode='selector' 
-                      onCancel={this.cancel.bind(this,'bus')}
-                      range={selBus} 
-                      onChange={this.navChange.bind(this,'bus')}
-                    >
-                      <View className='picker'>
-                        <Text decode>{ selBusVal }&nbsp;</Text>
-                        <AtIcon value={iconBus} size='18' color='#AEAEAE'></AtIcon>
-                      </View>
-                    </Picker>
-                  </View>
                   <View onClick={this.changeIcon.bind(this,'area')}>
                     <Picker 
                       mode='selector' 
@@ -713,6 +732,20 @@ export default class Index extends PureComponent {
                       </View>
                     </Picker>
                   </View>
+                  <View onClick={this.changeIcon.bind(this,'bus')}>
+                    <Picker 
+                      mode='selector' 
+                      onCancel={this.cancel.bind(this,'bus')}
+                      range={selBus} 
+                      onChange={this.navChange.bind(this,'bus')}
+                    >
+                      <View className='picker'>
+                        <Text decode>{ selBusVal }&nbsp;</Text>
+                        <AtIcon value={iconBus} size='18' color='#AEAEAE'></AtIcon>
+                      </View>
+                    </Picker>
+                  </View>
+
                   {/* <View onClick={this.changeIcon.bind(this,'price')}>
                     <Picker mode='selector' range={selPrice} 
                       onCancel={this.cancel.bind(this,'price')}

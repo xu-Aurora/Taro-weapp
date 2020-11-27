@@ -145,6 +145,7 @@
           }
         }
 
+
         .col1 {
           color: #808080;
           font-size: 30rpx;
@@ -154,7 +155,7 @@
           font-size: 30rpx;
         }
       }
-      //车位信息
+      //资产信息
       .carInfo {
         padding: 40rpx 0rpx 60rpx 32rpx;
         font-size: 30rpx;
@@ -169,6 +170,13 @@
           justify-content: space-between;
           margin: 30rpx 0rpx;
           align-items: center;
+
+
+
+          &>text:nth-child(1), &>text:nth-child(2) {
+            flex: 1;
+          }
+
         }
     
         &>view:nth-child(2) {

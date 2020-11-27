@@ -77,7 +77,7 @@ export default class Index extends PureComponent {
                 <View className='left'>待出售凭证:</View>
                 <View className='left'>资产通权证:</View>
                 <View className='left'>待出售权证:</View>
-                {/* <View className='left'>车位类型:</View> */}
+                {/* <View className='left'>资产类型:</View> */}
               </View>
               <View className='right'>
                 <View>{ datas.SaleProof }个</View>
@@ -92,7 +92,7 @@ export default class Index extends PureComponent {
                 <View className='left'>所在地址:</View>
                 {/* <View className='left'>开发商:</View> */}
                 <View className='left'>监管公司:</View>
-                {/* <View className='left'>车位管理费:</View> */}
+                {/* <View className='left'>资产管理费:</View> */}
                 {/* <View className='left'>管理费结算方式:</View> */}
               </View>
               <View className='right'>

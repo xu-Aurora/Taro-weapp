@@ -94,7 +94,7 @@ export default class Index extends PureComponent {
 
   //获取位置拒绝授权时，默认获取北京的地址
   getAreaZone () {
-    //根据省市code获取对应城市的车位数据
+    //根据省市code获取对应城市的资产数据
     let city = {
       citys: '北京市',
       cityCode: '110100'
@@ -132,7 +132,7 @@ export default class Index extends PureComponent {
           existLoading: true
         }).then(res1 => {
           if (res1 && res1.data.code === 200) {
-            //根据省市code获取对应城市的车位数据
+            //根据省市code获取对应城市的资产数据
             let city = {
               citys,
               cityCode: res1.data.data[0].AreaCode
@@ -159,7 +159,7 @@ export default class Index extends PureComponent {
 
   //页面跳转
   goPage (type,id) {
-    if (type === 'car_detail') {  //用来标识下,车位详情是从首页跳转过去的
+    if (type === 'car_detail') {  //用来标识下,资产详情是从首页跳转过去的
       set('page','home')
     }
     this.$preload({

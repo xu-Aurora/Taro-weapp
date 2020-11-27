@@ -6,7 +6,7 @@ import './index.scss'
 export default class Index extends PureComponent {
 
   // config = {
-  //   navigationBarTitleText: '车位详情'
+  //   navigationBarTitleText: '资产详情'
   // }
 
   constructor () {

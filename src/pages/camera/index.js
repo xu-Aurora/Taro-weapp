@@ -104,7 +104,7 @@
 //                                       Taro.navigateTo({
 //                                         url: '../buy_back/index'
 //                                       })
-//                                     } else {                                                  // 车位购买
+//                                     } else {                                                  // 资产购买
 //                                       t.$preload({
 //                                         inPage: t.$router.preload.pages1,
 //                                         payType: t.$router.preload.payType,
@@ -201,7 +201,7 @@
 //                               Taro.navigateTo({
 //                                 url: '../buy_back/index'
 //                               })
-//                             } else {                                   // 从车位购买跳转过来
+//                             } else {                                   // 从资产购买跳转过来
 //                               t.$preload({
 //                                 inPage: t.$router.preload.pages1,
 //                                 payType: t.$router.preload.payType,

@@ -65,6 +65,7 @@ export default class CarInfo extends PureComponent {
   //   return code
   // }
 
+  // 是否进口
   unit(val) {
     const { Units } = this.props
     let a;
@@ -73,6 +74,25 @@ export default class CarInfo extends PureComponent {
         a = ele.F_ItemName
       }
     })
+    return a
+  }
+  // 产地
+  origin(datas) {
+    const { ImportOrigins, DomesticOrigins } = this.props
+    let a;
+    if (datas.IsImport == 1) {
+      ImportOrigins.forEach(ele => {
+        if (ele.F_ItemValue == datas.Origin) {
+          a = ele.F_ItemName
+        }
+      })
+    } else if(datas.IsImport == 0) {
+      DomesticOrigins.forEach(ele => {
+        if (ele.F_ItemValue == datas.Origin) {
+          a = ele.F_ItemName
+        }
+      })
+    }
     return a
   }
 
@@ -249,7 +269,7 @@ export default class CarInfo extends PureComponent {
             </View>
 
             <View className='bottom'>
-              <View style={{fontSize:'36rpx',color:'#3E3E3E'}}>车位信息</View>
+              <View style={{fontSize:'36rpx',color:'#3E3E3E'}}>资产信息</View>
 
               <View>
                 <Text>
@@ -280,7 +300,7 @@ export default class CarInfo extends PureComponent {
                 </Text>
                 <Text>
                   <Text decode className='col1'>产地 :&nbsp;</Text>
-                  <Text className='col2'>{ onDatas.BuyBackModel.Origin }</Text>
+                  <Text className='col2'>{ this.origin(onDatas.BuyBackModel) }</Text>
                 </Text>
               </View>
               <View>

@@ -45,7 +45,7 @@ export default class Index extends PureComponent {
     }
   }
 
-  // 跳转到更多车位
+  // 跳转到更多资产
   morePark (type, id) {
     Taro.navigateTo({
       url: `../${type}/index?id=${id}`
@@ -465,7 +465,7 @@ export default class Index extends PureComponent {
 
               </View>
 
-              {/* 车位信息 */}
+              {/* 资产信息 */}
 
               {/* 资产通信息(回购模式) */}
               {
@@ -533,11 +533,11 @@ export default class Index extends PureComponent {
               }
 
               <View className='bottom'>
-                <View style={{fontSize:'36rpx',color:'#3E3E3E'}}>车位信息</View>
+                <View style={{fontSize:'36rpx',color:'#3E3E3E'}}>资产信息</View>
 
                 <View>
                   <Text>
-                    <Text className='col1'>车位号：</Text>
+                    <Text className='col1'>资产号：</Text>
                     <Text className='col2'>{ this.parkCode(datas) }</Text>
                   </Text>
                   <Text>

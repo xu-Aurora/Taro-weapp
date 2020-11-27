@@ -171,7 +171,7 @@ export default class Index extends PureComponent {
                               { ele.CircleName }
                             </View>
                             <View style={{ fontSize: '26rpx', color: '#808080' }} >
-                              所属{ ele.CompanyName },在售车位{ ele.OnSaleCount }
+                              所属{ ele.CompanyName },在售资产{ ele.OnSaleCount }
                             </View>
                           </View>
                           <View><AtIcon value='chevron-right' color='#C7C7CC'></AtIcon></View>

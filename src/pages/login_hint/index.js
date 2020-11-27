@@ -1,8 +1,9 @@
 import Taro, { PureComponent } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import Header from '../../components/header/header'
 import { get } from '../../global_data'
+import { imgUrl } from '@/utils/util'
 import './index.scss'
 
 export default class Index extends PureComponent {
@@ -36,7 +37,9 @@ export default class Index extends PureComponent {
           style={{marginTop: titleHeight,height: `calc(100vh - ${titleHeight})`}}
         >
           <View>
-            <View className='logo'></View>
+            <Image src={`${imgUrl}logo.png`} className='logo'>
+
+            </Image>
           </View>
           <View className='tips'>您还未登录，请先登录或注册</View>
           <View>

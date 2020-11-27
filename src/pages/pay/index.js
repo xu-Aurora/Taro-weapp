@@ -296,7 +296,7 @@ export default class Index extends PureComponent {
           PayPassword: md5(this.state.password),
           VerificationCode: this.state.code,
         })
-      }else{                            //全额购买->车位页面,支付尾款->订单页面,全额支付->订单页面,
+      }else{                            //全额购买->资产页面,支付尾款->订单页面,全额支付->订单页面,
         this.payNow({
           OrderCode: this.state.datas.OrderCode,
           PayType: this.$router.preload.type=== 'loan_buy'?2:1,   //全额购买还是贷款购买

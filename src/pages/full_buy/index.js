@@ -24,6 +24,9 @@ export default class Index extends PureComponent {
   constructor () {
     super(...arguments)
     this.state = {
+      ImportOrigins: [],
+      DomesticOrigins: [],
+      Units: [],
       switchIsCheck: false,
       btnLoading: false,
       title: '购买确认',
@@ -219,6 +222,39 @@ export default class Index extends PureComponent {
       }
     })
   }
+
+  // 是否进口
+  unit(val) {
+    const { Units } = this.state
+    let a;
+    Units.forEach(ele => {
+      if (ele.F_ItemValue == val) {
+        a = ele.F_ItemName
+      }
+    })
+    return a
+  }
+  // 产地
+  origin(datas) {
+    const { ImportOrigins, DomesticOrigins } = this.state
+    let a;
+    if (datas.IsImport == 1) {
+      ImportOrigins.forEach(ele => {
+        if (ele.F_ItemValue == datas.Origin) {
+          a = ele.F_ItemName
+        }
+      })
+    } else if(datas.IsImport == 0) {
+      DomesticOrigins.forEach(ele => {
+        if (ele.F_ItemValue == datas.Origin) {
+          a = ele.F_ItemName
+        }
+      })
+    }
+    return a
+  }
+
+
   //打开pdf
   openDocument () {
     const { type, datas } = this.state
@@ -329,15 +365,50 @@ export default class Index extends PureComponent {
     })
   }
 
-  componentWillMount () {
+  getUnit () {
+    api.getClassfy({data: 'Unit'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          Units: res.data.data,
+        })
+      }
+    })
+  }
+
+  // ImportOrigin -- 进口产地
+  // DomesticOrigin -- 国内产地
+  getImportOrigin () {
+    api.getClassfy({data: 'ImportOrigin'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ImportOrigins: res.data.data,
+        })
+      }
+    })
+  }
+  getDomesticOrigin () {
+    api.getClassfy({data: 'DomesticOrigin'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          DomesticOrigins: res.data.data,
+        })
+      }
+    })
+  }
+
+  async componentWillMount () {
     this.setState({
       datas: this.$router.preload.datas,
       price: this.$router.preload.Price,
       isSwitch: this.$router.preload.datas.Bond > 0 ? true : false,
       type: this.$router.preload.type
     })
+
+    await this.getUnit()              // 获取‘单位’的数据字典
+    await this.getImportOrigin()      // 获取‘进口产地’的数据字典
+    await this.getDomesticOrigin()    // 获取‘国内产地’的数据字典
     //获取账户信息
-    api.accountAmt({
+    await api.accountAmt({
       LoginMark: Taro.getStorageSync('uuid'),
       Token: JSON.parse(Taro.getStorageSync('userInfo')).token,
       data: JSON.stringify({
@@ -491,57 +562,176 @@ export default class Index extends PureComponent {
               }
 
               <View className='carInfo'>
-                <View style={{fontSize:'36rpx',color:'#3E3E3E'}}>车位信息</View>
+                <View style={{fontSize:'36rpx',color:'#3E3E3E'}}>资产信息</View>
 
                 <View>
                   <Text>
-                    <Text decode className='col1'>车位号 :&nbsp;</Text>
-                    <Text className='col2'>{ this.parkCode(datas&&datas) }</Text>
+                    <Text decode className='col1'>品名 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.ParkingCode }</Text>
+                    {/* <Text className='col2'>{ this.parkCode(datas&&datas) }</Text> */}
                   </Text>
                   <Text>
-                    <Text decode className='col1'>类型 :&nbsp;</Text>
-                    <Text className='col2'>{ datas.ParkingType }</Text>
+                  <Text decode className='col1'>数量 :&nbsp;</Text>
+                  <Text className='col2'>{ datas.BuyBackModel.Number }{ this.unit(datas.BuyBackModel.Unit) }</Text>
+                </Text>
+                </View>
+                <View>
+                  <Text>
+                    <Text decode className='col1'>酒精度 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.Vol }</Text>
+                  </Text>
+                  <Text>
+                    <Text decode className='col1'>净含量 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.NetContent }</Text>
+                  </Text>
+                </View>
+                <View>
+                  <Text>
+                    <Text decode className='col1'>进口 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.IsImport == 1 ? '是' : '否' }</Text>
+                  </Text>
+                  <Text>
+                    <Text decode className='col1'>产地 :&nbsp;</Text>
+                    <Text className='col2'>{ this.origin(datas.BuyBackModel) }</Text>
                   </Text>
                 </View>
                 <View>
                   <View>
-                    <Text decode className='col1'>面积 :&nbsp;</Text>
-                    <Text className='col2'>{ datas.Acreage }㎡</Text>
+                    <Text decode className='col1'>原料 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.RawMaterial }</Text>
+                  </View>
+                </View>
+
+                {
+                  datas.BuyBackModel.Storage && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>储存 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.BuyBackModel.Storage }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                {
+                  datas.BuyBackModel.GeneralLevel && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>标准/等级 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.BuyBackModel.GeneralLevel }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                {
+                  datas.BuyBackModel.License && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>生产许可证号 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.BuyBackModel.License }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                {
+                  datas.BuyBackModel.Special && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>特色 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.BuyBackModel.Special }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+
+                {
+                  datas.Contact && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>厂名 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.Contact }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                {
+                  datas.Location && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>厂址 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.Location }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                {
+                  datas.ContactTel && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>联系方式 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.ContactTel }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                {
+                  datas.Instruction && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>描述 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.Instruction }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+
+
+                <View>
+                  <View>
+                    <Text decode className='col1'>品牌 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.Brand }</Text>
+                  </View>
+                </View>
+                {
+                  datas.BuyBackModel.Series && (
+                    <View>
+                      <View>
+                        <Text decode className='col1'>系列 :&nbsp;</Text>
+                        <Text className='col2'>{ datas.BuyBackModel.Series }</Text>
+                      </View>
+                    </View>
+                  )
+                }
+                <View>
+                  <View>
+                    <Text decode className='col1'>生产日期 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.ManufactureDate && datas.BuyBackModel.ManufactureDate.split(' ')[0] }</Text>
                   </View>
                 </View>
                 <View>
                   <View>
-                    <Text decode className='col1'>使用（产权）期限 :&nbsp;</Text>
-                    <Text className='col2'>{ datas.EffectiveTime&&datas.EffectiveTime.split(' ')[0] }</Text>
+                  <Text decode className='col1'>保质日期 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.EffectiveTime && datas.EffectiveTime.split(' ')[0] }</Text>
                   </View>
                 </View>
-                <View>
-                  <View>
-                    <Text decode className='col1'>所属商圈 :&nbsp;</Text>
-                    <Text className='col2'>{ datas.CircleName }</Text>
-                  </View>
-                </View>
-                <View>
-                  <View>
-                    <Text decode className='col1'>所在仓储 :&nbsp;</Text>
-                    <Text className='col2'>{ datas.BuildingName }</Text>
-                  </View>
-                </View>
+
+
                 <View>
                   <View style={{display: 'flex'}}>
                     <Text decode className='col1'>地址 :&nbsp;</Text>
                     <View className='col2 address'>
                       <Text>{ datas.Address}</Text>
                       <View>
-                        <Image onClick={this.goNavigation.bind(this,datas.Address)} src={`${imgUrl}icon_map_l.png`} />
+                        <Image 
+                          src={`${imgUrl}icon_map_l.png`}
+                          onClick={this.goNavigation.bind(this,datas.Address)} />
                       </View>
                     </View>
                   </View>
                 </View>
                 <View style={{marginBottom: '20rpx'}}>
                   <View>
-                    <Text decode className='col1'>物业管理方 :&nbsp;</Text>
-                    <Text className='col2'>{ datas.Property }</Text>
+                    <Text decode className='col1'>所在仓储 :&nbsp;</Text>
+                    <Text className='col2'>{ datas.BuyBackModel.BuyBackName }</Text>
                   </View>
                 </View>
 
@@ -573,7 +763,7 @@ export default class Index extends PureComponent {
               <View>
                 <Image src={`${imgUrl}remind.png`} />
               </View>
-              <Text>支付定金后，车位将为您锁定。您须自订单日期起7日内支付尾款，否则订单将过期失效，车位自动解锁，过期失效订单的已付定金不予退还。若客户违约，定金不予退还。</Text>
+              <Text>支付定金后，资产将为您锁定。您须自订单日期起7日内支付尾款，否则订单将过期失效，资产自动解锁，过期失效订单的已付定金不予退还。若客户违约，定金不予退还。</Text>
             </View>
           </View>
         </View>

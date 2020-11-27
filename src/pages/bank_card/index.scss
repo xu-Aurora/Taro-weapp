@@ -25,7 +25,6 @@
   }
 
   .card_list {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     color: #ffffff;
@@ -34,8 +33,6 @@
       padding: 53rpx 50rpx 63rpx 50rpx;
       box-sizing: border-box;
       height: 350rpx;
-      background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/bank_card.png');
-      background-size: 100% 100%;
 
       &>view:nth-child(1) {
         display: flex;

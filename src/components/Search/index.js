@@ -20,7 +20,7 @@ export default class Search extends Component {
       multiIndex:[0, 0],
       flag: false,    // 用来判断是否用滑动选择省市
       classfyData: [],
-      ParkingTraitType: ''
+      ParkingTraitType: '',
     };
 
   }
@@ -48,7 +48,7 @@ export default class Search extends Component {
       if (res.data.code === 200) {
         let province = []
         let city = []
-        let sub = []
+        // let sub = []
         res.data.data.forEach(ele => {
           province.push(ele.text)
           city.push(ele.ChildNodes)
@@ -56,12 +56,13 @@ export default class Search extends Component {
         city.map(ele => {
           ele.unshift({text: '全部', id: ''})
         })
-        city[0].forEach(ele => {
-          sub.push(ele.text)
-        })
-
+        // city[0].forEach(ele => {
+        //   sub.push(ele.text)
+        // })
+        city.unshift([{text: "全部", id: ""}])
+        province.unshift('全部')
         this.setState({
-          province: [province, sub],
+          province: [province, ['全部']],
           city,
           cityVal: city[0][0].text,
           cityCode: city[0][0].id,
@@ -103,6 +104,7 @@ export default class Search extends Component {
           data[1] = citys
           arr[0] = e.detail.value
           arr[1] = 0
+
           this.setState({
             province: data,
             multiIndex: arr,
@@ -150,9 +152,8 @@ export default class Search extends Component {
     let arr = multiIndex
     arr[1] = e.detail.value[1]
     arr[0] = e.detail.value[0]
-    
     if (this.props.datas) {
-      let ParkingTraitType, ParkingTypeId
+      let ParkingTraitType = '', ParkingTypeId
 
       classfyData.forEach(ele => {
         if (ele.text === province[0][arr[0]]) {
@@ -169,9 +170,9 @@ export default class Search extends Component {
         }
       })
       this.setState({
-        cityVal: province[1][arr[1]],
+        cityVal: province[1][arr[1]] == '全部' ? `${province[0][arr[0]]}` : `${province[0][arr[0]]}-${province[1][arr[1]]}`,
         iconCity: 'chevron-down',
-        ParkingTraitType
+        ParkingTraitType,
       })
       this.props.changeCity(ParkingTraitType, ParkingTypeId)
 
@@ -189,7 +190,7 @@ export default class Search extends Component {
               value: ''
             })
             set('CityCode', ele.AreaCode)
-            this.props.changeCity({CityCode: ele.AreaCode}, province[1][arr[1]])
+            this.props.changeCity(ele.AreaCode)
           }
         })
         
@@ -198,7 +199,7 @@ export default class Search extends Component {
           cityCode: '110100',
           value: ''
         })
-        this.props.changeCity({CityCode: '110100'}, province[1][arr[1]])
+        this.props.changeCity('110100')
       }
     }
 

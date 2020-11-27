@@ -33,6 +33,9 @@ export default class Index extends PureComponent {
       id: '',
       disabled: false,
       disabled1: false,
+      ImportOrigins: [],
+      DomesticOrigins: [],
+      Units: []
     }
   }
 
@@ -219,15 +222,49 @@ export default class Index extends PureComponent {
     return code
   }
 
+  getUnit () {
+    api.getClassfy({data: 'Unit'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          Units: res.data.data,
+        })
+      }
+    })
+  }
 
-  componentWillMount () {
+  // ImportOrigin -- 进口产地
+  // DomesticOrigin -- 国内产地
+  getImportOrigin () {
+    api.getClassfy({data: 'ImportOrigin'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ImportOrigins: res.data.data,
+        })
+      }
+    })
+  }
+  getDomesticOrigin () {
+    api.getClassfy({data: 'DomesticOrigin'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          DomesticOrigins: res.data.data,
+        })
+      }
+    })
+  }
 
-    this.getData()
+
+  async componentWillMount () {
+
+    await this.getUnit()              // 获取‘单位’的数据字典
+    await this.getImportOrigin()      // 获取‘进口产地’的数据字典
+    await this.getDomesticOrigin()    // 获取‘国内产地’的数据字典
+    await this.getData()
 
   }
 
   render () {
-    const { page, datas, id, navType, num, title, disabled, disabled1 } = this.state
+    const { page, datas, id, navType, num, title, disabled, disabled1, Units, ImportOrigins, DomesticOrigins } = this.state
     const titleHeight = get('titleHeight')
 
     return (
@@ -238,6 +275,9 @@ export default class Index extends PureComponent {
           <View className='aw_car_detail' style={{marginTop: titleHeight}}>
             <CarInfo 
               onDatas={datas} 
+              ImportOrigins={ImportOrigins}
+              DomesticOrigins={DomesticOrigins}
+              Units={Units}
               onPage={page}
               onId={id}
             />

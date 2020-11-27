@@ -27,7 +27,7 @@ export default class Index extends PureComponent {
       isOpened: false,
       isOpened2: false,
       accountDatas: {}, // 账户信息数据
-      // parkingDatas: [], // 车位列表数据
+      // parkingDatas: [], // 资产列表数据
       pzParkArr: null,
       qzParkArr: null,
       thisAmt: '',       // 还款金额
@@ -133,7 +133,7 @@ export default class Index extends PureComponent {
     }
   }
 
-  // 车位操作
+  // 资产操作
   handle (type,id,CircleId,way,e) {
     e.stopPropagation()
     //用来判断是点击的支付还是转让,把状态存到全局变量中
@@ -294,7 +294,7 @@ export default class Index extends PureComponent {
     })
   }
 
-  //跳转到车位详情
+  //跳转到资产详情
   goDetail (id,status) {
     this.$preload({
       id,
@@ -334,7 +334,10 @@ export default class Index extends PureComponent {
     const { isZS, num, navType, title, accountDatas, thisAmt, current, pzParkArr, qzParkArr, isOpened, disabled, disabled1, disabled2 } = this.state
     const tabList = [{ title: '区块链资产通凭证' }, { title: '区块链资产通权证' }]
     const titleHeight = get('titleHeight')
-    
+    const bgImg = {
+      background: `url(${imgUrl}circle_card.png)`,
+      backgroundSize: '100% 100%'
+    }
     return (
       <View className='circle'>
 
@@ -344,7 +347,7 @@ export default class Index extends PureComponent {
           <View style={{marginTop: titleHeight, minHeight: `calc(100vh - ${titleHeight})`}}>
 
             <View className='top'>
-              <View className='card'>
+              <View className='card' style={bgImg}>
                 <View>
                   <View>{ accountDatas.CircleName }</View>
                   <Image
@@ -528,7 +531,7 @@ export default class Index extends PureComponent {
                             <View className='clear conTopMargin'>
                               <View className='itemContLeft'>
                                 <View className='textButton12'>
-                                  <Text>车位号：</Text>
+                                  <Text>资产号：</Text>
                                   <Text>{ele.ParkingCode}</Text>
                                 </View>
                                 <View className='textButton12'>

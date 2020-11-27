@@ -54,15 +54,15 @@ export default {
   areaZone(params){
     return request.post(`Modules/SourceInfo/AreaZone?${qs.stringify(params)}`)
   },
-  // 行政区域车位数量统计
+  // 行政区域资产数量统计
   areaCount(params){
     return request.post(`Modules/SourceInfo/AreaCount?${qs.stringify(params)}`)
   },
-  // 新上架车位(首页,用户未登录也能看到的车位数据)
+  // 新上架资产(首页,用户未登录也能看到的资产数据)
   newParking(params){
     return request.post(`Modules/SourceInfo/NewParking?${qs.stringify(params)}`)
   },
-  // 我的车位
+  // 我的资产
   parking(params){
     return request.post(`Modules/ParkingInfo/Parking?${qs.stringify(params)}`)
   },
@@ -70,15 +70,15 @@ export default {
   myaAssetst(params){
     return request.post(`Modules/ParkingInfo/MyaAssetst?${qs.stringify(params)}`)
   },
-  // 投资车位
+  // 投资资产
   investParking(params){
     return request.post(`Modules/SourceInfo/InvestParking?${qs.stringify(params)}`)
   },
-  // 未购买的车位详情
+  // 未购买的资产详情
   parkingDetail(params){
     return request.post(`Modules/SourceInfo/ParkingDetail?${qs.stringify(params)}`)
   },
-  // 我的的车位详情
+  // 我的的资产详情
   myParkingDetail(params){
     return request.post(`Modules/ParkingInfo/MyParkingDetail?${qs.stringify(params)}`)
   },
@@ -134,7 +134,7 @@ export default {
   statistics(params){
     return request.post(`Modules/Echart/Statistics?${qs.stringify(params)}`)
   },
-  // 仓储->楼盘类型,车位类型
+  // 仓储->楼盘类型,资产类型
   buildTraitType(params){
     return request.get(`learun/adms/dataitem/details?${qs.stringify(params)}`)
   },
@@ -170,39 +170,39 @@ export default {
   cancelOrder(params){
     return request.post(`Modules/Trade/CancelOrder?${qs.stringify(params)}`)
   },
-  // 车位->挂牌
+  // 资产->挂牌
   attorn(params){
     return request.post(`Modules/Trade/AttornParking?${qs.stringify(params)}`)
   },
-  // 车位->摘牌
+  // 资产->摘牌
   cancelAttorn(params){
     return request.post(`Modules/Trade/CancelAttorn?${qs.stringify(params)}`)
   },
-  // 车位->支付和转让
+  // 资产->支付和转让
   attornPay(params){
     return request.post(`Modules/Trade/AttornPay?${qs.stringify(params)}`)
   },
-  // 车位->申请回购
+  // 资产->申请回购
   backBuy(params){
     return request.post(`Modules/Trade/Repurchase?${qs.stringify(params)}`)
   },
-  // 车位->取消申请回购
+  // 资产->取消申请回购
   cancelBackBuy(params){
     return request.post(`Modules/Trade/CancelRepurchase?${qs.stringify(params)}`)
   },
-  // 车位->交易记录
+  // 资产->交易记录
   tradeList(params){
     return request.post(`Modules/SourceInfo/TradeList?${qs.stringify(params)}`)
   },
-  // 车位->协议详情
+  // 资产->协议详情
   protocol(params){
     return request.post(`Modules/SourceInfo/ProtocolDetail?${qs.stringify(params)}`)
   },
-  // 车位->历史账单
+  // 资产->历史账单
   historyBill(params){
     return request.post(`Modules/UserInfo/MyTradeDetail?${qs.stringify(params)}`)
   },
-  // 车位->收益明细
+  // 资产->收益明细
   myProfit(params){
     return request.post(`Modules/UserInfo/MyProfit?${qs.stringify(params)}`)
   },
@@ -250,7 +250,7 @@ export default {
   repurchaseMsg(params){
     return request.post(`Modules/Trade/RepurchaseMsg?${qs.stringify(params)}`)
   },
-  // 我的车位详情，车位权属证明
+  // 我的资产详情，资产权属证明
   verifyParking(params){
     return request.get(`Modules/ParkingInfo/VerifyParking`,params)
   },
@@ -313,5 +313,9 @@ export default {
   // 数据字典
   getClassfy(params){
     return request.get(`Modules/SourceInfo/GetDataDetailItem?${qs.stringify(params)}`)
+  },
+  // 热门关键字
+  getHotSearch(params){
+    return request.get(`Modules/SourceInfo/HotSearch?${qs.stringify(params)}`)
   },
 }

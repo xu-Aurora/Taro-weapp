@@ -9,7 +9,7 @@ import CarInfo from '../../components/car_detail/index'
 import './index.scss'
 
 
-// 车位详情,包括未购买、已购买、挂牌详情,集一个里面
+// 资产详情,包括未购买、已购买、挂牌详情,集一个里面
 
 export default class Index extends PureComponent {
 
@@ -29,6 +29,8 @@ export default class Index extends PureComponent {
       id: '',
       isOpened: false,
       isOpened1: false,
+      ImportOrigins: [],
+      DomesticOrigins: []
     }
   }
 
@@ -49,7 +51,7 @@ export default class Index extends PureComponent {
           Price: res.data.data.SalePrice,
           type
         })
-        // 用来知道购买的是权证车位还是凭证车位，在购买成功页面需要用到
+        // 用来知道购买的是权证资产还是凭证资产，在购买成功页面需要用到
         set('usufruct', res.data.data.BuyBackModel.Usufruct == 0 ? '凭证' : '权证')
 
         Taro.navigateTo({
@@ -86,6 +88,27 @@ export default class Index extends PureComponent {
     })
   }
 
+  // ImportOrigin -- 进口产地
+  // DomesticOrigin -- 国内产地
+  getImportOrigin () {
+    api.getClassfy({data: 'ImportOrigin'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ImportOrigins: res.data.data,
+        })
+      }
+    })
+  }
+  getDomesticOrigin () {
+    api.getClassfy({data: 'DomesticOrigin'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          DomesticOrigins: res.data.data,
+        })
+      }
+    })
+  }
+
   // 加入或移除购物车
   shpoppingCar(val) {
 
@@ -115,12 +138,15 @@ export default class Index extends PureComponent {
   }
 
   async componentWillMount () {
-    await this.getUnit()  // 获取‘单位’的数据字典
+
+    await this.getUnit()              // 获取‘单位’的数据字典
+    await this.getImportOrigin()      // 获取‘进口产地’的数据字典
+    await this.getDomesticOrigin()    // 获取‘国内产地’的数据字典
     await this.getData()
   }
   
   render () {
-    const { page, title, datas, id, navType, num, isOpened, isOpened1, Units } = this.state
+    const { page, title, datas, id, navType, num, isOpened, isOpened1, Units, ImportOrigins, DomesticOrigins } = this.state
     const titleHeight = get('titleHeight')
 
     return (
@@ -132,6 +158,8 @@ export default class Index extends PureComponent {
           >
             <CarInfo
               onDatas={datas}
+              ImportOrigins={ImportOrigins}
+              DomesticOrigins={DomesticOrigins}
               Units={Units}
               onPage={page}
               onId={id}

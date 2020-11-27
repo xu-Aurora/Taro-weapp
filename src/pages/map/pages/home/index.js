@@ -104,7 +104,7 @@ export default class Index extends PureComponent {
     return code
   }
 
-  //获取市下面所有的区与车位数量
+  //获取市下面所有的区与资产数量
   areaCount (cityCode) {
     let t = this
     // Taro.showLoading({ title: 'loading...', mask: true })
@@ -136,7 +136,7 @@ export default class Index extends PureComponent {
                 longitude: ele.location.lng,
                 alpha: isiOS ? 0 : 1,
                 callout: {
-                  // content: `${ele.fullname} \n ${ele.count}个车位`,
+                  // content: `${ele.fullname} \n ${ele.count}个资产`,
                   content: `${ele.fullname.substr(0, ele.fullname.length - 1)} \n ${ele.count}个`,
                   padding: 10,
                   display: 'ALWAYS',
@@ -253,7 +253,7 @@ export default class Index extends PureComponent {
               longitude: ele.Location.lng,
               alpha: isiOS ? 0 : 1,
               callout: {
-                content: `${ele.BuildingName} 车位：${ele.ForSaleCount} 均价：${splitThousand(ele.AveragePrice)}`,
+                content: `${ele.BuildingName} 资产：${ele.ForSaleCount} 均价：${splitThousand(ele.AveragePrice)}`,
                 padding: 5,
                 display: 'ALWAYS',
                 bgColor: '#5584ff',
@@ -331,7 +331,7 @@ export default class Index extends PureComponent {
   }
 
 
-  // 从车位数据进来，地址转经纬度
+  // 从资产数据进来，地址转经纬度
   getAddress(address, BuildingName) {
     qqmapsdk.geocoder({
       address,

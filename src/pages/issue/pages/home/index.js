@@ -336,7 +336,10 @@ export default class Index extends PureComponent {
     const titleHeight = get('titleHeight')
     const surHeight = get('titleHeight1') + 465
     dragStyle.height = `calc(100vh - ${surHeight}rpx)`
-
+    const bgImg = {
+      background: `url(${imgUrl}pic_bgfabu.png)`,
+      backgroundSize: '100% 100%'
+    }
     return (
       <View className='issue_home'>
         <Header onNum={num}  onTitle={title} onNavType={navType} />
@@ -370,18 +373,18 @@ export default class Index extends PureComponent {
 
           <View className='content'>
             <View className='header'>
-              <View>
-                <View onClick={this.goPage.bind(this,'车位求购',1)}>
+              <View style={bgImg}>
+                <View onClick={this.goPage.bind(this,'资产求购',1)}>
                   <View className='hor_center'><Image src={`${imgUrl}icon_buy.png`} /></View>
-                  <View className='hor_center'>车位求购</View>
+                  <View className='hor_center'>资产求购</View>
                 </View>
-                <View onClick={this.goPage.bind(this,'车位求租',2)}>
+                <View onClick={this.goPage.bind(this,'资产求租',2)}>
                   <View className='hor_center'><Image src={`${imgUrl}icon_demand.png`} /></View>
-                  <View className='hor_center'>车位求租</View>
+                  <View className='hor_center'>资产求租</View>
                 </View>
-                <View onClick={this.goPage.bind(this,'车位出租',3)}>
+                <View onClick={this.goPage.bind(this,'资产出租',3)}>
                   <View className='hor_center'><Image src={`${imgUrl}icon_rent.png`} /></View>
-                  <View className='hor_center'>车位出租</View>
+                  <View className='hor_center'>资产出租</View>
                 </View>
               </View>
             </View>
@@ -434,14 +437,14 @@ export default class Index extends PureComponent {
           onClose={() => this.setState({isOpened: false,iconIssue: 'chevron-down'})}
           cancelText='取消'
         >
-          <AtActionSheetItem onClick={this.handleItem.bind(this,'车位求购',1)}>
-            车位求购发布
+          <AtActionSheetItem onClick={this.handleItem.bind(this,'资产求购',1)}>
+            资产求购发布
           </AtActionSheetItem>
-          <AtActionSheetItem onClick={this.handleItem.bind(this,'车位求租',2)}>
-            车位求租发布
+          <AtActionSheetItem onClick={this.handleItem.bind(this,'资产求租',2)}>
+            资产求租发布
           </AtActionSheetItem>
-          <AtActionSheetItem onClick={this.handleItem.bind(this,'车位出租',3)}>
-            车位出租发布
+          <AtActionSheetItem onClick={this.handleItem.bind(this,'资产出租',3)}>
+            资产出租发布
           </AtActionSheetItem>
         </AtActionSheet>
 

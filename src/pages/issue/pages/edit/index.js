@@ -28,8 +28,8 @@ export default class Index extends PureComponent {
       describe: '',   //描述
       type: '',       //用来判断是求购、求租、出租
       area: ['北京市', '北京市', '东城区'],
-      parkData: [],   //车位类型数据
-      selType: '',    //选中的车位类型
+      parkData: [],   //资产类型数据
+      selType: '',    //选中的资产类型
       MinAmt: '',     //最低价格
       MaxAmt: '',     //最高价格
       Tel: JSON.parse(userInfoData).Mobile,        //手机号码
@@ -51,7 +51,7 @@ export default class Index extends PureComponent {
 
   //input双向绑定
   handleChange (types,e) {
-    if (this.state.type === '车位出租') {
+    if (this.state.type === '资产出租') {
       if (types === 'describe') {
         this.setState({
           [types]: e.target.value
@@ -139,7 +139,7 @@ export default class Index extends PureComponent {
     }
 
   }
-  //车位类型选择
+  //资产类型选择
   handleTag (e) {
     const arr = Object.assign([],this.state.parkData)
     let newArr = []
@@ -157,7 +157,7 @@ export default class Index extends PureComponent {
       parkData: arr,
       selType: newArr.join('/')
     },() => {
-      if (this.state.type === '车位出租') {
+      if (this.state.type === '资产出租') {
         if (
           this.state.title!=='' && 
           trim(this.state.title).length>0 &&
@@ -205,7 +205,7 @@ export default class Index extends PureComponent {
       }
     })
   }
-  //获取车位类型
+  //获取资产类型
   getParkType () {
     api.buildTraitType({
       data: 'ParkingType'
@@ -272,31 +272,31 @@ export default class Index extends PureComponent {
   text (type,num) {
     let text
     if (num === 1) {
-      if (type === '车位求购') {
+      if (type === '资产求购') {
         text = '求购'
-      }else if (type === '车位求租') {
+      }else if (type === '资产求租') {
         text = '求租'
-      }else if (type === '车位出租') {
+      }else if (type === '资产出租') {
         text = '所在'
       }
     }else if (num === 2) {
-      if (type === '车位求购') {
+      if (type === '资产求购') {
         text = '期望价格'
-      }else if (type === '车位求租') {
+      }else if (type === '资产求租') {
         text = '期望租金'
-      }else if (type === '车位出租') {
+      }else if (type === '资产出租') {
         text = '租金'
       }
     }else if (num === 3) {
-      if (type === '车位求购') {
+      if (type === '资产求购') {
         text = '价格'
-      }else if (type === '车位求租') {
+      }else if (type === '资产求租') {
         text = '租金'
       }
     }else if (num === 4) {
-      if (type === '车位求购') {
+      if (type === '资产求购') {
         text = '万元'
-      }else if (type === '车位求租') {
+      }else if (type === '资产求租') {
         text = '元/月'
       }
     }
@@ -506,11 +506,11 @@ export default class Index extends PureComponent {
         let type = () => {
           let text
           if (data.Type === 1) {
-            text = '车位求购'
+            text = '资产求购'
           }else if(data.Type === 2) {
-            text = '车位求租'
+            text = '资产求租'
           }else if(data.Type === 3) {
-            text = '车位出租'
+            text = '资产出租'
           }
           return text
         }
@@ -583,7 +583,7 @@ export default class Index extends PureComponent {
             />
 
             { 
-              type === '车位出租' && (
+              type === '资产出租' && (
                 <View style={{paddingBottom: '20rpx'}}>
                   <AtImagePicker
                     multiple
@@ -649,7 +649,7 @@ export default class Index extends PureComponent {
             </Picker>
             
             {
-              type === '车位出租' ? (
+              type === '资产出租' ? (
                 <View className='cz'>
                   <AtInput
                     type='digit'

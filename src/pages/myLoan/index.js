@@ -28,7 +28,7 @@ export default class Index extends PureComponent {
     }
   }
 
-  //跳转到车位详情
+  //跳转到资产详情
   goPage (datas) {
     this.$preload({
       datas

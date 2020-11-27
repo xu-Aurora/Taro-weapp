@@ -78,7 +78,7 @@ export default class Index extends PureComponent {
           <View>
             <Image src={`${imgUrl}complete.png`} />
           </View>
-          {/* 全额支付支付成功,跳回我的车位 */}
+          {/* 全额支付支付成功,跳回我的资产 */}
           {
             inPage === 'myCarport' && (
               <View>
@@ -100,7 +100,7 @@ export default class Index extends PureComponent {
             inPage === 'myOrder' && (
               <View>
                 <View>定金支付成功</View>
-                <View>车位已锁定，请尽快完成尾款支付，超过订单时间7日后，订单将过期失效，已付定金不予退还。</View>
+                <View>资产已锁定，请尽快完成尾款支付，超过订单时间7日后，订单将过期失效，已付定金不予退还。</View>
                 <View>
                   <AtButton 
                     onClick={this.goPage.bind(this,'myOrder')}
@@ -117,7 +117,7 @@ export default class Index extends PureComponent {
               <View>
                 <View>定金支付成功</View>
                 <View style={{fontSize:'30rpx',color:'#808080'}}>
-                  车位已锁定，个人征信及贷款额度正在审核中，请耐心等待。点击 
+                  资产已锁定，个人征信及贷款额度正在审核中，请耐心等待。点击 
                   <Text style={{color:'#5584FF'}} onClick={this.goPage.bind(this,'order_detail')}>订单详情</Text> 可查看审核结果。
                 </View>
               </View>
