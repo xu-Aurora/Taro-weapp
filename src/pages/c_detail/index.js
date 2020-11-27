@@ -19,7 +19,7 @@ export default class Index extends PureComponent {
       datas: '',
       num: 1,
       navType: 'backHome',
-      title: '小区详情',
+      title: '仓储详情',
     }
   }
 
@@ -73,34 +73,34 @@ export default class Index extends PureComponent {
           >
             <View>
               <View className='left'>
-                <View className='left'>车位通凭证:</View>
+                <View className='left'>资产通凭证:</View>
                 <View className='left'>待出售凭证:</View>
-                <View className='left'>车位通权证:</View>
+                <View className='left'>资产通权证:</View>
                 <View className='left'>待出售权证:</View>
-                <View className='left'>车位类型:</View>
+                {/* <View className='left'>车位类型:</View> */}
               </View>
               <View className='right'>
                 <View>{ datas.SaleProof }个</View>
                 <View>{ datas.ForSaleProof }个</View>
                 <View>{ datas.ForSaleProof }个</View>
                 <View>{ datas.ForSaleWarrant }个</View>
-                <View className='overflow'>{ datas.ParkingType }</View>
+                {/* <View className='overflow'>{ datas.ParkingType }</View> */}
               </View>
             </View>
             <View>
               <View className='left'>
                 <View className='left'>所在地址:</View>
-                <View className='left'>开发商:</View>
-                <View className='left'>物业公司:</View>
-                <View className='left'>车位管理费:</View>
-                <View className='left'>管理费结算方式:</View>
+                {/* <View className='left'>开发商:</View> */}
+                <View className='left'>监管公司:</View>
+                {/* <View className='left'>车位管理费:</View> */}
+                {/* <View className='left'>管理费结算方式:</View> */}
               </View>
               <View className='right'>
                 <View className='overflow'>{ datas.City } { datas.District } { datas.Address }</View>
-                <View className='overflow'>{ datas.CompanyName ? datas.CompanyName : '暂无' }</View>
+                {/* <View className='overflow'>{ datas.CompanyName ? datas.CompanyName : '暂无' }</View> */}
                 <View className='overflow'>{ datas.Property ? datas.Property : '暂无' }</View>
-                <View>{ splitThousand(datas.ParkingManageFee) } 元/月</View>
-                <View>{ this.way(datas.SettlementType) }</View>
+                {/* <View>{ splitThousand(datas.ParkingManageFee) } 元/月</View> */}
+                {/* <View>{ this.way(datas.SettlementType) }</View> */}
               </View>
             </View>
             <View>

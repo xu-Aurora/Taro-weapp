@@ -141,7 +141,7 @@ export default class Index extends PureComponent {
                     <View>期望价格 :</View>
                     {
                       datas.IfDiscuss ==1 ? <View><Text>面议</Text></View> : 
-                      <View><Text>{ splitThousand(datas.MinAmt/10000) }-{ splitThousand(datas.MaxAmt/10000) }</Text><Text> 万元</Text></View>
+                      <View><Text>{ splitThousand(datas.MinAmt) }-{ splitThousand(datas.MaxAmt) }</Text><Text> 元</Text></View>
                     }
                   </View>
                 )
@@ -152,7 +152,7 @@ export default class Index extends PureComponent {
                     <View>期望租金 :</View>
                     {
                       datas.IfDiscuss ==1 ? <View><Text>面议</Text></View> : 
-                      <View><Text>{ splitThousand(datas.MinAmt/1000) }-{ splitThousand(datas.MaxAmt/10000) }</Text><Text> 万元</Text></View>
+                      <View><Text>{ splitThousand(datas.MinAmt) }-{ splitThousand(datas.MaxAmt) }</Text><Text> 元</Text></View>
                     }
                   </View>
                 )
@@ -175,11 +175,11 @@ export default class Index extends PureComponent {
               {
                 datas.Type === 3 ? (
                   <View>
-                    <View>所在小区 :</View>
+                    <View>所在仓储 :</View>
                     <View>{ datas.Building }</View>
                   </View>
                 ):  <View>
-                      <View>{ this.type(datas.Type) }小区 :</View>
+                      <View>{ this.type(datas.Type) }仓储 :</View>
                       <View>{ datas.Building }</View>
                     </View>
               }

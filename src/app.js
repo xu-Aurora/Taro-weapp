@@ -3,7 +3,7 @@ import qs from 'qs'
 import getBaseUrl from '@/service/baseUrl'
 import { set } from './global_data'
 import Index from './pages/index'
-// import api from './api/api'
+import api from './api/api'
 
 import './app.scss'
 
@@ -39,27 +39,17 @@ class App extends Taro.PureComponent {
           })
         }
       })
-      // api.userLogin({
-      //   LoginMark: Taro.getStorageSync('uuid'),
-      //   data: JSON.stringify({
-      //     Account: Taro.getStorageSync('Account'),
-      //     Password: Taro.getStorageSync('Password')
-      //   })
-      // }).then(res => {
-      //   if (res) {  // 服务器部署时，容错判断
-      //     if(res.data.code === 200) {
-      //       let userInfo = {
-      //         userName: res.data.data.RealName,     // 用户名
-      //         headIcon: res.data.data.SvHeadIcon,   // 用户头像
-      //         token: res.data.data.Token            // token
-      //       }
-      //       Taro.setStorageSync('userInfo',JSON.stringify(userInfo))
-      //     }
-      //   }
-
-      // })
 
     }
+
+    api.wineClassfy().then(res => {
+      if (res.data.code === 200) {
+        set('ParkingTraitType', res.data.data[0].id)
+        // set('ParkingTypeId', res.data.data[0].ChildNodes[0].id)
+
+      }
+    })
+    
 
     // 获取设备信息
     let sysinfo = Taro.getSystemInfoSync()
@@ -117,12 +107,12 @@ class App extends Taro.PureComponent {
       "pages/invite_join/index",        // 邀请会员加入、车位搜索付款对象
       "pages/busArea/index",            // 我的商圈
       "pages/circle/index",             // 商圈
-      "pages/community/index",          // 小区
+      "pages/community/index",          // 仓储
       "pages/pay_success/index",        // 支付成功
       "pages/pay_fail/index",           // 支付失败
       "pages/pay/index",                // 支付
       "pages/full_buy/index",           // 订单确认
-      "pages/c_detail/index",           // 小区详情
+      "pages/c_detail/index",           // 仓储详情
       "pages/comm_derail/index",        // 楼盘详情
       "pages/login/index",              // 登录
       "pages/first_login/index",        // 第一次登录
@@ -146,7 +136,7 @@ class App extends Taro.PureComponent {
       "pages/login_hint/index",         // 登录提示
       "pages/aw_bus_detail/index",      // 商圈详情->为加入商圈
       "pages/al_bus_detail/index",      // 商圈详情->已加入商圈
-      "pages/web_h5/index"              // h5准一开户
+      "pages/web_h5/index",              // h5准一开户
     ],
     "window": {
       "backgroundTextStyle": "dark",

@@ -565,7 +565,7 @@ export default class Index extends PureComponent {
                                   </View>
                                 </View>
                                 <View className='marginB20'>
-                                  <Text>资产类型：</Text><Text>{ ele.Usufruct==0?'车位通凭证':'车位通权证' } </Text>
+                                  <Text>资产类型：</Text><Text>{ ele.Usufruct==0?'资产通凭证':'资产通权证' } </Text>
                                 </View>
                                 
                               </View>
@@ -774,7 +774,7 @@ export default class Index extends PureComponent {
                                   </View>
                                 </View>
                                 <View className='marginB20'>
-                                  <Text>资产类型：</Text><Text>{ ele.Usufruct==0?'车位通凭证':'车位通权证' } </Text>
+                                  <Text>资产类型：</Text><Text>{ ele.Usufruct==0?'资产通凭证':'资产通权证' } </Text>
                                 </View>
                                 
                               </View>

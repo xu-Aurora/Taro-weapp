@@ -134,11 +134,11 @@ export default {
   statistics(params){
     return request.post(`Modules/Echart/Statistics?${qs.stringify(params)}`)
   },
-  // 小区->楼盘类型,车位类型
+  // 仓储->楼盘类型,车位类型
   buildTraitType(params){
     return request.get(`learun/adms/dataitem/details?${qs.stringify(params)}`)
   },
-  // 小区列表
+  // 仓储列表
   buildings(params){
     return request.post(`Modules/SourceInfo/Buildings?${qs.stringify(params)}`)
   },
@@ -301,8 +301,17 @@ export default {
   faceMsg(){
     return request.post(`Modules/SourceInfo/FaceMsg`)
   },
-  // 小区详情模糊搜索
+  // 仓储详情模糊搜索
   searchWord(params){
     return request.post(`Modules/SourceInfo/SearchWord?${qs.stringify(params)}`)
+  },
+  
+  // 仓储详情模糊搜索
+  wineClassfy(){
+    return request.get(`Modules/SourceInfo/WineClassfy`)
+  },
+  // 数据字典
+  getClassfy(params){
+    return request.get(`Modules/SourceInfo/GetDataDetailItem?${qs.stringify(params)}`)
   },
 }

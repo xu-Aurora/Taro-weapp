@@ -209,11 +209,11 @@ export default class Index extends PureComponent {
     let code = null
     if (data!==undefined&&JSON.stringify(data)!=='{}') {
       if (data.BuyBackModel.Usufruct == 0) {
-        // code = `车位通凭证编号 ${data.ParkingId.toUpperCase().slice(0,2)}*****${data.ParkingId.toUpperCase().slice(-2)}`
-        code = `车位通凭证`
+        // code = `资产通凭证编号 ${data.ParkingId.toUpperCase().slice(0,2)}*****${data.ParkingId.toUpperCase().slice(-2)}`
+        code = `资产通凭证`
       } else {
-        // code = `车位通权证编号 ${data.ParkingId.toUpperCase().slice(0,2)}**${data.ParkingId.toUpperCase().slice(-2)}`  
-        code = `车位通权证`  
+        // code = `资产通权证编号 ${data.ParkingId.toUpperCase().slice(0,2)}**${data.ParkingId.toUpperCase().slice(-2)}`  
+        code = `资产通权证`  
       }
     }
     return code

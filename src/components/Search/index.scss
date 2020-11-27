@@ -1,0 +1,14 @@
+.search_ {
+  width: 100%;
+  display: flex;
+  &>view:nth-child(1) {
+    display: flex;
+    align-items: center;
+    padding-left: 18px;
+    font-size: 28px;
+  }
+
+  &>view:nth-child(2) {
+    flex: 1;
+  }
+}

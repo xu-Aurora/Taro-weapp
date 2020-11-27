@@ -3,6 +3,10 @@ $color-brand: #5584FF;
 $color-grey-3: #B2B2B2;
 @import '../node_modules/taro-ui/dist/style/index.scss';
 
+.at-search-bar::after {
+  border-bottom-width: 0px;
+}
+
 //水平居中
 .hor_center {
   display: flex;
@@ -118,36 +122,14 @@ $color-grey-3: #B2B2B2;
   background-color: #ffffff;
   border-bottom: 1rpx solid #D9D9D9;
   box-sizing: border-box;
-  padding: 10rpx 0rpx 32rpx 0rpx;
+  padding-bottom: 32px;
   position: relative;
 
 
-  .at-search-bar::after {
-    border-bottom-width: 0rpx;
-  }
-  // .at-search-bar {
-  //   padding: 0rpx 18rpx 0px 1px;
-  // }
-  .at-search-bar__input-cnt,.at-search-bar__input,.at-search-bar__placeholder-wrap,.at-search-bar__clear {
-    height: 82rpx !important;
-  }
-  .at-search-bar__clear {
-    z-index: 10000;
-  }
-
-  .at-search-bar__input-cnt {
-    max-width: 100%;
-  }
-
-  .at-search-bar__action {
-    height: 75rpx;
-    line-height: 75rpx;
-    margin-left: 0rpx;
-  }
   .area_select {
     position: absolute;
     left: 55rpx;
-    top: 40rpx;
+    top: 20rpx;
     z-index: 100;
 
     .city {
@@ -169,39 +151,41 @@ $color-grey-3: #B2B2B2;
   }
 
   //nav选择
-  .nav_select {
-    margin-top: 24rpx;
+.nav_select {
+  margin-top: 24rpx;
+  display: flex;
+
+  .picker {
+    font-size: 28rpx;
+    color: #3E3E3E;
+  }
+
+  & > view {
+    flex: 1;
     display: flex;
+    justify-content: center;
 
-    .picker {
-      font-size: 28rpx;
-      color: #3E3E3E;
+  }
+  .sort {
+    display: flex;
+    font-size: 28rpx;
+    color: #3E3E3E;
+    align-items: center;
+    text {
+      margin-right: 11rpx;
+      display: inline-block;
+      height: 42rpx;
+      vertical-align: bottom;
     }
-
-    & > view {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-
-    }
-    .sort {
-      display: flex;
-      font-size: 28rpx;
-      color: #3E3E3E;
-      align-items: center;
-      text {
-        margin-right: 11rpx;
-        display: inline-block;
-        height: 42rpx;
-        vertical-align: bottom;
-      }
-      image {
-        width: 28rpx;
-        height: 28rpx;
-      }
+    image {
+      width: 28rpx;
+      height: 28rpx;
     }
   }
 }
+}
+
+
 
 .tag_blue {
   font-size: 26rpx;
@@ -391,3 +375,34 @@ $color-grey-3: #B2B2B2;
 
 
 
+
+.searchInp {
+  padding: 18px 0px;
+  background-color: #f7f7f7;
+  margin-left: 0px;
+}
+
+.captcha-normal {
+  background: white;
+  width: 219px;
+  height: 76px;
+  line-height: 76px;
+  border-radius: 10px;
+  border: 2px solid rgba(63, 67, 70, 1);
+  font-size: 28px;
+  font-weight: 400;
+  color: #333;
+  text-align: center;
+}
+.captcha-disabled {
+  background: #EEEEEE;
+  width: 219px;
+  height: 76px;
+  line-height: 76px;
+  border-radius: 10px;
+  border: 2px solid #999;
+  font-size: 28px;
+  font-weight: 400;
+  color: #999;
+  text-align: center;
+}

@@ -4,7 +4,7 @@ import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtModal, AtButton, AtActivityIndicator, AtLoadMore } from 'taro-ui'
 import Header from '@/components/header/header'
 import { set, get, toast } from '@/global_data'
-import { imgUrl, throttle } from '@/utils/util'
+import { imgUrl, throttle, splitThousand } from '@/utils/util'
 import api from '@/api/api'
 import './index.scss'
 
@@ -72,10 +72,7 @@ export default class Index extends PureComponent {
     })
   }
 
-  tenThousand(val){
-    val = (val / 10000).toFixed(2)
-    return val
-  }
+
   renderStatus (val) {
     switch (val) {
       case 0: { return <View className='tag_bisque'>草稿</View> }
@@ -362,7 +359,7 @@ export default class Index extends PureComponent {
       downPullStyle,
       downPullText,
       status } = this.state
-    const tabList = [{ title: '区块链车位通凭证' }, { title: '区块链车位通权证' }]
+    const tabList = [{ title: '区块链资产通凭证' }, { title: '区块链资产通权证' }]
     const titleHeight = get('titleHeight')
     const surHeight = get('titleHeight1') + 190
     dragStyle.height = `calc(100vh - ${surHeight}rpx)`
@@ -400,7 +397,7 @@ export default class Index extends PureComponent {
                             <View>
                               <View className='itemTitle_wrap'>
                                 <Image src={`${imgUrl}icon_pz.png`} className='itemImg' />
-                                <Text className='itemTitle'>区块链车位通凭证信息</Text>
+                                <Text className='itemTitle'>区块链资产通凭证信息</Text>
                                 <View className='itemTag'>
                                   { this.renderStatus(ele.State) }
                                 </View>
@@ -408,8 +405,8 @@ export default class Index extends PureComponent {
                               <View className='clear conTopMargin'>
                                 <View className='itemContLeft'>
                                   <View className='textButton12'>
-                                    <Text>面额<Text style={{fontSize: '18rpx'}}> (万元)</Text>：</Text>
-                                    <Text>{ (ele.Price/10000).toFixed(2) }</Text>
+                                    <Text>面额<Text style={{fontSize: '18rpx'}}> (元)</Text>：</Text>
+                                    <Text>{ splitThousand(ele.Price) }</Text>
                                   </View>
                                   <View className='textButton12'>
                                     <Text>年化收益率：</Text>
@@ -537,7 +534,7 @@ export default class Index extends PureComponent {
                             <View>
                               <View className='itemTitle_wrap'>
                                 <Image src={`${imgUrl}icon_qz.png`} className='itemImg' />
-                                <Text className='itemTitle'>区块链车位通权证信息</Text>
+                                <Text className='itemTitle'>区块链资产通权证信息</Text>
                                 <View className='itemTag'>
                                   { this.renderStatus(ele.State) }
                                 </View>
@@ -553,8 +550,8 @@ export default class Index extends PureComponent {
                                     <Text>{ele.Acreage}㎡</Text>
                                   </View>
                                   <View>
-                                    <Text>挂牌价<Text style={{fontSize: '18rpx'}}> (万元)</Text>：</Text>
-                                    <Text>{this.tenThousand(ele.SalePrice)}</Text>
+                                    <Text>挂牌价<Text style={{fontSize: '18rpx'}}> (元)</Text>：</Text>
+                                    <Text>{splitThousand(ele.SalePrice)}</Text>
                                   </View>
                                 </View>
                                 <View className='itemContRight' style={{marginTop:'42rpx'}}>
@@ -563,7 +560,7 @@ export default class Index extends PureComponent {
                                     <Text>{ele.CircleName }</Text>
                                   </View>
                                   <View>
-                                    <Text>所属小区：</Text>
+                                    <Text>所属仓储：</Text>
                                     <Text>{ele.BuildingName}</Text>
                                   </View>
                                 </View>

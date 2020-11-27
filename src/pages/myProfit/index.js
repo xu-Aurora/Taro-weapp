@@ -243,7 +243,7 @@ export default class Index extends PureComponent {
                       onClick={this.goPage.bind(this, ele.ParkingId)}
                     >
                       <View className='clear list_top'>
-                        <View className='list_top_title'>区块链车位通凭证</View>
+                        <View className='list_top_title'>区块链资产通凭证</View>
                         <View className='list_top_Price'>
                           +{splitThousand(ele.ProfitRate)}
                           <Text style={{fontSize: '24rpx'}}> (元)</Text>

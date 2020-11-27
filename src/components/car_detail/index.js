@@ -1,7 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import {  AtList, AtListItem } from 'taro-ui'
-import { imgUrl } from '../../utils/util'
+import { imgUrl, splitThousand } from '../../utils/util'
 import QQMapWX from '../../assets/js/qqmap-wx-jssdk.min'
 import './index.scss'
 
@@ -53,16 +53,27 @@ export default class CarInfo extends PureComponent {
     }
   }
 
-  parkCode (data) {
-    let code = null
-    if (data!==undefined&&JSON.stringify(data)!=='{}') {
-      if (data.BuyBackModel.Usufruct == 0) {
-        code = `${data.ParkingCode.slice(0,1)} ***** ${data.ParkingCode.slice(-1)}`
-      } else {
-        code = data.ParkingCode  
+  // parkCode (data) {
+  //   let code = null
+  //   if (data!==undefined&&JSON.stringify(data)!=='{}') {
+  //     if (data.BuyBackModel.Usufruct == 0) {
+  //       code = `${data.ParkingCode.slice(0,1)} ***** ${data.ParkingCode.slice(-1)}`
+  //     } else {
+  //       code = data.ParkingCode  
+  //     }
+  //   }
+  //   return code
+  // }
+
+  unit(val) {
+    const { Units } = this.props
+    let a;
+    Units.forEach(ele => {
+      if (ele.F_ItemValue == val) {
+        a = ele.F_ItemName
       }
-    }
-    return code
+    })
+    return a
   }
 
   openPDF(PDF) {
@@ -135,20 +146,20 @@ export default class CarInfo extends PureComponent {
                   <View className='bg_pz'>
                     <Image src={`${imgUrl}pic_pz_bg.png`} /> 
                     <View className='left'>
-                      <View>{ onDatas.BuyBackModel.FixedRate.toFixed(2) }<Text style={{fontSize:'20rpx'}}>%</Text></View>
+                      <View>{ onDatas.BuyBackModel.FixedRate }<Text style={{fontSize:'20rpx'}}>%</Text></View>
                       <View style={{fontSize: '24rpx'}}>年化收益率</View>
                     </View>
                     <View className='right'>
-                      <View>{ onDatas.Price ? ((onDatas.Price)/10000).toFixed(2) : 0 }</View>
-                      <View style={{fontSize: '24rpx'}}>面额<Text style={{fontSize: '18rpx'}}> (万元)</Text></View>
+                      <View>{ onDatas.Price ? splitThousand(onDatas.Price) : 0 }</View>
+                      <View style={{fontSize: '24rpx'}}>面额<Text style={{fontSize: '18rpx'}}> (元)</Text></View>
                     </View>
                   </View>: 
                   <View className='bg_qz'>
                     <Image src={`${imgUrl}pic_qz_bg.png`} />
                     <View>
-                      <Text style={{fontSize:'30rpx'}}>挂牌价<Text style={{fontSize: '22rpx'}}> (万元)</Text>：</Text>
+                      <Text style={{fontSize:'30rpx'}}>挂牌价<Text style={{fontSize: '22rpx'}}> (元)</Text>：</Text>
                       <Text style={{fontSize:'48rpx'}}>
-                        { onDatas.SalePrice ? ((onDatas.SalePrice)/10000).toFixed(2) : 0 }
+                        { onDatas.SalePrice ? splitThousand(onDatas.SalePrice) : 0 }
                       </Text>
                     </View>
                   </View>
@@ -158,14 +169,14 @@ export default class CarInfo extends PureComponent {
             </View>
             <View className='car_info'>
 
-              {/* 车位通信息(回购模式) */}
+              {/* 资产通信息(回购模式) */}
               {
                 (onDatas&&JSON.stringify(onDatas)!=='{}')&&onDatas.BuyBackModel.Usufruct == 0 ? (
                   <View className='buy_back'>
                     <View>
                       <View>
                         <Image src={`${imgUrl}icon_pz.png`} />
-                        <Text>区块链车位通凭证信息</Text>
+                        <Text>区块链资产通凭证信息</Text>
                       </View>
                       <View>
                         {
@@ -186,8 +197,8 @@ export default class CarInfo extends PureComponent {
                         <View>
                           <Text className='col1'>面额 : </Text>
                           <Text className='col2'>
-                            { onDatas.Price ? ((onDatas.Price)/10000).toFixed(2) : 0 }
-                            <Text style={{fontSize: '20rpx'}}> (万元)</Text>
+                            { onDatas.Price ? splitThousand(onDatas.Price) : 0 }
+                            <Text style={{fontSize: '20rpx'}}> (元)</Text>
                           </Text>
                         </View>
                         <View>
@@ -217,7 +228,7 @@ export default class CarInfo extends PureComponent {
                     <View>
                       <View>
                         <Image src={`${imgUrl}icon_qz.png`} />
-                        <Text>区块链车位通权证信息</Text>
+                        <Text>区块链资产通权证信息</Text>
                       </View>
                     </View>
                     <View>
@@ -242,40 +253,154 @@ export default class CarInfo extends PureComponent {
 
               <View>
                 <Text>
-                  <Text decode className='col1'>车位号 :&nbsp;</Text>
-                  <Text className='col2'>{ this.parkCode(onDatas) }</Text>
+                  <Text decode className='col1'>品名 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.ParkingCode }</Text>
+                  {/* <Text className='col2'>{ this.parkCode(onDatas) }</Text> */}
                 </Text>
                 <Text>
-                  <Text decode className='col1'>类型 :&nbsp;</Text>
-                  <Text className='col2'>{ onDatas.ParkingType }</Text>
+                  <Text decode className='col1'>数量 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.Number }{ this.unit(onDatas.BuyBackModel.Unit) }</Text>
+                </Text>
+              </View>
+
+              <View>
+                <Text>
+                  <Text decode className='col1'>酒精度 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.Vol }</Text>
+                </Text>
+                <Text>
+                  <Text decode className='col1'>净含量 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.NetContent }</Text>
+                </Text>
+              </View>
+              <View>
+                <Text>
+                  <Text decode className='col1'>进口 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.IsImport == 1 ? '是' : '否' }</Text>
+                </Text>
+                <Text>
+                  <Text decode className='col1'>产地 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.Origin }</Text>
                 </Text>
               </View>
               <View>
                 <View>
-                  <Text decode className='col1'>面积 :&nbsp;</Text>
-                  <Text className='col2'>{ onDatas.Acreage }㎡</Text>
+                  <Text decode className='col1'>原料 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.RawMaterial }</Text>
+                </View>
+              </View>
+              {
+                onDatas.BuyBackModel.Storage && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>储存 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.BuyBackModel.Storage }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              {
+                onDatas.BuyBackModel.GeneralLevel && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>标准/等级 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.BuyBackModel.GeneralLevel }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              {
+                onDatas.BuyBackModel.License && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>生产许可证号 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.BuyBackModel.License }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              {
+                onDatas.BuyBackModel.Special && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>特色 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.BuyBackModel.Special }</Text>
+                    </View>
+                  </View>
+                )
+              }
+
+              {
+                onDatas.Contact && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>厂名 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.Contact }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              {
+                onDatas.Location && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>厂址 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.Location }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              {
+                onDatas.ContactTel && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>联系方式 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.ContactTel }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              {
+                onDatas.Instruction && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>描述 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.Instruction }</Text>
+                    </View>
+                  </View>
+                )
+              }
+
+
+              <View>
+                <View>
+                  <Text decode className='col1'>品牌 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.Brand }</Text>
+                </View>
+              </View>
+              {
+                onDatas.BuyBackModel.Series && (
+                  <View>
+                    <View>
+                      <Text decode className='col1'>系列 :&nbsp;</Text>
+                      <Text className='col2'>{ onDatas.BuyBackModel.Series }</Text>
+                    </View>
+                  </View>
+                )
+              }
+              <View>
+                <View>
+                  <Text decode className='col1'>生产日期 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuyBackModel.ManufactureDate && onDatas.BuyBackModel.ManufactureDate.split(' ')[0] }</Text>
                 </View>
               </View>
               <View>
                 <View>
-                  <Text decode className='col1'>使用 (产权) 期限 :&nbsp;</Text>
-                  {
-                    onDatas!==undefined && JSON.stringify(onDatas)!=='{}' && <Text className='col2'>{ onDatas&&onDatas.EffectiveTime.split(' ')[0] }</Text>
-                  }
+                <Text decode className='col1'>保质日期 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.EffectiveTime && onDatas.EffectiveTime.split(' ')[0] }</Text>
                 </View>
               </View>
-              <View>
-                <View>
-                  <Text decode className='col1'>所属商圈 :&nbsp;</Text>
-                  <Text className='col2'>{ onDatas.CircleName }</Text>
-                </View>
-              </View>
-              <View>
-                <View>
-                  <Text decode className='col1'>所在小区 :&nbsp;</Text>
-                  <Text className='col2'>{ onDatas.BuildingModel.BuildingName }</Text>
-                </View>
-              </View>
+
               <View>
                 <View style={{display: 'flex'}}>
                   <Text decode className='col1'>地址 :&nbsp;</Text>
@@ -297,8 +422,8 @@ export default class CarInfo extends PureComponent {
               </View>
               <View style={{marginBottom: '20rpx'}}>
                 <View>
-                  <Text decode className='col1'>物业管理方 :&nbsp;</Text>
-                  <Text className='col2'>{ onDatas.BuildingModel.Property }</Text>
+                  <Text decode className='col1'>所在仓储 :&nbsp;</Text>
+                  <Text className='col2'>{ onDatas.BuildingModel.BuildingName }</Text>
                 </View>
               </View>
 
@@ -312,14 +437,14 @@ export default class CarInfo extends PureComponent {
                       {
                         onDatas.BuyBackModel.Usufruct == 0 ? (
                           onDatas.ProofSaleUrl && 
-                          <AtListItem title={onDatas.BuyBackModel.Usufruct == 0 ? '区块链车位通凭证销售协议' : '区块链车位通权证销售协议'} 
+                          <AtListItem title={onDatas.BuyBackModel.Usufruct == 0 ? '区块链资产通凭证销售协议' : '区块链资产通权证销售协议'} 
                             className='bot_line'
                             onClick={this.openPDF.bind(this, onDatas.BuyBackModel.Usufruct == 0 ? onDatas.ProofSaleUrl : onDatas.WarrantSaleUrl)}
                             extraText='查看' arrow='right'
                           />
                         ) : (
                           onDatas.WarrantSaleUrl && 
-                          <AtListItem title={onDatas.BuyBackModel.Usufruct == 0 ? '区块链车位通凭证销售协议' : '区块链车位通权证销售协议'} 
+                          <AtListItem title={onDatas.BuyBackModel.Usufruct == 0 ? '区块链资产通凭证销售协议' : '区块链资产通权证销售协议'} 
                             className='bot_line'
                             onClick={this.openPDF.bind(this, onDatas.BuyBackModel.Usufruct == 0 ? onDatas.ProofSaleUrl : onDatas.WarrantSaleUrl)}
                             extraText='查看' arrow='right'
@@ -329,7 +454,7 @@ export default class CarInfo extends PureComponent {
 
                       {
                         onDatas.LoanContractUrl && 
-                        <AtListItem title='区块链车位通借款合同' 
+                        <AtListItem title='区块链资产通借款合同' 
                           className='bot_line'
                           onClick={this.openPDF.bind(this, onDatas.LoanContractUrl)}
                           extraText='查看' arrow='right'

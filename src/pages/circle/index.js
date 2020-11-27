@@ -281,10 +281,6 @@ export default class Index extends PureComponent {
   }
 
   
-  tenThousand(val){
-    val = (val / 10000).toFixed(2)
-    return val
-  }
   // 跳转到贷款列表
   goRepay = () => {
     this.$preload({
@@ -336,7 +332,7 @@ export default class Index extends PureComponent {
 
   render () {
     const { isZS, num, navType, title, accountDatas, thisAmt, current, pzParkArr, qzParkArr, isOpened, disabled, disabled1, disabled2 } = this.state
-    const tabList = [{ title: '区块链车位通凭证' }, { title: '区块链车位通权证' }]
+    const tabList = [{ title: '区块链资产通凭证' }, { title: '区块链资产通权证' }]
     const titleHeight = get('titleHeight')
     
     return (
@@ -429,7 +425,7 @@ export default class Index extends PureComponent {
                           <View>
                             <View className='itemTitle_wrap'>
                               <Image src={`${imgUrl}icon_pz.png`} className='itemImg' />
-                              <Text className='itemTitle'>区块链车位通凭证信息</Text>
+                              <Text className='itemTitle'>区块链资产通凭证信息</Text>
                               <View className='itemTag'>
                                 { this.renderStatus(ele.State) }
                               </View>
@@ -437,8 +433,8 @@ export default class Index extends PureComponent {
                             <View className='clear conTopMargin'>
                               <View className='itemContLeft'>
                                 <View className='textButton12'>
-                                  <Text>面额<Text style={{fontSize: '18rpx'}}> (万元)</Text>：</Text>
-                                  <Text>{ this.tenThousand(ele.Price) }</Text>
+                                  <Text>面额<Text style={{fontSize: '18rpx'}}> (元)</Text>：</Text>
+                                  <Text>{ ele.Price }</Text>
                                 </View>
                                 <View className='textButton12'>
                                   <Text>年化收益率：</Text>
@@ -496,7 +492,7 @@ export default class Index extends PureComponent {
                     <View className='nodata' style={{minHeight: '320rpx'}}>
                       <View>
                         <Image src={`${imgUrl}no_card.png`} />
-                        <View>暂无区块链车位通凭证</View>
+                        <View>暂无区块链资产通凭证</View>
                       </View>
                     </View>
                 }
@@ -524,7 +520,7 @@ export default class Index extends PureComponent {
                           <View>
                             <View className='itemTitle_wrap'>
                               <Image src={`${imgUrl}icon_qz.png`} className='itemImg' />
-                              <Text className='itemTitle'>区块链车位通权证信息</Text>
+                              <Text className='itemTitle'>区块链资产通权证信息</Text>
                               <View className='itemTag'>
                                 { this.renderStatus(ele.State) }
                               </View>
@@ -540,8 +536,8 @@ export default class Index extends PureComponent {
                                   <Text>{ele.Acreage}㎡</Text>
                                 </View>
                                 <View>
-                                  <Text>挂牌价<Text style={{fontSize: '18rpx'}}> (万元)</Text>：</Text>
-                                  <Text>{this.tenThousand(ele.SalePrice)}</Text>
+                                  <Text>挂牌价<Text style={{fontSize: '18rpx'}}> (元)</Text>：</Text>
+                                  <Text>{ele.SalePrice && splitThousand(ele.SalePrice)}</Text>
                                 </View>
                               </View>
                               <View className='itemContRight' style={{marginTop:'42rpx'}}>
@@ -550,7 +546,7 @@ export default class Index extends PureComponent {
                                   <Text>{ele.CircleName }</Text>
                                 </View>
                                 <View>
-                                  <Text>所属小区：</Text>
+                                  <Text>所属仓储：</Text>
                                   <Text>{ele.BuildingName}</Text>
                                 </View>
                               </View>
@@ -578,7 +574,7 @@ export default class Index extends PureComponent {
                     <View className='nodata' style={{minHeight: '320rpx'}}>
                       <View>
                         <Image src={`${imgUrl}no_card.png`} />
-                        <View>暂无区块链车位通凭证</View>
+                        <View>暂无区块链资产通凭证</View>
                       </View>
                     </View>
                 }

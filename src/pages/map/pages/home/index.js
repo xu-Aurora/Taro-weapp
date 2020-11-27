@@ -1,9 +1,10 @@
 import Taro, { PureComponent } from '@tarojs/taro'
-import { View, Map, Picker, Text } from '@tarojs/components'
-import { AtSearchBar, AtIcon, AtButton } from 'taro-ui'
+import { View, Map } from '@tarojs/components'
+import { AtButton } from 'taro-ui'
 import { splitThousand } from '../../../../utils/util'
 import QQMapWX from '../../../../assets/js/qqmap-wx-jssdk.min'
-import { toast, get, set } from '../../../../global_data'
+import { toast, get } from '../../../../global_data'
+import Search from '@/components/Search';
 import './index.scss'
 import api from '../../../../api/api'
 
@@ -44,75 +45,24 @@ export default class Index extends PureComponent {
     }
   }
 
-  //省市选择
-  picker (e) {
-    let arr = this.state.multiIndex
-    arr[0] = e.detail.value[0]
-    arr[1] = e.detail.value[1]
-    set('City',this.state.province[1][arr[1]])
-    this.setState({
-      cityVal: this.state.province[1][arr[1]],
-      iconCity: 'chevron-down'
-    })
-    if (this.state.flag) {
-      this.state.selCity.forEach(ele => {
-        if (ele.AreaName === this.state.province[1][arr[1]]) {
-          this.geocoder(this.state.province[1][arr[1]])
-          this.setState({
-            cityCode: ele.AreaCode,
-            seatchVal: ''
-          })
-          set('CityCode',ele.AreaCode)
-          this.areaCount(ele.AreaCode)
-        }
-      })
-    }else{
-      this.geocoder(this.state.province[1][arr[1]])
-      set('CityCode','110100')
-      this.setState({
-        cityCode: '110100'
-      })
-      this.areaCount('110100')
-    }
+  changeCity(cityCode, city) {
+    this.geocoder(city)
+    this.areaCount(cityCode.CityCode)
   }
-  columnchange (e) {
-    switch (e.detail.column){
-      case 0:
-        let city = []
-        this.state.city[e.detail.value].forEach(ele => {
-          city.push(ele.AreaName)
-        })
-        let data = this.state.province
-        let arr = this.state.multiIndex
-        data[1] = city
-        arr[0] = e.detail.value
-        arr[1] = 0
-        this.setState({
-          province: data,
-          multiIndex: arr,
-          flag: true,
-          selCity: this.state.city[e.detail.value]
-        })
-    }
-  }
-  //search的change事件
-  searchChange (value) {
-    this.setState({
-      seatchVal: value,
-    })
-  }
+
+
   //点击搜索
-  onActionClick () {
-    if (this.state.seatchVal === '') {
-      
-    }else{
+  onActionClick (value, cityCode) {
+    if (value === '') {
+      toast('请输入关键字', 'none', 1500)
+    } else {
       let params = {
         LoginMark: this.state.uuid ? this.state.uuid : '',
         Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token : '',
-        CityCode: this.state.cityCode,
-        KeyWord: this.state.seatchVal
+        CityCode: cityCode,
+        KeyWord: value
       }
-      this.getBuildings(params,13)
+      this.getBuildings(params, 13)
     }
   }
   //获取省市数据
@@ -213,7 +163,7 @@ export default class Index extends PureComponent {
   // 微信获得经纬度
   getLocation () {
     let t = this;
-    if (get('City')) {    // 在小区中切换了城市地址
+    if (get('City')) {    // 在仓储中切换了城市地址
       this.geocoder(get('City'))
     } else {             // 未切换地址
       Taro.getLocation({
@@ -268,20 +218,24 @@ export default class Index extends PureComponent {
   }
   // 点击marker
   markerTap (e) {
-
-    if (e.markerId.length > 7) {
-      Taro.navigateTo({
-        url: `../../../comm_derail/index?param=${e.markerId}`
-      })
-    } else {
-      let params = {
-        LoginMark: this.state.uuid ? this.state.uuid : '',
-        Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token : '',
-        CityCode: get('CityCode') ? get('CityCode') : JSON.parse(this.state.citys).cityCode,
-        DistrictCode: e.markerId
+    if (e.markerId) {
+      if (e.markerId.length > 7) {
+        Taro.navigateTo({
+          url: `../../../comm_derail/index?param=${e.markerId}`
+        })
+      } else {
+        let params = {
+          LoginMark: this.state.uuid ? this.state.uuid : '',
+          Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token : '',
+          CityCode: get('CityCode') ? get('CityCode') : JSON.parse(this.state.citys).cityCode,
+          DistrictCode: e.markerId
+        }
+        this.getBuildings(params,13, e.markerId)
       }
-      this.getBuildings(params,13, e.markerId)
+    } else {
+      toast('暂无数据', 'none', 1500)
     }
+
 
   }
   //获取楼盘
@@ -477,7 +431,7 @@ export default class Index extends PureComponent {
 
 
   render () {
-    const { btn, map, latitude, longitude, markers, scale, seatchVal, cityVal, iconCity, province, multiIndex } = this.state
+    const { btn, map, latitude, longitude, markers, scale } = this.state
 
     return (
       <View className='map'>
@@ -485,31 +439,12 @@ export default class Index extends PureComponent {
           map && 
           <View>
             <View className='top_search'>
-              <AtSearchBar
-                placeholder='请输入楼盘名称'
-                onActionClick={this.onActionClick.bind(this)}
-                value={seatchVal}
-                onChange={this.searchChange.bind(this)} 
-              />
-              <View 
-                onClick={() => this.setState({iconCity: 'chevron-up'})}
-                className='area_select'
-              >
-                <Picker 
-                  mode='multiSelector'
-                  onCancel={() => this.setState({iconCity: 'chevron-down'})}
-                  value={multiIndex} 
-                  range={province} 
-                  oncolumnchange={this.columnchange.bind(this)}
-                  onChange={this.picker.bind(this)}
-                >
-                  <View class='city'>
-                    <Text>{ cityVal }</Text>
-                    <AtIcon value={iconCity} size='21' color='#AEAEAE'></AtIcon>
-                    <Text className='line'></Text>
-                  </View>
-                </Picker>
-              </View> 
+              <View className='search_x'>
+                <Search 
+                  onActionClick={this.onActionClick} 
+                  changeCity={this.changeCity.bind(this)}
+                />
+              </View>
             </View>
             
             <Map 

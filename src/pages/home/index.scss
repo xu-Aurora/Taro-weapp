@@ -4,46 +4,6 @@
   background: #F5F6FA;
   height: 100vh;
 
-  
-
-  .goComm {
-    background: #ffffff;
-    position: relative;
-    padding: 0rpx 18rpx;
-
-    &>view {
-      background-color: #F7F7F7;
-      height: 82rpx;
-      border-radius: 40px;
-
-      &>view {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-  
-      &>view:nth-child(1) {
-        color: #000;
-        font-size: 30rpx;
-        left: 50rpx;
-      }
-      &>view:nth-child(2) {
-        left: 155rpx;
-      }
-      &>view:nth-child(3) {
-        width: 2rpx;
-        height: 30rpx;
-        left: 205rpx;
-        background-color: #B2B2B2;
-      }
-      &>view:nth-child(4) {
-        color: #999;
-        left: 290rpx;
-      }
-    }
-
-  }
-
 
   .box_top {
     padding: 0 28rpx 34rpx 28rpx;
@@ -67,7 +27,6 @@
   /* 头部图片 */
   .title_img {
     background: #ffffff;
-    padding-top: 20rpx;
 
     image {
       width: 100%;

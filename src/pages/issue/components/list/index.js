@@ -1,7 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import './index.scss'
-import { imgUrl } from '../../../../utils/util'
+import { imgUrl, splitThousand } from '../../../../utils/util'
 
 export default class Index extends PureComponent {
 
@@ -54,7 +54,7 @@ export default class Index extends PureComponent {
                         <View className='right'>
                           {
                             ele.IfDiscuss ==1 ? <View><Text>面议</Text></View> : 
-                            <View>{ (ele.MinAmt/10000).toFixed(2) }-{ (ele.MaxAmt/10000).toFixed(2) }<Text style={{fontSize:'24rpx'}}>万元</Text></View>
+                            <View>{ splitThousand(ele.MinAmt) }-{ splitThousand(ele.MaxAmt) }<Text style={{fontSize:'24rpx'}}>元</Text></View>
                           }
                           <View style={{textAlign:'right'}}>期望价格</View>
                         </View>
@@ -65,7 +65,7 @@ export default class Index extends PureComponent {
                         <View className='right'>
                           {
                             ele.IfDiscuss ==1 ? <View><Text>面议</Text></View> : 
-                            <View>{ (ele.MinAmt/10000).toFixed(2) }-{ (ele.MaxAmt/10000).toFixed(2) }<Text style={{fontSize:'24rpx'}}>万元</Text></View>
+                            <View>{ splitThousand(ele.MinAmt) }-{ splitThousand(ele.MaxAmt) }<Text style={{fontSize:'24rpx'}}>元</Text></View>
                           }
                           
                           <View style={{textAlign:'right'}}>期望租金</View>

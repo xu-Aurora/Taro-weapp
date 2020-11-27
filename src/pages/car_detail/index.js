@@ -22,6 +22,7 @@ export default class Index extends PureComponent {
     this.state = {
       page: '', //用来判断是从哪个页面跳转进来的
       datas: {},
+      Units: [],  // '单位'数据字典
       title: '详情',
       num: 1,
       navType: 'backHome',
@@ -75,6 +76,16 @@ export default class Index extends PureComponent {
     })
   }
 
+  getUnit () {
+    api.getClassfy({data: 'Unit'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          Units: res.data.data,
+        })
+      }
+    })
+  }
+
   // 加入或移除购物车
   shpoppingCar(val) {
 
@@ -103,13 +114,13 @@ export default class Index extends PureComponent {
 
   }
 
-  componentWillMount () {
-
-    this.getData()
+  async componentWillMount () {
+    await this.getUnit()  // 获取‘单位’的数据字典
+    await this.getData()
   }
   
   render () {
-    const { page, title, datas, id, navType, num, isOpened, isOpened1 } = this.state
+    const { page, title, datas, id, navType, num, isOpened, isOpened1, Units } = this.state
     const titleHeight = get('titleHeight')
 
     return (
@@ -121,6 +132,7 @@ export default class Index extends PureComponent {
           >
             <CarInfo
               onDatas={datas}
+              Units={Units}
               onPage={page}
               onId={id}
             />

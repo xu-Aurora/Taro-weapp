@@ -309,7 +309,7 @@ export default class Index extends PureComponent {
                 selectedList={protocol}
                 onChange={this.handleChange.bind(this,'protocol')}
               />
-              <Text onClick={this.goPage.bind(this,'protocol')}>《车位通平台服务条款及说明》</Text>
+              <Text onClick={this.goPage.bind(this,'protocol')}>《资产通平台服务条款及说明》</Text>
             </View>
             <View className='footer1'>
               <AtButton onClick={this.back} type='secondary' className='back'>上一步</AtButton>

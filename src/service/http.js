@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import getBaseUrl from './baseUrl'
 import interceptors from './interceptors'
-import { toast } from '../global_data'
+
 
 // 拦截器
 interceptors.forEach(interceptorItem => Taro.addInterceptor(interceptorItem))

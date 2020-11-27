@@ -83,7 +83,7 @@ export default class Index extends PureComponent {
             inPage === 'myCarport' && (
               <View>
                 <View>购买成功</View>
-                <View>您已成功购买区块链车位通{get('usufruct')}，可前往“我的资产”中查看。</View>
+                <View>您已成功购买区块链资产通{get('usufruct')}，可前往“我的资产”中查看。</View>
                 <View>
                   <AtButton 
                     onClick={this.goPage.bind(this,'myCarports')}

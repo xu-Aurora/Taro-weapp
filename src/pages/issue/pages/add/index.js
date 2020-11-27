@@ -20,7 +20,7 @@ export default class Index extends PureComponent {
     super(...arguments)
     this.state = {
       title: '',      //标题
-      community: '',  //小区
+      community: '',  //仓储
       describe: '',   //描述
       type: '',       //用来判断是求购、求租、出租
       area: ['北京市', '北京市', '东城区'],
@@ -613,8 +613,8 @@ export default class Index extends PureComponent {
             <AtInput
               className='bot_line'
               type='text'
-              title={`${this.text(type,1)}小区`}
-              placeholder='请输入小区名称'
+              title={`${this.text(type,1)}仓储`}
+              placeholder='请输入仓储名称'
               value={community}
               onChange={this.handleChange.bind(this,'community')}
             />

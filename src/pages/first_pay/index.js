@@ -668,7 +668,7 @@ export default class Index extends PureComponent {
                 style={{borderBottom: '1rpx solid #E5E5E5'}}
                 onClick={() => this.setState({modal1: true})}
               >
-                <View>区块链车位通借款</View>
+                <View>区块链资产通借款</View>
                 <View>
                   <Text style={{color: agreeCol1}}>{isAgree1}</Text>
                   <AtIcon value='chevron-right' color='#C7C7CC'></AtIcon>
@@ -725,7 +725,7 @@ export default class Index extends PureComponent {
           <AtModalHeader>请点击并阅读</AtModalHeader>
           <AtModalContent>
             <View className='xy' onClick={this.openDocument.bind(this, 1)}>
-              <View>区块链车位通借款</View>
+              <View>区块链资产通借款</View>
               <View>
                 <AtIcon value='chevron-right' color='#C7C7CC'></AtIcon>
               </View>

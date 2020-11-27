@@ -1,7 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { AtModal } from 'taro-ui'
-import { imgUrl } from '../../utils/util'
+import { imgUrl, splitThousand } from '../../utils/util'
 import api from '../../api/api'
 import { toast } from '../../global_data'
 import QQMapWX from '../../assets/js/qqmap-wx-jssdk.min'
@@ -154,7 +154,7 @@ export default class Index extends PureComponent {
                   }
                   </View>
                   <View>所属商圈：{ ele.CircleName }</View>
-                  <View>小区：{ ele.BuildingName }</View>
+                  <View>仓储：{ ele.BuildingName }</View>
                   <View className='address'>
                     <Text className='overflow2'>地址：{ ele.Address }</Text>
                     <View>
@@ -163,7 +163,7 @@ export default class Index extends PureComponent {
                   </View>
                   {
                     ele.BuyBack.Usufruct == 0 ? 
-                    <View>面额：{ (ele.Price/10000 ).toFixed(2) }<Text style={{fontSize: '18rpx'}}> (万元)</Text></View> :
+                    <View>面额：{ splitThousand(ele.Price) }<Text style={{fontSize: '18rpx'}}> (元)</Text></View> :
                     <View>类型：{ ele.ParkingTypeName }</View>
                   }
                 </View>

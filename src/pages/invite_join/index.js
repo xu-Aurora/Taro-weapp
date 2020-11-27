@@ -149,7 +149,7 @@ export default class Index extends PureComponent {
                   userData == null ? 
                   <View className='nodata1'>
                     <View>搜索不到该会员</View>
-                    <View>对方可能未注册车位通平台</View>
+                    <View>对方可能未注册资产通平台</View>
                   </View> : 
                   userData !==null && userData.map(ele => {
                     return (

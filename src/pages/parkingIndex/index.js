@@ -1,13 +1,15 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView, Image } from '@tarojs/components'
-import { AtSearchBar, AtIcon, AtActivityIndicator, AtLoadMore, AtActionSheet, AtActionSheetItem } from 'taro-ui'
-import Header from '../../components/header/header'
-import { get, set, toast } from '../../global_data'
-import { imgUrl } from '../../utils/util'
-import api from '../../api/api'
-import QQMapWX from '../../assets/js/qqmap-wx-jssdk.min'
+import { AtIcon, AtActivityIndicator, AtLoadMore, AtActionSheet, AtActionSheetItem } from 'taro-ui'
+import Header from '@/components/header/header'
+import Search from '@/components/Search';
+import { get, toast } from '@/global_data'
+import { imgUrl, splitThousand } from '@/utils/util'
+import api from '@/api/api'
+import QQMapWX from '@/assets/js/qqmap-wx-jssdk.min'
 import './index.scss'
 
+let hList = Taro.getStorageSync("search_cache")
 
 let qqmapsdk = new QQMapWX({
   key: 'L72BZ-CKOAQ-JQL5X-GA4RA-XJ755-CPBYX'
@@ -26,14 +28,17 @@ export default class Index extends PureComponent {
       num: 1,
       navType: 'back',
       title: '',
-      seatchVal: '',
       sord: '',
       isOpened: false,
       iconCity: 'chevron-down',
       iconPrice: 'chevron-down',
       iconBus: 'chevron-down',
-      selBus: [],     //商圈
-      susCode: [],    //商圈code数据
+      iconType: 'chevron-down',
+      selType: ['类别', '凭证', '权证'],    // 类别
+      typeCode: ['-1', '0', '1'],
+      selTypeVal: '类别',
+      selBus: [],     // 商圈
+      susCode: [],    // 商圈code数据
       susCode1: [],    //用来储存选中的商圈的code
       selBusVal: '商圈',
       selPrice: ['面额','1万以下','1-5万', '5-20万', '20-50万', '50万以上'],
@@ -46,10 +51,15 @@ export default class Index extends PureComponent {
       cityVal: '',    //选择数据展示的值
       selCity: [],
       multiIndex:[0,0],
-      parkingData: null,  //车位列表
-      flag: false,    //用来判断是否用滑动选择省市
+      parkingData: [],  //车位列表
       ParkingLot: '',
       display: 'none',
+      prePage: 'aw',
+
+      searchText: '',
+      flag: false,   // 用来判断展示列表还是搜索记录     
+      hotList: ['栏目1', '栏目2', '栏目3', '栏目4', '栏目5'],
+
       circleLength: '',
       scrollY: true,
       // 拖动上下滚动
@@ -67,39 +77,104 @@ export default class Index extends PureComponent {
     }
   }
 
-  //search的change事件
-  searchChange (value) {
-    this.setState({
-      seatchVal: value,
-    })
-  }
 
   //点击搜索
-  onActionClick () {
-    if (this.state.seatchVal === '') {
-      this.getParkingNum({
-        LoginMark: this.state.uuid ? this.state.uuid : '',
-        Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token : '',
-        CityCode: this.state.cityCode,
-        ParkingLot: this.state.ParkingLot,
-        CircleId: this.state.susCode1,
-        Price: this.state.priceCode1,   //车位面额值
-        sord: this.state.sord
+  onActionClick = (value, ParkingTypeId, ParkingTraitType) => {
+    if (value === '') {
+      toast('请输入关键字', 'none', 1500)
+    } else {
+      this.setState({
+        flag: false
       })
-
-    }else{
       this.getParkingNum({
         LoginMark: this.state.uuid ? this.state.uuid:'',
         Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token:'',
-        CityCode: this.state.cityCode,
+        ParkingTypeId,
+        ParkingTraitType,
         ParkingLot: this.state.ParkingLot,
         CircleId: this.state.susCode1,
         Price: this.state.priceCode1,   //车位面额值
-        KeyWord: this.state.seatchVal,
+        KeyWord: value,
         sord: this.state.sord
       })
+
     }
   }
+
+  initGetDatas(ParkingTraitType, ParkingTypeId) {
+    const { searchText } = this.state
+
+    this.setState({
+      selBusVal: '商圈',
+      selPriceVal: '价格' ,
+      selType: '类别',
+      iconBus: 'chevron-up',
+      iconPrice: 'chevron-up',
+      iconType: 'chevron-up',
+      ParkingLot: '',
+      ParkingTypeId,
+      ParkingTraitType
+    }, () => {
+      this.getParkingNum({ 
+        KeyWord: searchText
+      })
+    })
+
+  }
+
+  searchStart = () => {
+    const { searchText } = this.state
+
+    if (searchText == "") {
+      toast('请输入关键字', 'none', 1500)
+
+    } else {
+      Taro.getStorage({
+        key: "search_cache",
+        success: (res) => {
+          let list = res.data;
+          if (list.length > 5) {
+            for (let item of list) {
+              if (item == searchText) {
+                return;
+              }
+            }
+            list.pop();
+            list.unshift(searchText);
+          } else {
+            for (let item of list) {
+              if (item == searchText) {
+                return;
+              }
+            }
+            list.unshift(searchText);
+          }
+          hList = list
+          Taro.setStorage({
+            key: "search_cache",
+            data: list
+          })
+        },
+        fail(err) {
+          hList = []
+          hList.push(searchText);
+          Taro.setStorage({
+            key: "search_cache",
+            data: hList
+          });
+        }
+      });
+    }
+  };
+
+  keywordsClick = (item) => {
+    // 关键词搜索与历史搜索
+    this.setState({
+      searchText: item
+    }, () => {
+      this.searchStart();
+    });
+  };
 
 
   changeIcon (type) {
@@ -111,7 +186,11 @@ export default class Index extends PureComponent {
       this.setState({
         iconBus: 'chevron-up'
       })
-    }else {
+    } else if (type === 'type') {
+      this.setState({
+        iconType: 'chevron-up'
+      })
+    } else {
       this.setState({
         iconPrice: 'chevron-up'
       })
@@ -119,90 +198,20 @@ export default class Index extends PureComponent {
 
   }
 
-  /**
-   * 改变了地址，全局都要改变定位地址
-   *  set('City')   在全局保存城市
-   *  set('CityCode')   在全局保存城市的code
-   */
-  //省市选择
-  picker (e) {
-    let arr = this.state.multiIndex
-    arr[0] = e.detail.value[0]
-    arr[1] = e.detail.value[1]
-    set('City',this.state.province[1][arr[1]])
-    this.setState({
-      cityVal: this.state.province[1][arr[1]],
-      iconCity: 'chevron-down'
-    })
-    if (this.state.flag) {
-      this.state.selCity.forEach(ele => {
-        if (ele.AreaName === this.state.province[1][arr[1]]) {
-          this.setState({
-            cityCode: ele.AreaCode,
-            susCode1: '',
-            priceCode1: '',
-            seatchVal: '',
-            display: 'none'
-          })
-          set('CityCode',ele.AreaCode)
-          this.getParkingNum({
-            LoginMark: this.state.uuid ? this.state.uuid:'',
-            Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token:'',
-            CityCode: ele.AreaCode,
-            ParkingLot: this.state.ParkingLot,
-            CircleId: this.state.susCode1,
-            Price: this.state.priceCode1,   //车位面额值
-            KeyWord: this.state.seatchVal,
-            sord: this.state.sord
-          })
-        }
-      })
-    }else{
-      this.setState({
-        cityCode: '110100',
-        susCode1: '',
-        priceCode1: '',
-        seatchVal: '',
-        display: 'none'
-      })
-      set('CityCode','110100')
-      this.getParkingNum({
-        CityCode: '110100',
-        ParkingLot: this.state.ParkingLot,
-      })
-    }
-
-  }
-  columnchange (e) {
-    switch (e.detail.column){
-      case 0:
-        let city = []
-        this.state.city[e.detail.value].forEach(ele => {
-          city.push(ele.AreaName)
-        })
-        let data = this.state.province
-        let arr = this.state.multiIndex
-        data[1] = city
-        arr[0] = e.detail.value
-        arr[1] = 0
-        this.setState({
-          province: data,
-          multiIndex: arr,
-          flag: true,
-          selCity: this.state.city[e.detail.value]
-        })
-    }
-  }
   cancel (type) {
     if (type === 'city') {
       this.setState({
         iconCity: 'chevron-down'
       })
-    }else if (type === 'bus') {
+    } else if (type === 'bus') {
       this.setState({
         iconBus: 'chevron-down'
       })
-    }else {
+    } else if (type === 'type') {
+      this.setState({
+        iconType: 'chevron-down'
+      })
+    } else {
       this.setState({
         iconPrice: 'chevron-down'
       })
@@ -212,7 +221,7 @@ export default class Index extends PureComponent {
 
   // 价格排序
   sort(type) {
-    const { ParkingLot, cityCode, seatchVal, priceCode1, susCode1 } = this.state
+    const { ParkingLot, searchText, priceCode1, susCode1 } = this.state
     this.setState({
       isOpened: false,
       sord: type
@@ -221,9 +230,8 @@ export default class Index extends PureComponent {
       LoginMark: Taro.getStorageSync('uuid'),
       Token: Taro.getStorageSync('userInfo') ? JSON.parse(Taro.getStorageSync('userInfo')).token : '',
       ParkingLot: ParkingLot,
-      CityCode: cityCode,  //市code
       CircleId: susCode1,
-      KeyWord: seatchVal,
+      KeyWord: searchText,
       Price: priceCode1,
       sord: type
     })
@@ -232,7 +240,7 @@ export default class Index extends PureComponent {
 
   //nav选择
   navChange (type,e) {
-    const { cityCode, sord, susCode1, priceCode1, priceCode, selBus, susCode, selPrice, seatchVal } = this.state
+    const { sord, susCode1, priceCode1, priceCode, selBus, susCode, selPrice, searchText, typeCode, selType } = this.state
     if (type === 'bus') {
       this.setState({
         selBusVal: selBus[e.detail.value].slice(0,4),
@@ -240,10 +248,9 @@ export default class Index extends PureComponent {
         susCode1: susCode[e.detail.value] == 0 ? '' : susCode[e.detail.value]
       })
       this.getParkingNum({
-        CityCode: cityCode,    //市code
         CircleId: susCode[e.detail.value] == 0 ? '' : susCode[e.detail.value], //商圈id 
         Price: priceCode1,   //车位面额值
-        KeyWord: seatchVal,
+        KeyWord: searchText,
         sord: sord
       })
     } else if (type === 'price') {
@@ -253,12 +260,25 @@ export default class Index extends PureComponent {
         priceCode1: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value]
       })
       this.getParkingNum({
-        CityCode: cityCode,    //市code
         Price: priceCode[e.detail.value] == 0 ? '' : priceCode[e.detail.value],  //车位面额值
         CircleId: susCode1,   //商圈id 
-        KeyWord: seatchVal,
+        KeyWord: searchText,
         sord: sord
       })
+    } else if (type === 'type') {
+      this.setState({
+        selTypeVal: selType[e.detail.value],
+        iconType: 'chevron-down',
+        ParkingLot: typeCode[e.detail.value] == '-1' ? '' : typeCode[e.detail.value]
+      }, () => {
+        this.getParkingNum({
+          Price: priceCode1,  
+          CircleId: susCode1,   
+          KeyWord: searchText,
+          sord: sord
+        })
+      })
+
     }
 
   }
@@ -311,13 +331,15 @@ export default class Index extends PureComponent {
   }
 
   getDatas(params, downPullText, toast1) {
+    const { ParkingTypeId, ParkingTraitType, ParkingLot } = this.state
     api.newParking({
       Token: Taro.getStorageSync('userInfo') ? JSON.parse(Taro.getStorageSync('userInfo')).token : '',
       LoginMark: Taro.getStorageSync('uuid'),
       Page: 1,
       Rows: 10,
-      ParkingLot: this.$router.preload.ParkingLot,
-      CityCode: params.CityCode,  //市code
+      ParkingLot,
+      ParkingTypeId, 
+      ParkingTraitType,  
       CircleId: params.CircleId,
       KeyWord: params.KeyWord,
       Price: params.Price,
@@ -329,7 +351,7 @@ export default class Index extends PureComponent {
           parkingData: res.data.data.rows,
           downPullText,
           page: 1,
-          rows: 10,
+          rows: 10
         })
         if (toast1) {
           toast('刷新成功','success',1500)
@@ -343,14 +365,16 @@ export default class Index extends PureComponent {
 
   }
   getParkingNum1(params, status) {
+    const { ParkingTypeId, ParkingTraitType, ParkingLot } = this.state
     Taro.showLoading({title: 'loading...', mask: true})
     api.newParking({
       Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token : '',
       LoginMark: this.state.uuid ? this.state.uuid : '',
       Page: this.state.page + 1,
       Rows: this.state.rows + 10,
-      ParkingLot: this.state.ParkingLot,
-      CityCode: params.CityCode,  //市code
+      ParkingLot,
+      ParkingTypeId, 
+      ParkingTraitType,  
       CircleId: params.CircleId,
       sord: params.sord,
       Price: params.Price
@@ -416,22 +440,14 @@ export default class Index extends PureComponent {
     let uuid = Taro.getStorageSync('uuid')
     let userInfo = Taro.getStorageSync('userInfo')
 
-    
-    this.setState({
-      cityVal: get('City') ? get('City') : (citys ? citys.citys : ''),
-      cityCode: get('CityCode') ? get('CityCode') : (citys ? citys.cityCode : ''),
-      uuid,
-      userInfo,
-      ParkingLot: this.$router.preload.ParkingLot,
-      title: this.$router.preload.ParkingLot === 0 ? '在售车位通凭证' : '在售车位通权证'
-    })
     let params = {
       LoginMark: Taro.getStorageSync('uuid'),
       Token: Taro.getStorageSync('userInfo') ? JSON.parse(Taro.getStorageSync('userInfo')).token : '',
-      CityCode: get('CityCode') ? get('CityCode') : (citys ? citys.cityCode : ''),
+      ParkingTypeId: get('ParkingTypeId'),
+      ParkingTraitType: get('ParkingTraitType'),
       CircleId: this.state.CircleId,
       Price: this.state.Price,
-      KeyWord: this.state.seatchVal,
+      KeyWord: this.state.searchText,
       sord: this.state.sord,
       existLoading: true
     }
@@ -441,8 +457,21 @@ export default class Index extends PureComponent {
       await this.getCircle()
       await this.getParkingNum(params)
     }
-    asyncHttp()
+    const { ParkingLot, page } = this.$router.preload;
+    this.setState({
+      cityVal: get('City') ? get('City') : (citys ? citys.citys : ''),
+      cityCode: get('CityCode') ? get('CityCode') : (citys ? citys.cityCode : ''),
+      uuid,
+      userInfo,
+      ParkingLot: ParkingLot,
+      title: ParkingLot ? (ParkingLot === 0 ? '在售资产通凭证' : '在售资产通权证') : '资产通',
+      ParkingTypeId: '',
+      ParkingTraitType: get('ParkingTraitType'),
+      flag: page === 'al' ? true : false,
+      prePage: page
+    })
 
+    asyncHttp()
   }
 
   // 鼠标点击移动开始触发事件
@@ -454,6 +483,7 @@ export default class Index extends PureComponent {
   }
   // 移动往上触发顶部回弹实现
   touchRecMove = e => {
+    const { creState, priceCode1, susCode1 } = this.state
     clearTimeout(timeout)
     e.stopPropagation();
 
@@ -463,8 +493,8 @@ export default class Index extends PureComponent {
     let deviationY = 70; //拉动长度（低于这个值的时候不执行）
     let maxY = 70; //拉动的最大高度
 
-    let start_x = that.state.creState ? that.state.creState ? that.state.creState.clientX : 0 : 0;
-    let start_y = that.state.creState ? that.state.creState ? that.state.creState.clientY : 0 : 0;
+    let start_x = creState ? creState ? clientX : 0 : 0;
+    let start_y = creState ? creState ? creState.clientY : 0 : 0;
     let move_x = move.clientX;
     let move_y = move.clientY;
 
@@ -480,10 +510,9 @@ export default class Index extends PureComponent {
           timeout = setTimeout(() => {
             let params = {
               sord: this.state.sord,
-              CityCode: that.state.cityCode,
-              KeyWord: this.state.seatchVal,
-              CircleId: that.state.susCode1,   //商圈id 
-              Price: that.state.priceCode1   //车位面额值
+              KeyWord: searchText,
+              CircleId: susCode1,   //商圈id 
+              Price: priceCode1,   //车位面额值
             }
             that.getParkingNum(params, 'loading', 'toast1')
           },500)
@@ -551,16 +580,16 @@ export default class Index extends PureComponent {
   // 获取更多推荐列表
   getMoreRecList = () => {
     let that = this;
+    const { sord, susCode1, priceCode1 } = that.state
     that.setState({
       status: 'loading',
       display: 'block'
     })
     setTimeout(() => {
       let params = {
-        sord: that.state.sord,
-        CityCode: that.state.cityCode,
-        CircleId: that.state.susCode1,   //商圈id 
-        Price: that.state.priceCode1   //车位面额值
+        sord: sord,
+        CircleId: susCode1,   //商圈id 
+        Price: priceCode1   //车位面额值
       }
       that.getParkingNum1(params, 'noMore')
     }, 500)
@@ -568,16 +597,20 @@ export default class Index extends PureComponent {
 
 
   render () {
-    const { num, navType, title, parkingData, seatchVal, multiIndex, province, display, circleLength,
-      selPrice, selPriceVal, iconPrice, cityVal, iconCity, selBus, selBusVal, iconBus, isOpened, cityCode,
+    const { num, navType, title, parkingData, display, circleLength, flag, selType, selTypeVal,
+      selPrice, selPriceVal, iconPrice, selBus, selBusVal, iconBus, isOpened, iconType,
       isActive,
       scrollY,
       dragStyle,
       downPullStyle,
       downPullText,
+      searchText,
+      prePage,
+      hotList,
       status } = this.state
+
     const house_nodata = `${imgUrl}house_nodata.png`
-    const surHeight = get('titleHeight1') + 310
+    const surHeight = get('titleHeight1') + 260
     const titleHeight = get('titleHeight')
     dragStyle.height = `calc(100vh - ${surHeight}rpx)`
 
@@ -590,180 +623,227 @@ export default class Index extends PureComponent {
           style={{marginTop: titleHeight,minHeight: `calc(100vh - ${titleHeight})`}}
         >
           {/* 顶部搜索及select */}
-          <View className='top_search'>
-            <AtSearchBar
-              placeholder='请输入商圈、小区名称'
-              onActionClick={this.onActionClick.bind(this)}
-              value={seatchVal}
-              onChange={this.searchChange.bind(this)} 
-            />
-            <View 
-              onClick={this.changeIcon.bind(this,'city')}
-              className='area_select'
-            >
-              <Picker 
-                mode='multiSelector'
-                onCancel={this.cancel.bind(this,'city')}
-                value={multiIndex} 
-                range={province} 
-                oncolumnchange={this.columnchange.bind(this)}
-                onChange={this.picker.bind(this)}
-              >
-                <View class='city'>
-                  <Text>{ cityVal }</Text>
-                  <AtIcon value={iconCity} size='18' color='#AEAEAE'></AtIcon>
-                  <Text className='line'></Text>
-                </View>
-              </Picker>
-
-            </View> 
-
-            <View className='nav_select'>
-              <View onClick={this.changeIcon.bind(this,'bus')}>
-                <Picker 
-                  mode='selector' 
-                  onCancel={this.cancel.bind(this,'bus')}
-                  range={selBus} 
-                  onChange={this.navChange.bind(this,'bus')}
-                >
-                  <View className='picker'>
-                    <Text decode>{ selBusVal }&nbsp;</Text>
-                    <AtIcon value={iconBus} size='18' color='#AEAEAE'></AtIcon>
-                  </View>
-                </Picker>
-              </View>
-              <View onClick={this.changeIcon.bind(this,'price')}>
-                <Picker mode='selector' range={selPrice} 
-                  onCancel={this.cancel.bind(this,'price')}
-                  onChange={this.navChange.bind(this,'price')}
-                >
-                  <View className='picker'>
-                    <Text decode>{ selPriceVal }&nbsp;</Text>
-                    <AtIcon value={iconPrice} size='18' color='#AEAEAE'></AtIcon>
-                  </View>
-                </Picker>
-              </View>
-              <View onClick={() => this.setState({isOpened: true})} className='sort'>
-                <Text>价格</Text>
-                <View><Image src={`${imgUrl}rank.png`} /></View>
-              </View>
+          <View>
+            <View className='search_x'>
+              <Search 
+                onActionClick={this.onActionClick} 
+                getValue={(searchText) => this.setState({searchText})} 
+                changeCity={this.initGetDatas.bind(this)}
+                value={searchText}
+                onFocus={() => this.setState({flag: true})}
+                datas={'classfy'}
+              />
             </View>
-
           </View>
-          
-          <View className='dragUpdatePage' style={{height: `calc(100vh - ${surHeight}rpx)`}}>
-            <View className='downDragBox' style={downPullStyle}>
-              <AtActivityIndicator content={downPullText} />
-            </View>
 
-            {/* list数据 */}
-            <ScrollView
-              style={dragStyle}
-              scrollY={scrollY}
-              className={'tab-container ' + (isActive == 1 ? 'show' : 'hide')}
-              upperThreshold={50}
-              lowerThreshold={50}
-              onTouchStart={this.touchStart}
-              onTouchMove={this.touchRecMove}
-              onTouchEnd={this.touchEnd}
-              onScrollToLower={this.onReachBottom}
-              scrollWithAnimation
-            >
-              {
-                JSON.stringify(parkingData) !== '[]' && parkingData!==null && parkingData.map(ele => {
-                  return (
-                    <View className='list' key={ele.BuildingId}>
-                      <View className='item' key={ele.BuildingId} onClick={this.goDetail.bind(this,ele.ParkingId)}>
-                      <View class='left'>
-                          {
-                            ele && ele.BuyBack.Usufruct == 0 ? 
-                            <View style={{color: '#FC7946'}}>
-                              <View>
-                                <Text>{ ele.BuyBack.FixedRate&&ele.BuyBack.FixedRate.toFixed(2) }</Text>
-                                <Text>%</Text>
-                              </View>
-                              <View>年化收益率</View>
-                            </View> : 
-                            <View style={{color: '#5584FF'}}>
-                              <View>
-                                <Text>{ ele&&((ele.SalePrice)/10000).toFixed(2) }</Text>
-                                <Text>万</Text>
-                              </View>
-                              <View>挂牌价 (元)</View>
-                            </View>
-                          }
-                        </View>
-                      {
-                        ele && ele.BuyBack.Usufruct == 0 ? 
-                        <View class='right'>
-                          <View className='overflow1'>
-                            <Text>{ `凭证编号${ele.ParkingId.toUpperCase()}` }</Text>
-                          </View>
-                          <View>所属商圈：{ ele.CircleName }</View>
-                          <View>所属小区：{ ele.BuildingName }</View>
-                          <View className='address'>
-                            <View className='overflow1'>地址：{ ele.Address }</View>
-                            <View>
-                              <Image onClick={this.goNavigation.bind(this,ele.Address)} src={`${imgUrl}icon_map_l.png`} />
-                            </View>
-                          </View>
-                          <View>凭证到期日：{ ele.LimitDate }</View>
-                          <View>
-                            面额：{ ele&&((ele.Price)/10000).toFixed(2) }
-                            <Text style={{fontSize: '18rpx'}}> (万元)</Text>
-                          </View>
-                        </View> : 
-                        <View class='right'>
-                          <View>
-                            <Text>车位号{ ele.ParkingCode }</Text>
-                          </View>
-                          <View>所属商圈：{ ele.CircleName }</View>
-                          <View>所属小区：{ ele.BuildingName }</View>
-                          <View className='address'>
-                            <View className='overflow1'>地址：{ ele.Address }</View>
-                            <View>
-                              <Image onClick={this.goNavigation.bind(this,ele.Address)} src={`${imgUrl}icon_map_l.png`} />
-                            </View>
-                          </View>
-                          <View>车位类型：{ ele.ParkingTypeName }</View>
-                        </View>
-                      }
-
-                      </View>
+          {
+            flag ? (
+              <View className='search_history' style={{height: `calc(100vh - 110px)`}}>
+                {hList.length > 0 ? (
+                  <View className={"s-circle"}>
+                    <View className="header">
+                      历史记录
+                      <Image
+                        src={require("@/assets/images/delete.svg")}
+                        mode="aspectFit"
+                        onClick={this.delhistory}
+                      ></Image>
                     </View>
-                  )
-                }) 
-              }
-              {
-                JSON.stringify(parkingData) == '[]' && (
-                  <View className='nodata'>
-                    <View>
-                      <Image src={house_nodata} />
-                      {
-                        circleLength > 0 ? 
-                        <View>当前城市无数据，请尝试切换城市查看</View> : 
-                        <View>您还未加入任何一个商圈，请前往“我的商圈”，在“未加入”列表进行选择并加入。</View>
-                      }
-                      
-                    </View> 
+                    <View className="list">
+                      {hList.map((item, index) => {
+                        return (
+                          <View
+                            key={index}
+                            onClick={this.keywordsClick.bind(this, item)}
+                          >
+                            {item}
+                          </View>
+                        );
+                      })}
+                    </View>
                   </View>
-                )
-              }
-              <View className='upDragBox' style={{display: display}}>
-                <AtLoadMore
-                  status={status}
-                  // moreText='查看数据'
-                  loadingText='数据加载中...'
-                  noMoreText='---已经到底啦---'
-                  noMoreTextStyle={{ border: 'none' }}
-                  moreBtnStyle={{ border: 'none' }}
-                />
+                ) : null}
+                <View className={"wanted-circle"}>
+                  <View className="header">猜你想搜的</View>
+                  <View className="list">
+                    {hotList.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          onClick={this.keywordsClick.bind(this, item)}
+                        >
+                          {item}
+                        </View>
+                      );
+                    })}
+                  </View>
+                </View>
               </View>
-            </ScrollView>
+            ) : (
+              <View>
+                <View className='top_search' style={{paddingTop: '6px'}}>  
+                  <View className='nav_select'>
+                    {
+                      prePage === 'al' && (
+                        <View onClick={this.changeIcon.bind(this,'type')}>
+                          <Picker 
+                            mode='selector' 
+                            onCancel={this.cancel.bind(this,'type')}
+                            range={selType} 
+                            onChange={this.navChange.bind(this,'type')}
+                          >
+                            <View className='picker'>
+                              <Text decode>{ selTypeVal }&nbsp;</Text>
+                              <AtIcon value={ iconType } size='18' color='#AEAEAE'></AtIcon>
+                            </View>
+                          </Picker>
+                        </View>
+                      )
+                    }
 
-          </View>
+                    <View onClick={this.changeIcon.bind(this,'bus')}>
+                      <Picker 
+                        mode='selector' 
+                        onCancel={this.cancel.bind(this,'bus')}
+                        range={selBus} 
+                        onChange={this.navChange.bind(this,'bus')}
+                      >
+                        <View className='picker'>
+                          <Text decode>{ selBusVal }&nbsp;</Text>
+                          <AtIcon value={iconBus} size='18' color='#AEAEAE'></AtIcon>
+                        </View>
+                      </Picker>
+                    </View>
+                    <View onClick={this.changeIcon.bind(this,'price')}>
+                      <Picker mode='selector' range={selPrice} 
+                        onCancel={this.cancel.bind(this,'price')}
+                        onChange={this.navChange.bind(this,'price')}
+                      >
+                        <View className='picker'>
+                          <Text decode>{ selPriceVal }&nbsp;</Text>
+                          <AtIcon value={iconPrice} size='18' color='#AEAEAE'></AtIcon>
+                        </View>
+                      </Picker>
+                    </View>
+                    <View onClick={() => this.setState({isOpened: true})} className='sort'>
+                      <Text>价格</Text>
+                      <View><Image src={`${imgUrl}rank.png`} /></View>
+                    </View>
+                  </View>
+                </View>
+                <View className='dragUpdatePage' style={{height: `calc(100vh - ${surHeight}rpx)`}}>
+                  <View className='downDragBox' style={downPullStyle}>
+                    <AtActivityIndicator content={downPullText} />
+                  </View>
+                  {/* list数据 */}
+                  <ScrollView
+                    style={dragStyle}
+                    scrollY={scrollY}
+                    className={'tab-container ' + (isActive == 1 ? 'show' : 'hide')}
+                    upperThreshold={50}
+                    lowerThreshold={50}
+                    onTouchStart={this.touchStart}
+                    onTouchMove={this.touchRecMove}
+                    onTouchEnd={this.touchEnd}
+                    onScrollToLower={this.onReachBottom}
+                    scrollWithAnimation
+                  >
+                    {
+                      parkingData.length>0 ? parkingData.map(ele => {
+                        return (
+                          <View className='list_' key={ele.BuildingId}>
+                            <View className='item' key={ele.BuildingId} onClick={this.goDetail.bind(this,ele.ParkingId)}>
+                            <View class='left'>
+                                {
+                                  ele && ele.BuyBack.Usufruct == 0 ? 
+                                  <View style={{color: '#FC7946'}}>
+                                    <View>
+                                      <Text>{ ele.BuyBack.FixedRate&&ele.BuyBack.FixedRate.toFixed(2) }</Text>
+                                      <Text>%</Text>
+                                    </View>
+                                    <View>年化收益率</View>
+                                  </View> : 
+                                  <View style={{color: '#5584FF'}}>
+                                    <View>
+                                      <Text>{ ele&&splitThousand(ele.SalePrice) }</Text>
+                                      <Text>万</Text>
+                                    </View>
+                                    <View>挂牌价 (元)</View>
+                                  </View>
+                                }
+                              </View>
+                            {
+                              ele && ele.BuyBack.Usufruct == 0 ? 
+                              <View class='right'>
+                                <View className='overflow1'>
+                                  <Text>{ `凭证编号${ele.ParkingId.toUpperCase()}` }</Text>
+                                </View>
+                                <View>所属商圈：{ ele.CircleName }</View>
+                                <View>所属仓储：{ ele.BuildingName }</View>
+                                <View className='address'>
+                                  <View className='overflow1'>地址：{ ele.Address }</View>
+                                  <View>
+                                    <Image onClick={this.goNavigation.bind(this,ele.Address)} src={`${imgUrl}icon_map_l.png`} />
+                                  </View>
+                                </View>
+                                <View>凭证到期日：{ ele.LimitDate }</View>
+                                <View>
+                                  面额：{ ele&&splitThousand(ele.Price) }
+                                  <Text style={{fontSize: '18rpx'}}> (元)</Text>
+                                </View>
+                              </View> : 
+                              <View class='right'>
+                                <View>
+                                  <Text>车位号{ ele.ParkingCode }</Text>
+                                </View>
+                                <View>所属商圈：{ ele.CircleName }</View>
+                                <View>所属仓储：{ ele.BuildingName }</View>
+                                <View className='address'>
+                                  <View className='overflow1'>地址：{ ele.Address }</View>
+                                  <View>
+                                    <Image onClick={this.goNavigation.bind(this,ele.Address)} src={`${imgUrl}icon_map_l.png`} />
+                                  </View>
+                                </View>
+                                <View>车位类型：{ ele.ParkingTypeName }</View>
+                              </View>
+                            }
+
+                            </View>
+                          </View>
+                        )
+                      }) : (
+                        <View className='nodata'>
+                          <View>
+                            <Image src={house_nodata} />
+                            {
+                              circleLength > 0 ? 
+                              <View>当前类别无数据，请尝试切换类别查看</View> : 
+                              <View>您还未加入任何一个商圈，请前往“我的商圈”，在“未加入”列表进行选择并加入。</View>
+                            }
+                            
+                          </View> 
+                        </View>
+                      )
+                    }
+
+                    <View className='upDragBox' style={{display: display}}>
+                      <AtLoadMore
+                        status={status}
+                        // moreText='查看数据'
+                        loadingText='数据加载中...'
+                        noMoreText='---已经到底啦---'
+                        noMoreTextStyle={{ border: 'none' }}
+                        moreBtnStyle={{ border: 'none' }}
+                      />
+                    </View>
+                  </ScrollView>
+                </View>
+              </View>
+            )
+          }
 
         </View>
+
 
         {/* 点击排序 */}
         <AtActionSheet 

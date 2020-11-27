@@ -2,7 +2,7 @@ import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtActionSheet, AtActionSheetItem, AtSearchBar } from "taro-ui"
 import Header from '../../components/header/header'
-import { imgUrl, debounce, isEmpty } from '../../utils/util'
+import { imgUrl, debounce, isEmpty, splitThousand } from '../../utils/util'
 import api from '../../api/api'
 import { get, set } from '../../global_data'
 import './index.scss'
@@ -19,7 +19,7 @@ export default class Index extends PureComponent {
       }, 
       searchValue: '',
       num: 1,
-      title: '小区详情',
+      title: '仓储详情',
       navType: 'backHome',
       display1: 'none',
       display2: 'none',
@@ -31,14 +31,27 @@ export default class Index extends PureComponent {
       Ifuse: 0,
       Sord: '',
       Sidx: '',
+      ParkingTraitType: []
     }
 
     this.handleSearch = debounce(this.handleSearch1)
   }
 
-  componentWillMount () {
+  getType () {
+    api.getClassfy({data: 'wineTpye'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ParkingTraitType: res.data.data,
+        })
+      }
+    })
+  }
 
-    this.getData({
+  async componentWillMount () {
+
+    await this.getType()
+
+    await this.getData({
       Ifuse: 0,
       Sord: '',
       Sidx: '',
@@ -56,7 +69,7 @@ export default class Index extends PureComponent {
   //页面跳转
   goPage (type,val) {
     if (type === 'car_detail') {
-      if (type === 'car_detail') {  //用来标识下,车位详情是从小区跳转过去的
+      if (type === 'car_detail') {  //用来标识下,车位详情是从仓储跳转过去的
         set('page', 'community')
       }
       this.$preload({
@@ -268,14 +281,24 @@ export default class Index extends PureComponent {
     return code
   }
 
-
+  type(val) {
+    const { ParkingTraitType } = this.state
+    let t
+    ParkingTraitType.forEach(ele => {
+      if (ele.F_ItemValue == val) {
+        t = ele.F_ItemName
+      }
+    })
+    return t
+  }
 
 
   render () {
     const { num, title, navType, datas, display1, display2, current, isOpened, searchValue, listsDisplay, lists } = this.state
     const titleHeight = get('titleHeight')
+    // const surHeight = get('titleHeight1') + 268
     const surHeight = get('titleHeight1') + 475 + 100
-    const tabList = [{ title: '车位通凭证' }, { title: '车位通权证' }]
+    const tabList = [{ title: '资产通凭证' }, { title: '资产通权证' }]
 
     return (
       <View className='comm_derail'>
@@ -289,7 +312,7 @@ export default class Index extends PureComponent {
             <View className='top_title'>
               <View>
                 <Text>{ datas.BuildingName }</Text>
-                <Text onClick={this.goPage.bind(this,'c_detail',datas.BuildingId)}>小区详情</Text>
+                <Text onClick={this.goPage.bind(this,'c_detail',datas.BuildingId)}>仓储详情</Text>
               </View>
               <View>
                 <Text decode>{ datas.City }&nbsp;</Text>
@@ -297,21 +320,19 @@ export default class Index extends PureComponent {
                 <Text>{ datas.Address }</Text>
               </View>
               <View>
-                <View>车位通凭证 : { datas.SaleProof }个</View>
-                <View>车位通权证 : { datas.SaleWarrant }个</View>
+                <View>资产通凭证 : { datas.SaleProof }个</View>
+                <View>资产通权证 : { datas.SaleWarrant }个</View>
               </View>
               <View>
                 <View>待出售凭证 : { datas.ForSaleProof }个</View>
                 <View>待出售权证 : { datas.ForSaleWarrant }个</View>
               </View>
-
-
             </View>
 
             <View className='search'>
               <AtSearchBar
                 value={searchValue}
-                placeholder='车位编号'
+                placeholder='酒品名'
                 onBlur={this.onBlur.bind(this)}
                 onChange={this.handleSearch}
                 onConfirm={this.onConfirm.bind(this)}
@@ -367,7 +388,9 @@ export default class Index extends PureComponent {
                                   <View className='overflow1'>凭证编号{ ele.ParkingId.toUpperCase() }</View>
                                   <View>所属商圈：{ ele.CircleName }</View>
                                   <View>凭证到期日：{ ele.LimitDate }</View>
-                                  <View>面额<Text style={{fontSize: '18rpx'}}> (元)</Text>：{ ele.Price }</View>
+                                  <View>类别：{ this.type(ele.ParkingTraitType) }</View>
+                                  <View>品牌：{ ele.Brand }</View>
+                                  <View>面额<Text style={{fontSize: '18rpx'}}> (元)</Text>：{ ele.Price && splitThousand(ele.Price) }</View>
                                 </View>
                               </View>
                             )
@@ -418,8 +441,8 @@ export default class Index extends PureComponent {
                                 <View className='left'>
                                   <View style={{color: '#5584FF'}}>
                                     <View>
-                                      <Text>{ ((ele.SalePrice)/10000).toFixed(2) }</Text>
-                                      <Text> 万</Text>
+                                      <Text>{ ele.SalePrice && splitThousand(ele.SalePrice) }</Text>
+                                      <Text>元</Text>
                                     </View>
                                     <View>挂牌价<Text style={{fontSize: '18rpx'}}> (元)</Text></View>
                                   </View>

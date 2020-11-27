@@ -129,7 +129,7 @@ export default class Index extends PureComponent {
     const { password, surePassword } = this.state
     return (
       <View className='first_login'>
-        <View>欢迎登录车位通平台！</View>
+        <View>欢迎登录资产通平台！</View>
         {/* <View>首次登录请先绑定银行卡，并设置交易密码</View> */}
         <View>首次登录请设置交易密码</View>
 

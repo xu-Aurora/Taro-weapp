@@ -170,7 +170,7 @@ export default class Index extends PureComponent {
                     <View className='top'>
                       <View className='l'>
                         <View style={{background: '#FC7946'}}></View>
-                        <View>持有区块链车位通凭证<Text style={{fontSize: '22rpx'}}> (元)</Text></View>
+                        <View>持有区块链资产通凭证<Text style={{fontSize: '22rpx'}}> (元)</Text></View>
                       </View>
                       <View className='r'>
                         {
@@ -181,7 +181,7 @@ export default class Index extends PureComponent {
                       </View>
                     </View>
                     <View className='bottom'>
-                      <View>持有区块链车位通凭证个数<Text style={{fontSize: '22rpx'}}> (个)</Text>：</View>
+                      <View>持有区块链资产通凭证个数<Text style={{fontSize: '22rpx'}}> (个)</Text>：</View>
                       {
                         flag ? <View>{datas.pzTotalCount}</View> : <View>**</View>
                       }
@@ -192,7 +192,7 @@ export default class Index extends PureComponent {
                     <View className='top'>
                       <View className='l'>
                         <View style={{background: '#5584FF'}}></View>
-                        <View>持有区块链车位通权证<Text style={{fontSize: '22rpx'}}> (元)</Text></View>
+                        <View>持有区块链资产通权证<Text style={{fontSize: '22rpx'}}> (元)</Text></View>
                       </View>
                       <View className='r'>
                         {
@@ -204,7 +204,7 @@ export default class Index extends PureComponent {
                       </View>
                     </View>
                     <View className='bottom'>
-                      <View>持有区块链车位通权证个数<Text style={{fontSize: '22rpx'}}> (个)</Text>：</View>
+                      <View>持有区块链资产通权证个数<Text style={{fontSize: '22rpx'}}> (个)</Text>：</View>
                       {
                         flag ? <View>{ datas.qzTotalCount }</View> : <View>**</View>
                       }

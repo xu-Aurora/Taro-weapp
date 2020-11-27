@@ -23,7 +23,7 @@ export function splitThousand(num, fixed) {
 
 
 //服务器图片路径
-export const imgUrl = 'http://cwt.yiyatong.net.cn:8087/system/weapp-image/'
+export const imgUrl = 'http://cwt.yiyatong.net.cn:8087/system/weapp-image-zct/'
 
 
 //正则校验

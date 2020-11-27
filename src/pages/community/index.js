@@ -1,24 +1,25 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Text, Picker, ScrollView, Image } from '@tarojs/components'
-import { AtSearchBar, AtIcon, AtActivityIndicator, AtLoadMore } from 'taro-ui'
-import { get, set, toast } from '../../global_data'
+import { AtIcon, AtActivityIndicator, AtLoadMore } from 'taro-ui'
+import Search from '@/components/Search';
+import { get, toast } from '../../global_data'
 import { imgUrl } from '../../utils/util'
 import api from '../../api/api'
 import './index.scss'
 
 let timeout = null
+let hList = Taro.getStorageSync("search_cache")
 
 export default class Index extends PureComponent {
 
   config = {
-    navigationBarTitleText: '小区'
+    navigationBarTitleText: '仓储'
   }
 
   constructor () {
     super(...arguments)
     this.state = {
-      seatchVal: '',
-      iconCity: 'chevron-down',
+      // iconCity: 'chevron-down',
       iconArea: 'chevron-down',
       iconPrice: 'chevron-down',
       iconBus: 'chevron-down',
@@ -31,10 +32,10 @@ export default class Index extends PureComponent {
       susCode: [],    //商圈code数据
       susCode1: [],    //用来储存选中的商圈的code
       selBusVal: '商圈',
-      selPrice: ['均格','1万以下','1-5万', '5-20万', '20-50万', '50万以上'],
+      selPrice: ['价格','1万以下','1-5万', '5-20万', '20-50万', '50万以上'],
       priceCode: ['0','-10000','10000-50000','50000-200000','200000-500000','500000-'],
       priceCode1: '',
-      selPriceVal: '均格',
+      selPriceVal: '价格',
       selType: [],    //楼盘类型
       typeCode: [],    //楼盘code数据
       typeCode1: '',    //用来储存选中的楼盘类型的code
@@ -45,10 +46,13 @@ export default class Index extends PureComponent {
       cityVal: '',    //选择数据展示的值
       selCity: [],
       multiIndex:[0,0],
-      buildingsData: null,  //小区列表
-      flag: false,    //用来判断是否用滑动选择省市
+      buildingsData: [],  //仓储列表
       display: 'none',
       circleLength: '',
+
+      searchText: '',
+      flag: false,   // 用来判断展示列表还是搜索记录     
+      hotList: ['栏目1', '栏目2', '栏目3', '栏目4', '栏目5'],
 
       scrollY: true,
       // 拖动上下滚动
@@ -69,58 +73,102 @@ export default class Index extends PureComponent {
   // search的change事件
   searchChange (value) {
     this.setState({
-      seatchVal: value,
+      searchText: value,
     })
   }
 
-  // 点击搜索
-  onActionClick () {
-    if (this.state.seatchVal === '') {
-      api.buildings({
-        LoginMark: Taro.getStorageSync('uuid')?Taro.getStorageSync('uuid'):'',
-        Token: Taro.getStorageSync('userInfo')?JSON.parse(Taro.getStorageSync('userInfo')).token:'',
-        CityCode: this.state.cityCode,
-      }).then(res => {
-        if (res.data.code === 200) {
-          Taro.hideLoading()
-          this.setState({
-            buildingsData: res.data.data.rows ? res.data.data.rows : [],
-            selBusVal: '商圈',
-            selAreaVal: '区域',
-            selPriceVal: '价格',
-            selTypeVal: '楼盘类型',
-          })
-        }
+  /**
+   * 
+   * @param {*} value 搜索框的值
+   * @param {*} cityCode 城市code
+   */
+  onActionClick = (value, cityCode) => {
+    const { priceCode1, susCode1, tareaCode1, typeCode1 } = this.state
+    if (value === '') {
+      toast('请输入关键字', 'none', 1500)
+    } else {
+      this.setState({
+        flag: false
       })
-    }else{
-      api.buildings({
-        LoginMark: Taro.getStorageSync('uuid')?Taro.getStorageSync('uuid'):'',
-        Token: Taro.getStorageSync('userInfo')?JSON.parse(Taro.getStorageSync('userInfo')).token:'',
-        CityCode: this.state.cityCode,
-        KeyWord: this.state.seatchVal
-      }).then(res => {
-        if (res.data.code === 200) {
-          Taro.hideLoading()
-          this.setState({
-            buildingsData: res.data.data.rows ? res.data.data.rows : [],
-            selBusVal: '商圈',
-            selAreaVal: '区域',
-            selPriceVal: '价格',
-            selTypeVal: '楼盘类型',
-          })
-        }
+      this.getBuildings({
+        CityCode: cityCode,         // 市code
+        BuildTraitTypes: typeCode1, // 楼盘类型code
+        DistrictCode: tareaCode1,   // 区code
+        CircleIds: susCode1,        // 商圈id 
+        Price: priceCode1,          // 车位价格值
+        KeyWord: value 
       })
     }
-  
+
   }
 
+  initGetDatas(params) {
+    this.getDatas(params)
+    this.setState({
+      selBusVal: '商圈',
+      selAreaVal: '区域' ,
+      selPriceVal: '价格' ,
+      selTypeVal: '楼盘类型'
+    })
+  }
 
-  changeIcon (type) {
-    if (type === 'city') {
-      this.setState({
-        iconCity: 'chevron-up'
-      })
-    }else if (type === 'bus') {
+  searchStart = () => {
+    const { searchText } = this.state
+
+    if (searchText == "") {
+      toast('请输入关键字', 'none', 1500)
+
+    } else {
+      Taro.getStorage({
+        key: "search_cache",
+        success: (res) => {
+          let list = res.data;
+          if (list.length > 5) {
+            for (let item of list) {
+              if (item == searchText) {
+                return;
+              }
+            }
+            list.pop();
+            list.unshift(searchText);
+          } else {
+            for (let item of list) {
+              if (item == searchText) {
+                return;
+              }
+            }
+            list.unshift(searchText);
+          }
+          hList = list
+          Taro.setStorage({
+            key: "search_cache",
+            data: list
+          })
+        },
+        fail(err) {
+          hList = []
+          hList.push(searchText);
+          Taro.setStorage({
+            key: "search_cache",
+            data: hList
+          });
+        }
+      });
+    }
+  };
+
+  keywordsClick = (item) => {
+    // 关键词搜索与历史搜索
+    this.setState({
+      searchText: item
+    }, () => {
+      this.searchStart();
+    });
+  };
+
+
+  changeIcon (type) { 
+    if (type === 'bus') {
       this.setState({
         iconBus: 'chevron-up'
       })
@@ -140,82 +188,6 @@ export default class Index extends PureComponent {
 
   }
 
-  /**
-   * 改变了地址，全局都要改变定位地址
-   *  set('City')   在全局保存城市
-   *  set('CityCode')   在全局保存城市的code
-   */
-  // 省市选择
-  picker (e) {
-    let arr = this.state.multiIndex
-    arr[0] = e.detail.value[0]
-    arr[1] = e.detail.value[1]
-    set('City',this.state.province[1][arr[1]])
-    this.setState({
-      cityVal: this.state.province[1][arr[1]],
-      iconCity: 'chevron-down'
-    })
-    if (this.state.flag) {
-      this.state.selCity.forEach(ele => {
-        if (ele.AreaName === this.state.province[1][arr[1]]) {
-          this.setState({
-            cityCode: ele.AreaCode,
-            susCode1: '',
-            areaCode1: '',
-            typeCode1: '',
-            priceCode1: '',
-            seatchVal: ''
-          })
-          set('CityCode',ele.AreaCode)
-          this.getArea({
-            CityCode: ele.AreaCode,
-            LoginMark: this.state.uuid ? this.state.uuid:'',
-            Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token:''
-          })
-          this.getBuildings({
-            CityCode: ele.AreaCode,
-            LoginMark: this.state.uuid ? this.state.uuid:'',
-            Token: this.state.userInfo ? JSON.parse(this.state.userInfo).token:''
-          })
-        }
-      })
-    }else{
-      this.setState({
-        cityCode: '110100',
-        susCode1: '',
-        areaCode1: '',
-        typeCode1: '',
-        priceCode1: '',
-        seatchVal: ''
-      })
-      set('CityCode','110100')
-      this.getArea({CityCode: '110100'})
-      this.getBuildings({
-        CityCode: '110100'
-      })
-    }
-
-  }
-  columnchange (e) {
-    switch (e.detail.column){
-      case 0:
-        let city = []
-        this.state.city[e.detail.value].forEach(ele => {
-          city.push(ele.AreaName)
-        })
-        let data = this.state.province
-        let arr = this.state.multiIndex
-        data[1] = city
-        arr[0] = e.detail.value
-        arr[1] = 0
-        this.setState({
-          province: data,
-          multiIndex: arr,
-          flag: true,
-          selCity: this.state.city[e.detail.value]
-        })
-    }
-  }
   cancel (type) {
     if (type === 'city') {
       this.setState({
@@ -241,13 +213,16 @@ export default class Index extends PureComponent {
 
   }
 
+
+
   // nav选择
-  navChange (type,e) {
+  navChange (type, e) {
+
     this.setState({
       display: 'none'
     })
-    const { selArea, seatchVal, tareaCode1, priceCode, typeCode, selType, selPrice, areaCode, cityCode, susCode1, typeCode1, priceCode1, selBus, susCode, areaCode1 } = this.state
-    
+    const { selArea, searchText, tareaCode1, priceCode, typeCode, selType, selPrice, areaCode, cityCode, susCode1, typeCode1, priceCode1, selBus, susCode, areaCode1 } = this.state
+
     if (type === 'area') {
       this.setState({
         selAreaVal: selArea[e.detail.value],
@@ -260,7 +235,7 @@ export default class Index extends PureComponent {
         CircleIds: susCode1,   //商圈id 
         BuildTraitTypes: typeCode1,  //商圈类型code
         Price: priceCode1,   //车位价格值
-        KeyWord: seatchVal 
+        KeyWord: searchText 
       })
     }else if (type === 'bus') {
       this.setState({
@@ -274,7 +249,7 @@ export default class Index extends PureComponent {
         DistrictCode: areaCode1,   //区code
         BuildTraitTypes: typeCode1,  //商圈类型code
         Price: priceCode1,   //车位价格值
-        KeyWord: seatchVal 
+        KeyWord: searchText 
       })
     }else if (type === 'price') {
       this.setState({
@@ -288,7 +263,7 @@ export default class Index extends PureComponent {
         DistrictCode: areaCode1,   //区code
         BuildTraitTypes: typeCode1,  //商圈类型code
         CircleIds: susCode1,   //商圈id 
-        KeyWord: seatchVal 
+        KeyWord: searchText 
       })
     }else {
       this.setState({
@@ -303,7 +278,7 @@ export default class Index extends PureComponent {
         DistrictCode: tareaCode1,   //区code
         CircleIds: susCode1,   //商圈id 
         Price: priceCode1,  //车位价格值
-        KeyWord: seatchVal 
+        KeyWord: searchText 
       })
 
     }
@@ -439,7 +414,9 @@ export default class Index extends PureComponent {
     })
   }
 
-  // 获取小区列表数据
+
+
+  // 获取仓储列表数据
   getBuildings (params, downPullText = '下拉刷新', toast1) {
     this.getDatas(params, downPullText, toast1)
   }
@@ -490,7 +467,7 @@ export default class Index extends PureComponent {
       DistrictCode: this.state.areaCode1,             // 区code
       BuildTraitTypes: this.state.typeCode1,          // 商圈类型code
       Price: this.state.priceCode1,                   // 车位价格值
-      KeyWord: this.state.seatchVal,                   // 输入框
+      KeyWord: this.state.searchText,                   // 输入框
       existLoading: true
     }
 
@@ -544,7 +521,7 @@ export default class Index extends PureComponent {
               DistrictCode: this.state.areaCode1,             // 区code
               BuildTraitTypes: this.state.typeCode1,          // 商圈类型code
               Price: this.state.priceCode1,                   // 车位价格值
-              KeyWord: this.state.seatchVal                   // 输入框
+              KeyWord: this.state.searchText                   // 输入框
             }
             that.getBuildings(params, 'loading', 'toast1')
           },500)
@@ -623,190 +600,213 @@ export default class Index extends PureComponent {
         DistrictCode: this.state.areaCode1,             // 区code
         BuildTraitTypes: this.state.typeCode1,          // 商圈类型code
         Price: this.state.priceCode1,                   // 车位价格值
-        KeyWord: this.state.seatchVal                   // 输入框
+        KeyWord: this.state.searchText                   // 输入框
       }
       this.getBuildings1(params, 'noMore')
     }, 500)
   }
 
   render () {
-    const { buildingsData, display, seatchVal, multiIndex, province, cityVal, iconCity, selBus, selBusVal, iconBus, cityCode,
-      selArea, selAreaVal, iconArea, selPrice, selPriceVal, iconPrice, selType, selTypeVal, iconType, circleLength,
+    const { buildingsData, display, selBus, selBusVal, iconBus, iconType, circleLength,
+      selArea, selAreaVal, iconArea, selPrice, selPriceVal, iconPrice, selType, selTypeVal, 
       isActive,
       scrollY,
       dragStyle,
       downPullStyle,
       downPullText,
+      hotList,
+      searchText,
+      flag,
       status } = this.state
     const house_default = `${imgUrl}house_default.png`
     const house_nodata = `${imgUrl}house_nodata.png`
-    const surHeight = get('titleHeight1') + 175
+    const surHeight = get('titleHeight1') + 140
     dragStyle.height = `calc(100vh - ${surHeight}rpx)`
-
-    let params = {
-      LoginMark: Taro.getStorageSync('uuid'),
-      Token: Taro.getStorageSync('userInfo') ? JSON.parse(Taro.getStorageSync('userInfo')).token : '',
-      CityCode: get('CityCode') ? get('CityCode') : cityCode
-    }
 
     return (
       <View className='community'>
-        {/* 顶部搜索及select */}
-        <View className='top_search'>
-          <AtSearchBar
-            placeholder='请输入小区名称、商圈'
-            onActionClick={this.onActionClick.bind(this)}
-            onConfirm={this.onActionClick.bind(this)}
-            value={seatchVal}
-            onChange={this.searchChange.bind(this)} 
-          />
-          <View 
-            onClick={this.changeIcon.bind(this,'city')}
-            className='area_select'
-          >
-            <Picker 
-              mode='multiSelector'
-              onCancel={this.cancel.bind(this,'city')}
-              value={multiIndex} 
-              range={province} 
-              oncolumnchange={this.columnchange.bind(this)}
-              onChange={this.picker.bind(this)}
-            >
-              <View class='city'>
-                <Text>{ cityVal }</Text>
-                <AtIcon value={iconCity} size='18' color='#AEAEAE'></AtIcon>
-                <Text className='line'></Text>
-              </View>
-            </Picker>
 
-          </View> 
-
-          <View className='nav_select'>
-            <View onClick={this.changeIcon.bind(this,'bus')}>
-              <Picker 
-                mode='selector' 
-                onCancel={this.cancel.bind(this,'bus')}
-                range={selBus} 
-                onChange={this.navChange.bind(this,'bus')}
-              >
-                <View className='picker'>
-                  <Text decode>{ selBusVal }&nbsp;</Text>
-                  <AtIcon value={iconBus} size='18' color='#AEAEAE'></AtIcon>
-                </View>
-              </Picker>
-            </View>
-            <View onClick={this.changeIcon.bind(this,'area')}>
-              <Picker 
-                mode='selector' 
-                onCancel={this.cancel.bind(this,'area')}
-                range={selArea} 
-                onChange={this.navChange.bind(this,'area')}
-              >
-                <View className='picker'>
-                  <Text decode>{ selAreaVal }&nbsp;</Text>
-                  <AtIcon value={iconArea} size='18' color='#AEAEAE'></AtIcon>
-                </View>
-              </Picker>
-            </View>
-            <View onClick={this.changeIcon.bind(this,'price')}>
-              <Picker mode='selector' range={selPrice} 
-                onCancel={this.cancel.bind(this,'price')}
-                onChange={this.navChange.bind(this,'price')}
-              >
-                <View className='picker'>
-                  <Text decode>{ selPriceVal }&nbsp;</Text>
-                  <AtIcon value={iconPrice} size='18' color='#AEAEAE'></AtIcon>
-                </View>
-              </Picker>
-            </View>
-            <View onClick={this.changeIcon.bind(this,'type')}>
-              <Picker 
-                mode='selector' 
-                onCancel={this.cancel.bind(this,'type')}
-                range={selType} 
-                onChange={this.navChange.bind(this,'type')}
-              >
-                <View className='picker'>
-                  <Text decode>{ selTypeVal }&nbsp;</Text>
-                  <AtIcon value={iconType} size='18' color='#AEAEAE'></AtIcon>
-                </View>
-              </Picker>
-            </View>
+        <View>
+          <View className='search_x'>
+            <Search 
+              onActionClick={this.onActionClick} 
+              getValue={(searchText) => this.setState({searchText})} 
+              changeCity={this.initGetDatas.bind(this)}
+              value={searchText}
+              onFocus={() => this.setState({flag: true})}
+              datas={''}
+            />
           </View>
 
         </View>
 
-        <View className='dragUpdatePage' style={{height: `calc(100vh - ${surHeight}rpx)`}}>
-          <View className='downDragBox' style={downPullStyle}>
-            <AtActivityIndicator content={downPullText} />
-          </View>
-          {/* list数据 */}
-          <ScrollView
-            style={dragStyle}
-            scrollY={scrollY}
-            className={'tab-container ' + (isActive == 1 ? 'show' : 'hide')}
-            upperThreshold={50}
-            lowerThreshold={50}
-            onTouchStart={this.touchStart}
-            onTouchMove={this.touchRecMove}
-            onTouchEnd={this.touchEnd}
-            onScrollToLower={this.onReachBottom}
-            scrollWithAnimation
-          >
-            {
-              JSON.stringify(buildingsData) !== '[]' && buildingsData!==null && buildingsData.map(ele => {
-                return (
-                  <View className='list' key={ele.BuildingId}>
-                    <View className='item' key={ele.BuildingId} onClick={this.goDetail.bind(this,ele.BuildingId)}>
-                      <View className='left'>
-                        <Image src={ele.Imgs ? ele.Imgs[0] : house_default} />
-                      </View>
-                      <View className='right'>
-                        <View>{ ele.BuildingName }</View>
-                        <View>
-                          <Text decode>{ ele.City }&nbsp;</Text>
-                          <Text decode>{ ele.District }&nbsp;</Text>{ ele.Address }
+        {
+          flag ? (
+            <View className='search_history' style={{height: `calc(100vh - 44px)`}}>
+                {hList.length > 0 ? (
+                  <View className={"s-circle"}>
+                    <View className="header">
+                      历史记录
+                      <Image
+                        src={require("@/assets/images/delete.svg")}
+                        mode="aspectFit"
+                        onClick={this.delhistory}
+                      ></Image>
+                    </View>
+                    <View className="list">
+                      {hList.map((item, index) => {
+                        return (
+                          <View
+                            key={index}
+                            onClick={this.keywordsClick.bind(this, item)}
+                          >
+                            {item}
                           </View>
-                        <View>
-                          <Text>{ ele.CompanyName }</Text>
-                          <View>{ ((ele.AveragePrice)/10000).toFixed(2) }<Text> 万元</Text></View>
-                        </View>
-                        <View>
-                          <View>{ ele.BuildTraitType }</View>
-                          <Text decode>均价&nbsp;</Text>
-                        </View>
-                      </View>
+                        );
+                      })}
                     </View>
                   </View>
-                )
-              }) 
-            }
-            {
-              JSON.stringify(buildingsData) == '[]' && (
-                <View className='nodata'>
-                  <View>
-                    <Image src={house_nodata} />
-                    {
-                      circleLength > 0 ? 
-                      <View>当前城市无数据，请尝试切换城市查看</View> :
-                      <View>您还未加入任何一个商圈，请前往“我的商圈”，在“未加入”列表进行选择并加入。</View>
-                    }
-                  </View> 
+                ) : null}
+                <View className={"wanted-circle"}>
+                  <View className="header">猜你想搜的</View>
+                  <View className="list">
+                    {hotList.map((item, index) => {
+                      return (
+                        <View
+                          key={index}
+                          onClick={this.keywordsClick.bind(this, item)}
+                        >
+                          {item}
+                        </View>
+                      );
+                    })}
+                  </View>
                 </View>
-              )
-            }
-            <View className='upDragBox' style={{display: JSON.stringify(buildingsData) == '[]' ? 'none': display}}>
-              <AtLoadMore
-                status={status}
-                // moreText='查看数据'
-                loadingText='数据加载中...'
-                noMoreText='---已经到底啦---'
-                noMoreTextStyle={{ border: 'none' }}
-                moreBtnStyle={{ border: 'none' }}
-              />
+              </View>
+          ) : (
+            <View>
+              <View className='top_search' style={{paddingTop: '6px'}}>
+                <View className='nav_select'>
+                  <View onClick={this.changeIcon.bind(this,'bus')}>
+                    <Picker 
+                      mode='selector' 
+                      onCancel={this.cancel.bind(this,'bus')}
+                      range={selBus} 
+                      onChange={this.navChange.bind(this,'bus')}
+                    >
+                      <View className='picker'>
+                        <Text decode>{ selBusVal }&nbsp;</Text>
+                        <AtIcon value={iconBus} size='18' color='#AEAEAE'></AtIcon>
+                      </View>
+                    </Picker>
+                  </View>
+                  <View onClick={this.changeIcon.bind(this,'area')}>
+                    <Picker 
+                      mode='selector' 
+                      onCancel={this.cancel.bind(this,'area')}
+                      range={selArea} 
+                      onChange={this.navChange.bind(this,'area')}
+                    >
+                      <View className='picker'>
+                        <Text decode>{ selAreaVal }&nbsp;</Text>
+                        <AtIcon value={iconArea} size='18' color='#AEAEAE'></AtIcon>
+                      </View>
+                    </Picker>
+                  </View>
+                  {/* <View onClick={this.changeIcon.bind(this,'price')}>
+                    <Picker mode='selector' range={selPrice} 
+                      onCancel={this.cancel.bind(this,'price')}
+                      onChange={this.navChange.bind(this,'price')}
+                    >
+                      <View className='picker'>
+                        <Text decode>{ selPriceVal }&nbsp;</Text>
+                        <AtIcon value={iconPrice} size='18' color='#AEAEAE'></AtIcon>
+                      </View>
+                    </Picker>
+                  </View> */}
+                  {/* <View onClick={this.changeIcon.bind(this,'type')}>
+                    <Picker 
+                      mode='selector' 
+                      onCancel={this.cancel.bind(this,'type')}
+                      range={selType} 
+                      onChange={this.navChange.bind(this,'type')}
+                    >
+                      <View className='picker'>
+                        <Text decode>{ selTypeVal }&nbsp;</Text>
+                        <AtIcon value={iconType} size='18' color='#AEAEAE'></AtIcon>
+                      </View>
+                    </Picker>
+                  </View> */}
+                </View>
+              </View>
+              <View className='dragUpdatePage' style={{height: `calc(100vh - ${surHeight}rpx)`}}>
+                <View className='downDragBox' style={downPullStyle}>
+                  <AtActivityIndicator content={downPullText} />
+                </View>
+                {/* list数据 */}
+                <ScrollView
+                  style={dragStyle}
+                  scrollY={scrollY}
+                  className={'tab-container ' + (isActive == 1 ? 'show' : 'hide')}
+                  upperThreshold={50}
+                  lowerThreshold={50}
+                  onTouchStart={this.touchStart}
+                  onTouchMove={this.touchRecMove}
+                  onTouchEnd={this.touchEnd}
+                  onScrollToLower={this.onReachBottom}
+                  scrollWithAnimation
+                >
+                  {
+                    buildingsData.length> 0 ? buildingsData.map(ele => {
+                      return (
+                        <View className='list_' key={ele.BuildingId}>
+                          <View className='item' key={ele.BuildingId} onClick={this.goDetail.bind(this,ele.BuildingId)}>
+                            <View className='left'>
+                              <Image src={ele.Imgs ? ele.Imgs[0] : house_default} />
+                            </View>
+                            <View className='right'>
+                              <View>{ ele.BuildingName }</View>
+                              <View>
+                                <Text decode>{ ele.City }&nbsp;</Text>
+                                <Text decode>{ ele.District }&nbsp;</Text>{ ele.Address }
+                                </View>
+                              <View>
+                                <Text>{ ele.CompanyName }</Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      )
+                    }) :
+                    <View className='nodata'>
+                        <View>
+                          <Image src={house_nodata} />
+                          {
+                            circleLength > 0 ? 
+                            <View>当前城市无数据，请尝试切换城市查看</View> :
+                            <View>您还未加入任何一个商圈，请前往“我的商圈”，在“未加入”列表进行选择并加入。</View>
+                          }
+                        </View> 
+                      </View>
+                  }
+
+                  <View className='upDragBox' style={{display: buildingsData.length<=0 ? 'none': display}}>
+                    <AtLoadMore
+                      status={status}
+                      // moreText='查看数据'
+                      loadingText='数据加载中...'
+                      noMoreText='---已经到底啦---'
+                      noMoreTextStyle={{ border: 'none' }}
+                      moreBtnStyle={{ border: 'none' }}
+                    />
+                  </View>
+                </ScrollView>
+              </View>
             </View>
-          </ScrollView>
-        </View>
+          )
+        }
+
+
       </View>
     )
   }

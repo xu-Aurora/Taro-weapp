@@ -261,7 +261,7 @@ export default class Index extends PureComponent {
   }
 
   /**
-   * 从小区、首页跳转进来,全额购买payType=1(接口完成后跳回原来的列表),支付定金payType=2
+   * 从仓储、首页跳转进来,全额购买payType=1(接口完成后跳回原来的列表),支付定金payType=2
    * 从我的订单跳转进来,全额支付payType=4,支付尾款payType=3,首付payType=5,贷款不付定金购买payType=6
    * 除了定金支付的调orderSubmit接口,其他的都调payNow接口
    */

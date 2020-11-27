@@ -1,6 +1,6 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
-import { AtIcon } from 'taro-ui'
+import { AtSearchBar } from 'taro-ui'
 import QQMapWX from '../../assets/js/qqmap-wx-jssdk.min'
 import { imgUrl } from '../../utils/util'
 import api from '../../api/api'
@@ -28,7 +28,7 @@ export default class Index extends PureComponent {
   }
 
   config = {
-    navigationBarTitleText: '车位通'
+    navigationBarTitleText: '资产通'
   }
 
 
@@ -131,7 +131,7 @@ export default class Index extends PureComponent {
           ProvinceName: res.result.ad_info.province,
           existLoading: true
         }).then(res1 => {
-          if (res1.data.code === 200) {
+          if (res1 && res1.data.code === 200) {
             //根据省市code获取对应城市的车位数据
             let city = {
               citys,
@@ -149,7 +149,8 @@ export default class Index extends PureComponent {
 
   goMore(type) {
     this.$preload({
-      ParkingLot: type
+      ParkingLot: type,
+      page: 'aw'
     })
     Taro.navigateTo({ 
       url: `../parkingIndex/index`
@@ -169,6 +170,15 @@ export default class Index extends PureComponent {
       url: `../${type}/index`
     })
   }
+  goPage1 () {
+    this.$preload({
+      ParkingLot: null,
+      page: 'al'
+    })
+    Taro.navigateTo({ 
+      url: `../parkingIndex/index`
+    })
+  }
   //跳转到分包
   goBranchPage (type) {
     Taro.navigateTo({ 
@@ -180,19 +190,16 @@ export default class Index extends PureComponent {
 
 
   render () {
-    const { cityVal } = this.state
 
     return (
       <View class='base_font container'>
 
-        <View className='goComm' onClick={this.goPage.bind(this,'community')}>
-
-          <View>
-            <View>{cityVal}</View>
-            <View><AtIcon value='chevron-down' size='18' color='#AEAEAE'></AtIcon></View>
-            <View></View>
-            <View>请输入小区名称、商圈</View>
-          </View>
+        {/* <View className='goComm' onClick={this.goPage.bind(this,'community')}> */}
+        <View className='goComm' onClick={this.goPage1.bind(this)}>
+          <AtSearchBar
+            placeholder='搜索'
+            disabled
+          />
 
         </View>
 
@@ -214,7 +221,7 @@ export default class Index extends PureComponent {
               <View>
                 <Image mode='widthFix' src={`${imgUrl}house.png`}></Image>
               </View>
-              <View>小区</View>
+              <View>仓储</View>
             </View>
             <View onClick={this.goBranchPage.bind(this,'map')}>
               <View>
@@ -229,7 +236,7 @@ export default class Index extends PureComponent {
             <Image mode='widthFix' src={`${imgUrl}pic_pzcard_bg.png`}></Image>
             <View className='posiHome'>
               <View className='home_btm_textT'>区块链</View>
-              <View className='home_btm_textB'>车位通凭证</View>
+              <View className='home_btm_textB'>资产通凭证</View>
             </View>
             
           </View>
@@ -237,7 +244,7 @@ export default class Index extends PureComponent {
             <Image mode='widthFix' src={`${imgUrl}pic_qzcard_bg.png`}></Image>
             <View className='posiHome'>
               <View className='home_btm_textT'>区块链</View>
-              <View className='home_btm_textB'>车位通权证</View>
+              <View className='home_btm_textB'>资产通权证</View>
             </View>
             
           </View>

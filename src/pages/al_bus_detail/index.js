@@ -120,7 +120,7 @@ export default class Index extends PureComponent {
                 <View>{ datas.UserCount }个</View>
               </View>
               <View>
-                <View>车位通资产总数 :</View>
+                <View>资产通资产总数 :</View>
                 <View>{ datas.TotalCount }个</View>
               </View>
               <View>
@@ -165,7 +165,7 @@ export default class Index extends PureComponent {
               onCancel={() => this.setState({isOpened: false})}
               onClose={() => this.setState({isOpened: false})}
               onConfirm={throttle(this.handleConfirm)}
-              content='退出商圈后，您将无法查看、购买商圈内的车位通资产及其车位信息'
+              content='退出商圈后，您将无法查看、购买商圈内的资产通资产及其车位信息'
             />
           </View>
         }

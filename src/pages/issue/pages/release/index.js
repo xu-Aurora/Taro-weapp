@@ -563,7 +563,7 @@ export default class Index extends PureComponent {
           {/* 顶部搜索及select */}
           <View className='top_search' style={{marginBottom: '20rpx'}}>
             <AtSearchBar
-              placeholder='请输入小区名称'
+              placeholder='请输入仓储名称'
               onActionClick={this.onActionClick.bind(this)}
               value={seatchVal}
               onChange={this.searchChange.bind(this)} 

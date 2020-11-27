@@ -410,7 +410,7 @@ export default class Index extends PureComponent {
                     </View>
                     <View>
                       <View>账户余额（元）：</View>
-                      <View>{ accountDatas.Amt }</View>
+                      <View>{ splitThousand(accountDatas.Amt) }</View>
                     </View>
                   </View>
                 )
@@ -429,13 +429,13 @@ export default class Index extends PureComponent {
               </View>
               
 
-             {/* 车位通信息(回购模式) */}
+             {/* 资产通信息(回购模式) */}
               {
                 (datas&&JSON.stringify(datas)!=='{}')&&datas.BuyBackModel.Usufruct == 0 ? (
                   <View className='buy_back'>
                     <View>
                       <Image src={`${imgUrl}icon_pz.png`} />
-                      <Text>区块链车位通凭证信息</Text>
+                      <Text>区块链资产通凭证信息</Text>
                     </View>
                     <View>
                       <View>
@@ -447,7 +447,7 @@ export default class Index extends PureComponent {
                       <View className='left'>
                         <View>
                           <Text className='col1'>面额 : </Text>
-                          <Text className='col2'>{ splitThousand(datas&&((datas.Price)/10000).toFixed(2)) }<Text style={{fontSize:'28rpx'}}>万元</Text></Text>
+                          <Text className='col2'>{ splitThousand(datas.Price) }<Text style={{fontSize:'28rpx'}}>元</Text></Text>
                         </View>
                         <View>
                           <Text className='col1'>年化收益率 : </Text>
@@ -476,7 +476,7 @@ export default class Index extends PureComponent {
                   <View className='buy_back'>
                     <View>
                       <Image src={`${imgUrl}icon_qz.png`} />
-                      <Text>区块链车位通权证信息</Text>
+                      <Text>区块链资产通权证信息</Text>
                     </View>
                     <View>
                       <Text className='col1'>编号 : </Text>
@@ -523,7 +523,7 @@ export default class Index extends PureComponent {
                 </View>
                 <View>
                   <View>
-                    <Text decode className='col1'>所在小区 :&nbsp;</Text>
+                    <Text decode className='col1'>所在仓储 :&nbsp;</Text>
                     <Text className='col2'>{ datas.BuildingName }</Text>
                   </View>
                 </View>
