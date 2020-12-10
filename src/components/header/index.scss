@@ -25,11 +25,12 @@
         transform: translateY(-50%);
         left: 20px;
         height: 37px;
-        border: 1rpx solid #E8E8E8;
+        border: 1rpx solid #e8e8e8;
         border-radius: 32rpx;
         width: 170rpx;
         padding: 12rpx 0rpx;
-        .back-icon, .home-icon {
+        .back-icon,
+        .home-icon {
           position: absolute;
           transform: translateY(-50%);
           top: 50%;
@@ -40,11 +41,11 @@
         .back-icon {
           left: 10px;
           width: 70px;
-          border-right: 1px solid #CACACA;
+          border-right: 1px solid #cacaca;
         }
         .home-icon {
           width: 60px;
-          left: 95px
+          left: 95px;
         }
       }
       .nav_back {
@@ -64,5 +65,4 @@
       }
     }
   }
-
 }

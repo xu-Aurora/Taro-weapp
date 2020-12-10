@@ -1,7 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { AtModal } from 'taro-ui'
-import { imgUrl, splitThousand } from '../../utils/util'
+import { imgUrl, splitThousand, changeNum } from '../../utils/util'
 import api from '../../api/api'
 import { toast } from '../../global_data'
 import QQMapWX from '../../assets/js/qqmap-wx-jssdk.min'
@@ -23,7 +23,8 @@ export default class Index extends PureComponent {
     this.state = {
       datas: [],
       isOpened: false,
-      ParkingId: ''
+      ParkingId: '',
+      ParkingTraitTypes: []
     }
   }
 
@@ -37,6 +38,16 @@ export default class Index extends PureComponent {
         this.setState({
           datas: res.data.data.rows,
           isOpened: false
+        })
+      }
+    })
+  }
+
+  getType () {
+    api.getClassfy({data: 'wineTpye'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ParkingTraitTypes: res.data.data,
         })
       }
     })
@@ -82,6 +93,17 @@ export default class Index extends PureComponent {
     })
   }
 
+  type(val) {
+    const { ParkingTraitTypes } = this.state
+    let t
+    ParkingTraitTypes.forEach(ele => {
+      if (ele.F_ItemValue == val) {
+        t = ele.F_ItemName
+      }
+    })
+    return t
+  }
+
   // 移除购物车
   handleConfirm = () => {
     api.collectionEvent({
@@ -100,9 +122,9 @@ export default class Index extends PureComponent {
     })
   } 
 
-  componentDidShow () { 
-
-    this.getDatas()
+  async componentDidShow () { 
+    await this.getType()
+    await this.getDatas()
   }
 
   render () {
@@ -135,10 +157,10 @@ export default class Index extends PureComponent {
                     </View> : 
                     <View style={{color: '#5584FF'}}>
                       <View>
-                        <Text>{ ((ele.SalePrice)/10000).toFixed(2) }</Text>
-                        <Text> 万</Text>
+                        <Text>{ ele.SalePrice && changeNum(ele.SalePrice) }</Text>
+                        {/* <Text> 万</Text> */}
                       </View>
-                      <View>挂牌价<Text style={{fontSize: '20rpx'}}> (元)</Text></View>
+                      <View>挂牌价<Text style={{fontSize: '18rpx'}}> {ele.SalePrice>=100000 ? '(万元)' : '(元)'}</Text></View>
                       {
                         ele.CollectionMark == 0 && <View className='zp'>已摘牌</View>
                       }
@@ -146,15 +168,16 @@ export default class Index extends PureComponent {
                   }
                 </View>
                 <View className='right'>
-                  <View className='overflow1'>
-                  {
+                  <View>
+                  {/* {
                     ele.BuyBack.Usufruct == 0 ? 
                     <Text>{ `凭证编号${ele.ParkingId.toUpperCase()}` }</Text> : 
                     <Text>资产号{ ele.ParkingCode }</Text>
-                  }
+                  } */}
+                    <Text>品名：{ ele.ParkingCode }</Text>
                   </View>
                   <View>所属商圈：{ ele.CircleName }</View>
-                  <View>仓储：{ ele.BuildingName }</View>
+                  {/* <View>仓储：{ ele.BuildingName }</View> */}
                   <View className='address'>
                     <Text className='overflow2'>地址：{ ele.Address }</Text>
                     <View>
@@ -164,7 +187,7 @@ export default class Index extends PureComponent {
                   {
                     ele.BuyBack.Usufruct == 0 ? 
                     <View>面额：{ splitThousand(ele.Price) }<Text style={{fontSize: '18rpx'}}> (元)</Text></View> :
-                    <View>类型：{ ele.ParkingTypeName }</View>
+                    <View>类别：{ this.type(ele.ParkingTraitType) }</View>
                   }
                 </View>
               

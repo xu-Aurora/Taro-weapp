@@ -1,9 +1,6 @@
 .container {
-  overflow: hidden;
-  min-height: 100vh;
   box-sizing: border-box;
-  background-color: #F5F6FA;
-  
+  background: #f5f6fa;
 
   .content {
     background-color: #ffffff;
@@ -12,15 +9,15 @@
   // 搜素历史
   .search_history {
     background-color: #ffffff;
-    padding-top: 1px;    
+    padding-top: 1px;
     .s-block {
       margin-top: 30px;
-    
+
       .header {
         font-size: 32px;
         padding: 30px;
         position: relative;
-    
+
         image {
           width: 36px;
           height: 36px;
@@ -30,11 +27,11 @@
           top: 24px;
         }
       }
-    
+
       .list {
         display: flex;
         flex-wrap: wrap;
-    
+
         view {
           width: 50%;
           color: #8a8a8a;
@@ -51,16 +48,16 @@
         }
       }
     }
-    
+
     .s-circle {
       margin-top: 30px;
-    
+
       .header {
         font-size: 32px;
         padding: 30px;
         border-bottom: 2px solid #f9f9f9;
         position: relative;
-    
+
         image {
           width: 36px;
           height: 36px;
@@ -70,12 +67,12 @@
           top: 24px;
         }
       }
-    
+
       .list {
         display: flex;
         flex-wrap: wrap;
         padding: 0 30px 20px;
-    
+
         view {
           padding: 8px 30px;
           margin: 20px 30px 0 0;
@@ -88,19 +85,19 @@
         }
       }
     }
-    
+
     .wanted-block {
       margin-top: 30px;
-    
+
       .header {
         font-size: 32px;
         padding: 30px;
       }
-    
+
       .list {
         display: flex;
         flex-wrap: wrap;
-    
+
         view {
           width: 50%;
           color: #8a8a8a;
@@ -117,20 +114,20 @@
         }
       }
     }
-    
+
     .wanted-circle {
       margin-top: 30px;
-    
+
       .header {
         font-size: 32px;
         padding: 30px;
       }
-    
+
       .list {
         display: flex;
         flex-wrap: wrap;
         padding: 0 30px 20px;
-    
+
         view {
           padding: 8px 30px;
           margin: 20px 30px 0 0;
@@ -144,7 +141,6 @@
       }
     }
   }
-
 
   .overflow1 {
     width: 420rpx;
@@ -158,21 +154,17 @@
   }
 
   .community {
-    background-color: #F5F6FA;
-    min-height: 100vh;
-
-    &>view:nth-child(1) {
+    & > view:nth-child(1) {
       background-color: #ffffff;
     }
-  
-  
+
     //list数据
     .list_ {
       background-color: #ffffff;
       box-sizing: border-box;
       padding: 0rpx 10rpx;
-      border-bottom: 1rpx solid #E5E5E5;
-  
+      border-bottom: 1rpx solid #e5e5e5;
+
       .item {
         padding-bottom: 38rpx;
         margin-top: 36rpx;
@@ -186,8 +178,8 @@
           justify-content: center;
           align-items: center;
           & > view {
-            color: #FC7946;
-        
+            color: #fc7946;
+
             & > view:nth-child(1) {
               margin-bottom: 5rpx;
               & > text:nth-child(1) {
@@ -198,13 +190,13 @@
                 font-size: 32rpx;
               }
             }
-        
+
             & > view:nth-child(2) {
               font-size: 24rpx;
             }
           }
         }
-  
+
         .right {
           font-size: 24rpx;
           color: #808080;
@@ -214,25 +206,20 @@
           }
           & > view:nth-child(1) {
             font-size: 32rpx;
-            color: #3E3E3E;
+            color: #3e3e3e;
             margin-bottom: 10rpx;
           }
         }
       }
-      &>view:first-child {
+      & > view:first-child {
         padding-top: 38rpx;
         margin-top: 0rpx;
       }
-  
-      &>view:last-child {
+
+      & > view:last-child {
         border-bottom: none;
         border-bottom: 0rpx;
       }
-
     }
-  
   }
-
 }
-
-

@@ -30,7 +30,8 @@ export default class Index extends PureComponent {
       isOpened: false,
       isOpened1: false,
       ImportOrigins: [],
-      DomesticOrigins: []
+      DomesticOrigins: [],
+      ParkingTraitTypes: [],
     }
   }
 
@@ -137,8 +138,18 @@ export default class Index extends PureComponent {
 
   }
 
-  async componentWillMount () {
+  getType () {
+    api.getClassfy({data: 'wineTpye'}).then(res => {
+      if (res.data.code === 200) {
+        this.setState({
+          ParkingTraitTypes: res.data.data,
+        })
+      }
+    })
+  }
 
+  async componentWillMount () {
+    await this.getType()
     await this.getUnit()              // 获取‘单位’的数据字典
     await this.getImportOrigin()      // 获取‘进口产地’的数据字典
     await this.getDomesticOrigin()    // 获取‘国内产地’的数据字典
@@ -146,7 +157,7 @@ export default class Index extends PureComponent {
   }
   
   render () {
-    const { page, title, datas, id, navType, num, isOpened, isOpened1, Units, ImportOrigins, DomesticOrigins } = this.state
+    const { page, ParkingTraitTypes, title, datas, id, navType, num, isOpened, isOpened1, Units, ImportOrigins, DomesticOrigins } = this.state
     const titleHeight = get('titleHeight')
 
     return (
@@ -160,6 +171,7 @@ export default class Index extends PureComponent {
               onDatas={datas}
               ImportOrigins={ImportOrigins}
               DomesticOrigins={DomesticOrigins}
+              ParkingTraitTypes={ParkingTraitTypes}
               Units={Units}
               onPage={page}
               onId={id}
