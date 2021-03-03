@@ -1,22 +1,19 @@
-
 .containers {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    box-sizing: border-box;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
 
-  &>view:nth-child(1) {
-    background: #F5F6FA;
+  & > view:nth-child(1) {
+    background: #f5f6fa;
     flex: 1;
     padding-bottom: 110rpx;
     overflow-y: auto;
   }
 
-  
   .aw_car_detail {
-    background-color: #F5F6FA;
-  
+    background-color: #f5f6fa;
+
     .col1 {
       color: #808080;
       font-size: 30rpx;
@@ -31,91 +28,92 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-  
+
     // 头部,已购买状态展示
     .titles {
       padding: 32rpx 50rpx 48rpx 46rpx;
       background-color: #ffffff;
-      margin-bottom: 20rpx; 
-  
+      margin-bottom: 20rpx;
+
       .info {
         font-size: 30rpx;
         color: #808080;
-        border-bottom: 1rpx solid #E5E5E5;
+        border-bottom: 1rpx solid #e5e5e5;
         margin-top: 42rpx;
-        &>view {
+        & > view {
           display: flex;
           justify-content: space-between;
           margin-bottom: 30rpx;
         }
       }
-  
-      &>view:nth-child(1) {
+
+      & > view:nth-child(1) {
         font-size: 46rpx;
-        color: #3E3E3E;
+        color: #3e3e3e;
         font-weight: 600;
       }
-      .prove, .record {
+      .prove,
+      .record {
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 32rpx;
         color: #606060;
-        &>view {
+        & > view {
           display: flex;
           align-items: center;
         }
       }
       .prove {
         margin: 42rpx 0rpx 30rpx 0rpx;
-        &>view>text:nth-child(1) {
+        & > view > text:nth-child(1) {
           display: inline-block;
           width: 42rpx;
           height: 30rpx;
           margin-right: 14rpx;
-          background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/certificate.png') no-repeat;
+          background: url("http://cwt.yiyatong.net.cn:8087/system/weapp-image/certificate.png")
+            no-repeat;
           background-size: 100% 100%;
         }
       }
       .record {
-        &>view>text:nth-child(1) {
+        & > view > text:nth-child(1) {
           display: inline-block;
           width: 42rpx;
           height: 30rpx;
           margin-right: 14rpx;
-          background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/record.png') no-repeat;
+          background: url("http://cwt.yiyatong.net.cn:8087/system/weapp-image/record.png")
+            no-repeat;
           background-size: 100% 100%;
         }
       }
     }
-  
   }
 
   // 底部按钮
   .footer2 {
-    background: #FFFFFF;
-    box-shadow: 0 -2rpx 12rpx 0 rgba(0,0,0,0.16);
+    background: #ffffff;
+    box-shadow: 0 -2rpx 12rpx 0 rgba(0, 0, 0, 0.16);
     padding: 28rpx 40rpx;
     margin-top: 15rpx;
-    border-top: 1rpx solid #E5E5E5;
+    border-top: 1rpx solid #e5e5e5;
     display: flex;
     justify-content: space-between;
-    
+
     & > view {
       flex: 1;
     }
     & > view:nth-child(1) {
       font-size: 34rpx;
       height: 92rpx;
-      color: #5584FF;
+      color: #5584ff;
       box-sizing: border-box;
-      background: #F0F4FF;
-      border: 1rpx solid #5584FF;
+      background: #f0f4ff;
+      border: 1rpx solid #5584ff;
       border-radius: 10rpx;
       margin-right: 32rpx;
       display: flex;
       justify-content: space-around;
-
 
       & > view {
         display: flex;
@@ -132,17 +130,6 @@
       & > view:nth-child(2) {
         margin-right: 25rpx;
       }
-
     }
   }
-
 }
-
-
-
-
-
-
-
-
-

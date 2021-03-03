@@ -3,17 +3,14 @@
   flex-direction: column;
   height: 100vh;
   box-sizing: border-box;
-  overflow: hidden;
-
-
 
   .box {
-    background: #F5F6FA;
+    background: #f5f6fa;
     flex: 1;
     overflow-y: auto;
 
     .carInfo {
-      padding: 20rpx 0rpx 45rpx 0rpx; 
+      padding: 20rpx 0rpx 45rpx 0rpx;
       margin-bottom: 20rpx;
 
       .orderInfo {
@@ -22,11 +19,11 @@
         padding-bottom: 55rpx;
         box-sizing: border-box;
         font-size: 32rpx;
-        color: #3E3E3E;
+        color: #3e3e3e;
 
         & > view:nth-child(1) {
           padding: 40rpx 0rpx 22rpx 0rpx;
-          border-bottom: 1rpx solid #E5E5E5;
+          border-bottom: 1rpx solid #e5e5e5;
         }
 
         .pz {
@@ -36,7 +33,7 @@
             justify-content: space-between;
             & > view:nth-child(2) {
               padding-right: 43rpx;
-              color: #FA5741;
+              color: #fa5741;
             }
           }
           & > view:nth-child(2) {
@@ -51,7 +48,7 @@
             justify-content: space-between;
             & > view:nth-child(2) {
               padding-right: 43rpx;
-              color: #FA5741;
+              color: #fa5741;
             }
           }
           & > view:nth-child(2) {
@@ -63,11 +60,11 @@
             font-size: 30rpx;
             color: #808080;
             display: flex;
-  
+
             & > view:nth-child(2) {
               display: flex;
               align-items: center;
-  
+
               image {
                 width: 36rpx;
                 height: 36rpx;
@@ -75,7 +72,6 @@
             }
           }
         }
-
       }
 
       .circleInfo {
@@ -104,12 +100,12 @@
         color: #909090;
         background: #ffffff;
         padding: 40rpx 0rpx 60rpx 32rpx;
-        border-bottom: 1rpx solid #D9D9D9;
-        border-top: 1rpx solid #D9D9D9;
+        border-bottom: 1rpx solid #d9d9d9;
+        border-top: 1rpx solid #d9d9d9;
 
-        &>view:nth-child(1) {
+        & > view:nth-child(1) {
           font-size: 36rpx;
-          color: #3E3E3E;
+          color: #3e3e3e;
           margin-bottom: 40rpx;
           height: 30rpx;
           line-height: 30rpx;
@@ -126,25 +122,25 @@
             line-height: 30rpx;
           }
         }
-        &>view:nth-child(2) {
+        & > view:nth-child(2) {
           margin-bottom: 30rpx;
-          &>view {
+          & > view {
             margin-bottom: 20rpx;
           }
         }
-        &>view:nth-child(3) {
+        & > view:nth-child(3) {
           display: flex;
-          .left, .right {
+          .left,
+          .right {
             flex: 0.9;
-            &>view {
-              margin-bottom: 30rpx
+            & > view {
+              margin-bottom: 30rpx;
             }
           }
           .right {
             flex: 1.1;
           }
         }
-
 
         .col1 {
           color: #808080;
@@ -162,24 +158,22 @@
         color: #909090;
         box-sizing: border-box;
         background-color: #ffffff;
-        border-bottom: 1rpx solid #D9D9D9;
-        border-top: 1rpx solid #D9D9D9;
-    
+        border-bottom: 1rpx solid #d9d9d9;
+        border-top: 1rpx solid #d9d9d9;
+
         & > view {
           display: flex;
           justify-content: space-between;
           margin: 30rpx 0rpx;
           align-items: center;
 
-
-
-          &>text:nth-child(1), &>text:nth-child(2) {
+          & > text:nth-child(1),
+          & > text:nth-child(2) {
             flex: 1;
           }
-
         }
-    
-        &>view:nth-child(2) {
+
+        & > view:nth-child(2) {
           display: flex;
           margin-top: 34rpx;
           padding-right: 65rpx;
@@ -187,7 +181,6 @@
           margin-bottom: 30rpx;
         }
       }
-
     }
     .earnest {
       background: #ffffff;
@@ -210,7 +203,6 @@
           height: 52rpx;
         }
       }
-
     }
   }
 
@@ -226,25 +218,25 @@
   }
 
   .footer2 {
-    background: #FFFFFF;
-    box-shadow: 0 -2rpx 12rpx 0 rgba(0,0,0,0.16);
-    padding: 25rpx 32rpx 32rpx 32rpx; 
+    background: #ffffff;
+    box-shadow: 0 -2rpx 12rpx 0 rgba(0, 0, 0, 0.16);
+    padding: 25rpx 32rpx 32rpx 32rpx;
     box-sizing: border-box;
 
     .bottom {
       display: flex;
       justify-content: space-between;
-      &>view:nth-child(1) {
+      & > view:nth-child(1) {
         display: flex;
         align-items: center;
-        &>view:nth-child(1) {
+        & > view:nth-child(1) {
           margin-right: 24rpx;
           font-size: 30rpx;
-          color: #3E3E3E;
+          color: #3e3e3e;
         }
-        &>view:nth-child(2) {
+        & > view:nth-child(2) {
           margin-right: 24rpx;
-          color: #FA5741;
+          color: #fa5741;
           display: flex;
           align-items: flex-end;
           text:nth-of-type(1) {
@@ -257,6 +249,5 @@
         }
       }
     }
-
   }
 }

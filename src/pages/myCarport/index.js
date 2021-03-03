@@ -20,7 +20,7 @@ export default class Index extends PureComponent {
       display1: "none",
       display2: "none",
       ParkingTraitType: [],
-
+      parkingType: 2,
       hasMore: true,
       page: 1,
       rows: 10
@@ -44,7 +44,8 @@ export default class Index extends PureComponent {
     let param = this.$router.preload.ParkingType;
     await this.getType();
     this.setState({
-      current: param == 2 ? 0 : 1
+      current: param == 2 ? 0 : 1,
+      parkingType: param
     });
     await this.getDatas(param);
   }
@@ -99,7 +100,8 @@ export default class Index extends PureComponent {
   // tab切换
   handleClick(value) {
     this.setState({
-      current: value
+      current: value,
+      parkingType: value == 0 ? 2 : 3
     });
     this.getDatas(value == 0 ? 2 : 3);
   }
@@ -209,14 +211,14 @@ export default class Index extends PureComponent {
 
   // 上拉
   onPullDownRefresh = () => {
-    const { current, page, rows } = this.state;
-    this.getDatas(current, page, rows);
+    const { parkingType, page, rows } = this.state;
+    this.getDatas(parkingType, page, rows);
   };
 
   // 下拉
   onScrollToLower = () => {
-    const { current, page, rows } = this.state;
-    this.getDatas(current, page + 1, rows + 10);
+    const { parkingType, page, rows } = this.state;
+    this.getDatas(parkingType, page + 1, rows + 10);
   };
 
   render() {

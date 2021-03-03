@@ -1,8 +1,6 @@
 .boxs {
-  overflow: hidden;
-  min-height: 100vh;
   box-sizing: border-box;
-  background-color: #F5F6FA;
+  background-color: #f5f6fa;
 
   .at-tabs__item {
     flex: 0.3;
@@ -12,32 +10,30 @@
   }
 
   .at-load-more__tip {
-    color: #ACAEB5;
+    color: #acaeb5;
     font-size: 28rpx;
   }
 
-  .marginB20{
+  .marginB20 {
     margin-bottom: 20rpx;
   }
-  .textColor22{
-    color: #2276FF;
+  .textColor22 {
+    color: #2276ff;
   }
   .at-button--small {
     padding: 0rpx 10rpx;
   }
 
   .myOrder {
-    box-sizing: border-box;
-  
     .list {
       // padding-top: 20rpx;
       .hint {
         display: flex;
         font-size: 28rpx;
-        color: #F67149;
+        color: #f67149;
         margin-top: 28rpx;
         padding-bottom: 60rpx;
-        &>view:nth-child(1) {
+        & > view:nth-child(1) {
           width: 32rpx;
           height: 32rpx;
           margin-right: 12rpx;
@@ -48,7 +44,7 @@
           }
         }
       }
-  
+
       // .footer {
       //   display: flex;
       //   justify-content: flex-end;
@@ -57,17 +53,17 @@
       //     display: flex;
       //   }
       // }
-  
+
       .item {
         background-color: #ffffff;
         margin-bottom: 20rpx;
         padding: 37rpx 40rpx 0rpx 32rpx;
         box-sizing: border-box;
         font-size: 30rpx;
-  
+
         .tips {
           font-size: 28rpx;
-          color: #F67149;
+          color: #f67149;
           display: flex;
           margin-bottom: 28rpx;
           image {
@@ -77,11 +73,11 @@
             margin-top: 8rpx;
           }
         }
-  
+
         .top {
           display: flex;
           color: #808080;
-          &>view:nth-child(1) {
+          & > view:nth-child(1) {
             // background-color: #5584FF;
             border-radius: 4rpx;
             image {
@@ -89,35 +85,36 @@
               height: 160rpx;
             }
           }
-          &>view:nth-child(2) {
+          & > view:nth-child(2) {
             flex: 1;
 
-            &>view:nth-child(1) {
+            & > view:nth-child(1) {
               font-size: 30rpx;
-              color: #3E3E3E;
+              color: #3e3e3e;
               display: flex;
               justify-content: space-between;
             }
-            &>view:nth-child(2),&>view:nth-child(3) {
+            & > view:nth-child(2),
+            & > view:nth-child(3) {
               font-size: 24rpx;
               color: #808080;
               margin: 5rpx 0rpx;
             }
-            &>view:nth-child(4) {
+            & > view:nth-child(4) {
               font-size: 24rpx;
               color: #808080;
             }
           }
         }
-  
+
         .bottom {
-          &>view {
+          & > view {
             color: #808080;
           }
           .l {
             color: #808080;
             box-sizing: border-box;
-            &>view {
+            & > view {
               image {
                 width: 32rpx;
                 height: 32rpx;
@@ -129,12 +126,12 @@
             box-sizing: border-box;
             flex: 3;
             .overtime {
-              color: #F67149;
+              color: #f67149;
             }
           }
         }
       }
-  
+
       .item1 {
         padding: 21rpx 28rpx 46rpx 32rpx;
         background-color: #ffffff;
@@ -142,5 +139,3 @@
     }
   }
 }
-
-

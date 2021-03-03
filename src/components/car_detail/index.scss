@@ -1,10 +1,9 @@
 .boxs {
   color: #808080;
 
-
   .topBG {
-    padding-top: 30rpx;
-    background: #F5F6FA;
+    padding-top: 20rpx;
+    background: #f5f6fa;
 
     & > view {
       width: 100vw;
@@ -29,7 +28,6 @@
         right: 128rpx;
         top: 50rpx;
       }
-
     }
 
     .bg_qz {
@@ -43,13 +41,13 @@
     }
   }
 
-   //资产信息
+  //资产信息
   .car_info {
     padding: 0rpx 28rpx 33rpx 28rpx;
     box-sizing: border-box;
     background-color: #ffffff;
     margin-bottom: 20rpx;
-    border-bottom: 1rpx solid #D9D9D9;
+    border-bottom: 1rpx solid #d9d9d9;
 
     //回购模式
     .buy_back {
@@ -58,16 +56,16 @@
       font-size: 30rpx;
       .tag_blue {
         font-size: 26rpx;
-        color: #3C92FF;
-        background: #ECF4FF;
+        color: #3c92ff;
+        background: #ecf4ff;
         border-radius: 25rpx;
         padding: 8rpx 22rpx;
         height: 36rpx;
         margin-right: 10rpx;
       }
       .tag_bisque {
-        color: #ED801E;
-        background: #FFEFDC;
+        color: #ed801e;
+        background: #ffefdc;
         font-size: 26rpx;
         border-radius: 25rpx;
         padding: 8rpx 17rpx;
@@ -75,12 +73,12 @@
         margin-right: 10rpx;
       }
 
-      &>view:nth-child(1) {
+      & > view:nth-child(1) {
         display: flex;
         justify-content: space-between;
         & > view:nth-child(1) {
           font-size: 36rpx;
-          color: #3E3E3E;
+          color: #3e3e3e;
           margin-bottom: 28rpx;
           height: 30rpx;
           line-height: 30rpx;
@@ -99,20 +97,20 @@
         & > view:nth-child(2) {
           margin-bottom: 28rpx;
         }
-
       }
-      &>view:nth-child(2) {
+      & > view:nth-child(2) {
         margin-bottom: 30rpx;
-        &>view {
+        & > view {
           margin-bottom: 20rpx;
         }
       }
-      &>view:nth-child(3) {
+      & > view:nth-child(3) {
         display: flex;
-        .left, .right {
+        .left,
+        .right {
           flex: 0.9;
-          &>view {
-            margin-bottom: 30rpx
+          & > view {
+            margin-bottom: 30rpx;
           }
         }
         .right {
@@ -120,7 +118,6 @@
         }
       }
     }
-
   }
 
   .bottom {
@@ -128,8 +125,8 @@
     font-size: 30rpx;
     box-sizing: border-box;
     background-color: #ffffff;
-    border-bottom: 1rpx solid #E5E5E5;
-    border-top: 1rpx solid #E5E5E5;
+    border-bottom: 1rpx solid #e5e5e5;
+    border-top: 1rpx solid #e5e5e5;
 
     & > view {
       display: flex;
@@ -137,7 +134,8 @@
       margin: 30rpx 0rpx;
       align-items: center;
 
-      &>text:nth-child(1), &>text:nth-child(2) {
+      & > text:nth-child(1),
+      & > text:nth-child(2) {
         flex: 1;
       }
     }
@@ -166,10 +164,10 @@
       display: flex;
       justify-content: center;
       view {
-        background-color: #F5F7FB;
+        background-color: #f5f7fb;
         border-radius: 10rpx;
         font-size: 34rpx;
-        color: #3E3E3E;
+        color: #3e3e3e;
         width: 670rpx;
         height: 82rpx;
         display: flex;
@@ -179,24 +177,23 @@
     }
   }
 
-
   // 购买协议
   .buy_protocol {
     background-color: #ffffff;
-    border-bottom: 1rpx solid #E5E5E5;
-    border-top: 1rpx solid #E5E5E5;
+    border-bottom: 1rpx solid #e5e5e5;
+    border-top: 1rpx solid #e5e5e5;
     padding: 26rpx 50rpx 26rpx 32rpx;
     display: flex;
     justify-content: space-between;
     justify-items: center;
-    &>text {
+    & > text {
       font-size: 32rpx;
-      color: #3E3E3E;
+      color: #3e3e3e;
     }
-    &>view {
+    & > view {
       font-size: 34rpx;
       color: #808080;
-      &>text {
+      & > text {
         margin-right: 28rpx;
       }
     }
@@ -214,6 +211,4 @@
       height: 40rpx;
     }
   }
-  
 }
-

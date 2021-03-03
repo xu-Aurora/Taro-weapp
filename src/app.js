@@ -3,11 +3,47 @@ import qs from "qs";
 import getBaseUrl from "@/service/baseUrl";
 import { set } from "./global_data";
 import Index from "./pages/index";
-import api from "./api/api";
-
 import "./app.scss";
 
 class App extends Taro.PureComponent {
+  onLaunch() {
+    // 判断是否能用这个 api
+    if (wx.canIUse("getUpdateManager")) {
+      // 创建 updateManager 实例
+      const updateManager = wx.getUpdateManager();
+      // 检查是否有新版本
+      updateManager.onCheckForUpdate(function(res) {
+        // hasUpdate 指是否有新版本，为 boolean 值
+        if (res.hasUpdate) {
+          updateManager.onUpdateReady(function() {
+            wx.showModal({
+              title: "更新提示",
+              content: "新版本已经准备好，是否重启应用？",
+              success: function(res) {
+                if (res.confirm) {
+                  // 强制更新版本
+                  updateManager.applyUpdate();
+                }
+              }
+            });
+          }),
+            updateManager.onUpdateFailed(function() {
+              wx.showModal({
+                title: "已经有新版本了",
+                content: "新版本已经上线啦~，请您删除当前小程序，重新搜索打开"
+              });
+            });
+        }
+      });
+    } else {
+      wx.showModal({
+        title: "提示",
+        content:
+          "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。"
+      });
+    }
+  }
+
   componentWillMount() {
     // 判断是否登录过
     if (Taro.getStorageSync("Account")) {
@@ -40,14 +76,6 @@ class App extends Taro.PureComponent {
         }
       });
     }
-
-    // api.wineClassfy().then(res => {
-    //   if (res.data.code === 200) {
-    //     set('ParkingTraitType', res.data.data[0].id)
-    //     // set('ParkingTypeId', res.data.data[0].ChildNodes[0].id)
-
-    //   }
-    // })
 
     // 获取设备信息
     let sysinfo = Taro.getSystemInfoSync();

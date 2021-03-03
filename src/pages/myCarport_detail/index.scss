@@ -1,22 +1,17 @@
-
 .containers {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  box-sizing: border-box;
-  overflow: hidden;
+  background: #f5f6fa;
 
-  &>view:nth-child(1) {
-    background: #F5F6FA;
-    flex: 1;
-    overflow-y: auto;
-  }
+  // & > view:nth-child(1) {
+  //   background: #f5f6fa;
+  //   flex: 1;
+  // }
 
   .aw_car_detail {
-
     padding-bottom: 20rpx;
     box-sizing: border-box;
-  
+
     .col1 {
       color: #808080;
       font-size: 30rpx;
@@ -31,71 +26,73 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-  
+
     // 头部,已购买状态展示
     .titles {
       padding: 32rpx 50rpx 48rpx 46rpx;
       background-color: #ffffff;
-      margin-bottom: 20rpx; 
-  
+      margin-bottom: 20rpx;
+
       .info {
         font-size: 30rpx;
         color: #808080;
-        border-bottom: 1rpx solid #E5E5E5;
+        border-bottom: 1rpx solid #e5e5e5;
         margin-top: 42rpx;
-        &>view {
+        & > view {
           display: flex;
           justify-content: space-between;
           margin-bottom: 30rpx;
         }
       }
-  
-      &>view:nth-child(1) {
+
+      & > view:nth-child(1) {
         font-size: 40rpx;
-        color: #3E3E3E;
+        color: #3e3e3e;
         font-weight: 600;
         margin-bottom: 42rpx;
       }
-      .prove, .record {
+      .prove,
+      .record {
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 32rpx;
         color: #606060;
-        &>view {
+        & > view {
           display: flex;
           align-items: center;
         }
       }
       .prove {
-        &>view>text:nth-child(1) {
+        & > view > text:nth-child(1) {
           display: inline-block;
           width: 42rpx;
           height: 30rpx;
           margin-right: 14rpx;
-          background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/certificate.png') no-repeat;
+          background: url("http://cwt.yiyatong.net.cn:8087/system/weapp-image/certificate.png")
+            no-repeat;
           background-size: 100% 100%;
         }
       }
       .record {
         margin-top: 30rpx;
-        &>view>text:nth-child(1) {
+        & > view > text:nth-child(1) {
           display: inline-block;
           width: 42rpx;
           height: 30rpx;
           margin-right: 14rpx;
-          background: url('http://cwt.yiyatong.net.cn:8087/system/weapp-image/record.png') no-repeat;
+          background: url("http://cwt.yiyatong.net.cn:8087/system/weapp-image/record.png")
+            no-repeat;
           background-size: 100% 100%;
         }
       }
     }
-  
   }
 
   // 底部按钮
   .footer1 {
-    background: #FFFFFF;
-    box-shadow: 0 -2rpx 12rpx 0 rgba(0,0,0,0.16);
+    background: #ffffff;
+    box-shadow: 0 -2rpx 12rpx 0 rgba(0, 0, 0, 0.16);
     padding: 30rpx 28rpx 20rpx 0rpx;
     display: flex;
     justify-content: flex-end;
@@ -111,16 +108,7 @@
     display: flex;
     justify-content: flex-end;
     padding: 40rpx 28rpx 40rpx 0rpx;
-    background: #FFFFFF;
-    box-shadow: 0 -2rpx 12rpx 0 rgba(0,0,0,0.16);
+    background: #ffffff;
+    box-shadow: 0 -2rpx 12rpx 0 rgba(0, 0, 0, 0.16);
   }
-  
 }
-
-
-
-
-
-
-
-

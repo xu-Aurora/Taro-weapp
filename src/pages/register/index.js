@@ -7,7 +7,7 @@ import { toast } from '../../global_data'
 import { phoneReg, idCardReg } from '../../utils/util'
 import './index.scss'
 
-let valData1 = []
+// let valData1 = []
 
 export default class Index extends PureComponent {
 
@@ -34,8 +34,8 @@ export default class Index extends PureComponent {
       codeBtn: '获取动态码',
       btn: false,
       protocol: [],
-      btnDisabled: true,
-      btnDisabled2: true,
+      // btnDisabled: true,
+      // btnDisabled2: true,
       btnLoading1: false,
       btnLoading2: false,
     }
@@ -45,14 +45,42 @@ export default class Index extends PureComponent {
     }]
   }
 
+  regxPage1() {
+    const { userName, idcard, dateSel, nationality, sex, phone, profession, address } = this.state
+    if (userName === '') {
+      toast('请输入真是姓名', 'none', 1500)
+      return false
+    } else if (idcard === '') {
+      toast('请输入身份证号码', 'none', 1500)
+      return false
+    } else if (dateSel === '请选择日期') {
+      toast('请选择证件到日期日', 'none', 1500)
+      return false
+    } else if (nationality === '') {
+      toast('请输入国籍', 'none', 1500)
+      return false
+    } else if (sex === '请选择性别') {
+      toast('请选择性别', 'none', 1500)
+      return false
+    } else if (phone === '') {
+      toast('请输入手机号码', 'none', 1500)
+      return false
+    } else if (profession === '') {
+      toast('请输入职业', 'none', 1500)
+      return false
+    } else if (address === '') {
+      toast('请输入地址', 'none', 1500)
+      return false
+    }
+    return true
+  }
+
   //点击下一步
   next () {
-    this.setState({
-      loading: false
-    })
-    if (!this.state.btnDisabled) {
+
+    if (this.regxPage1()) {
       this.setState({
-        btnDisabled: true,
+        // btnDisabled: true,
         btnLoading1: true
       }, () => {
         if (!idCardReg.test(this.state.idcard)) {
@@ -65,7 +93,7 @@ export default class Index extends PureComponent {
         }
         this.setState({
           flag: true,
-          btnDisabled: false,
+          // btnDisabled: false,
           btnLoading1: false
         })
       })
@@ -112,14 +140,29 @@ export default class Index extends PureComponent {
 
   }
 
+  regxPage2() {
+    const { password, passwords, code } = this.state
+    if (password === '') {
+      toast('请输入密码', 'none', 1500)
+      return false
+    } else if (passwords === '') {
+      toast('请再次输入密码', 'none', 1500)
+      return false
+    } else if (passwords !== password) {
+      toast('两次密码输入不一致', 'none', 1500)
+      return false
+    }else if (code === '') {
+      toast('请输入验证码', 'none', 1500)
+      return false
+    } 
+    return true
+  }
+
   register () {
-    this.setState({
-      loading: false
-    })
-    const { btnDisabled2, userName, idcard, password, phone, code, sex, date, nationality, profession, address, dateSel } = this.state
-    if (!btnDisabled2) {
+    const { userName, idcard, password, phone, code, sex, nationality, profession, address, dateSel } = this.state
+    if (this.regxPage2()) {
       this.setState({
-        btnDisabled2: true,
+        // btnDisabled2: true,
         toastShow: false
       }, () => {
         api.register({
@@ -129,7 +172,6 @@ export default class Index extends PureComponent {
           F_Mobile: phone,
           VerificationCode: code,
           F_Gender: sex == '男' ? 1 : 2,
-          F_cusCertExpDate: date,
           F_Question: nationality,
           F_AnswerQuestion: profession,
           F_OtherNo: address,
@@ -138,7 +180,7 @@ export default class Index extends PureComponent {
           if (res.data.code === 200) {
             toast('注册成功！','success',1500).then(() => {
               this.setState({
-                btnDisabled2: false,
+                // btnDisabled2: false,
                 btnLoading2: false
               })
             })
@@ -149,11 +191,11 @@ export default class Index extends PureComponent {
             }, 1500);
           }else{
             this.setState({
-              btnDisabled2: false,
+              // btnDisabled2: false,
               toastShow: false,
               infoText: res.data.info
             })
-            // toast(res.data.info,'none',3000)
+            
           }
         })
       })
@@ -162,48 +204,50 @@ export default class Index extends PureComponent {
   }
 
   handleChange (type,e) {
-
     this.setState({
       [type]: e
-    },() => {
-      if (this.state.flag === false) {  //第一页
-        if (e.length > 0) {
-          if (valData1.length > 0) {
-            if (valData1.indexOf(type) == -1) {
-              valData1.push(type)
-            }
-          }else{
-            valData1.push(type)
-          }
-        }else{
-          for (let index = 0,len = valData1.length; index < len; index++) {
-            if (valData1[index] === type) {
-              valData1.splice(index,1)
-            }
-          }
-        }
+    })  
+    // this.setState({
+    //   [type]: e
+    // }, () => {
+    //   if (this.state.flag === false) {  //第一页
+    //     if (e.length > 0) {
+    //       if (valData1.length > 0) {
+    //         if (valData1.indexOf(type) == -1) {
+    //           valData1.push(type)
+    //         }
+    //       } else {
+    //         valData1.push(type)
+    //       }
+    //     } else {
+    //       for (let index = 0,len = valData1.length; index < len; index++) {
+    //         if (valData1[index] === type) {
+    //           valData1.splice(index,1)
+    //         }
+    //       }
+    //     }
 
-        if (valData1.length === 6 && this.state.sex !== '' && this.state.dateSel !== '') {
-          this.setState({
-            btnDisabled: false
-          })
-        }else{
-          this.setState({
-            btnDisabled: true
-          })
-        }
-      }else {
-        if (this.state.password !== '' && this.state.passwords !== '' && this.state.code !== '' && this.state.protocol.length>0) {
-          this.setState({
-            btnDisabled2: false
-          })
-        }else{
-          this.setState({
-            btnDisabled2: true
-          })
-        }
-      }
-    })
+    //     if (valData1.length >= 6 && this.state.sex !== '' && this.state.dateSel !== '') {
+    //       this.setState({
+    //         btnDisabled: false
+    //       })
+    //     } else {
+    //       this.setState({
+    //         btnDisabled: true
+    //       })
+    //     }
+    //   }else {
+    //     if (this.state.password !== '' && this.state.passwords !== '' && this.state.code !== '' && this.state.protocol.length>0) {
+    //       this.setState({
+    //         btnDisabled2: false
+    //       })
+    //     }else{
+    //       this.setState({
+    //         btnDisabled2: true
+    //       })
+    //     }
+    //   }
+    // })
   }
 
   //点击跳转到登录
@@ -225,11 +269,11 @@ export default class Index extends PureComponent {
         col2: '#333',
       })
     }
-    if (valData1.length === 6 && this.state.sex !== '' && this.state.dateSel !== '') {
-      this.setState({
-        btnDisabled: false
-      })
-    }
+    // if (valData1.length === 6 && this.state.sex !== '' && this.state.dateSel !== '') {
+    //   this.setState({
+    //     btnDisabled: false
+    //   })
+    // }
 
   }
   //页面跳转
@@ -239,15 +283,8 @@ export default class Index extends PureComponent {
     })
   }
 
-  componentWillUnmount () {
-    valData1 = []
-  }
-  componentDidHide () {
-    valData1 = []
-  }
-
   render () {
-    const { toastShow, infoText, flag, sex, col2, profession, btnDisabled, address, password, passwords, phone, code, codeBtn, protocol, btnDisabled2, userName, idcard, nationality, col1, selector, dateSel } = this.state
+    const { toastShow, infoText, flag, sex, col2, profession, address, password, passwords, phone, code, codeBtn, protocol, userName, idcard, nationality, col1, selector, dateSel } = this.state
     
     let infoTexts = `${infoText.slice(0, 18)} ${infoText.slice(18, 36)} `
 
@@ -313,7 +350,10 @@ export default class Index extends PureComponent {
             </View>
             <View className='footer1'>
               <AtButton onClick={this.back} type='secondary' className='back'>上一步</AtButton>
-              <AtButton disabled={btnDisabled2} type='primary' onClick={this.register.bind(this)}>注册</AtButton>
+              <AtButton 
+                // disabled={btnDisabled2} 
+                type='primary' 
+                onClick={this.register.bind(this)}>注册</AtButton>
             </View>
           </View> :
           <View className='one_page'>
@@ -386,7 +426,7 @@ export default class Index extends PureComponent {
             <View className='footer'>
               <AtButton 
                 type='primary' 
-                disabled={btnDisabled} 
+                // disabled={btnDisabled} 
                 onClick={this.next.bind(this)}
               >下一步</AtButton>
             </View>
