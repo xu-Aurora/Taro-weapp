@@ -166,8 +166,9 @@ class App extends Taro.PureComponent {
       backgroundTextStyle: "dark",
       navigationBarBackgroundColor: "#fff",
       navigationBarTextStyle: "black",
-      backgroundColor: "#F5F6FA"
-      // "enablePullDownRefresh": true,   //下拉刷新
+      backgroundColor: "#F5F6FA",
+      disableScroll: true,
+      enablePullDownRefresh: false
     },
     subPackages: [
       {
