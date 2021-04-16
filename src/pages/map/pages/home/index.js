@@ -270,8 +270,11 @@ export default class Index extends PureComponent {
   markerTap (e) {
 
     if (e.markerId.length > 7) {
+      this.$preload({
+        BuildingId: e.markerId
+      })
       Taro.navigateTo({
-        url: `../../../comm_derail/index?param=${e.markerId}`
+        url: `../../../comm_derail/index`
       })
     } else {
       let params = {
