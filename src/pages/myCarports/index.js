@@ -84,7 +84,7 @@ export default class Index extends PureComponent {
         
         {
           datas && 
-          <View>
+          <View className="content">
             {/* 我的资产 */}
             <View className='myProperty'>
               <View className='t'>

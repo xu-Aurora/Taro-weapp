@@ -1,9 +1,13 @@
 
 .container {
-  background: #F5F6FA;
-  padding: 20rpx 0rpx 58rpx 0rpx;
-  box-sizing: border-box;
-  min-height: 100vh;
+
+  .content {
+    background: #F5F6FA;
+    padding: 20rpx 0rpx 58rpx 0rpx;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 100vh;
+  }
 
   // 我的资产
   .myProperty {
